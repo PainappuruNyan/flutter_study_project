@@ -6,6 +6,7 @@ class myColors{
   static const Color kTextSecondary = Color(0xff999999);
   static const Color kPrimaryText = Color(0xff191927);
   static const Color kWhite = Color(0xffffffff);
+  static const Color kFrameBackground = Color(0xfff5f5f5);
 }
 
 
