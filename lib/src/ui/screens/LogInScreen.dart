@@ -3,14 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/colors.dart';
+import '../../routes/Routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static const String routeName = '/';
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+
+
   @override
   Widget build(BuildContext context){
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -24,26 +31,26 @@ class _LoginScreenState extends State<LoginScreen> {
       body:
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(50.0),
+              padding: EdgeInsets.all(50.0.sp),
               child: Column(
                 children: <Widget> [
                   Container(
-                    padding: const EdgeInsets.only(top: 46),
+                    padding: EdgeInsets.only(top: 46.sp),
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:  <Widget> [
                         const Image(image: AssetImage('assets/images/image 8.png')),
                         Container(
-                            margin: const EdgeInsets.only(left: 14.0),
+                            margin: EdgeInsets.only(left: 14.0.sp),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const <Widget> [
+                              children:  <Widget> [
                                 Text('АТБ', style: TextStyle(
-                                    fontSize: 36,
+                                    fontSize: 36.sp,
                                     fontWeight: FontWeight.bold
                                 ),),
                                 Text('ТЕРРИТОРИЯ', style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 24.sp,
                                     fontWeight: FontWeight.bold
                                 ),),
                               ],
@@ -101,7 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.only(top: 50.0),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, Routes.profile);
+                      },
                       minWidth: 250,
                       height: 40,
                       elevation: 0,

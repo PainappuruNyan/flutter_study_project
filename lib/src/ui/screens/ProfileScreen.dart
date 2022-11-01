@@ -1,15 +1,19 @@
+import 'package:atb_first_project/src/ui/widgets/NavigationDrawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/BookingCard.dart';
 import '../widgets/IdCard.dart';
+import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
 import '../widgets/UserCard.dart';
 import '../../constants/colors.dart';
 import '../widgets/ProfileListCard.dart';
 
-class AccountScreen extends StatelessWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
+  static const String routeName = '/profile';
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +24,10 @@ class AccountScreen extends StatelessWidget {
     ));
     return Scaffold(
       backgroundColor: myColors.kFrameBackground,
+      drawer:  const NavigationDrawer.NavigationDrawer(),
       appBar: AppBar(
         backgroundColor: myColors.kPrimary,
         elevation: 0,
-        leading: InkWell(
-          onTap: () {},
-          child: const Icon(Icons.menu_outlined),
-        ),
         title: const Center(
           child: Text('Профиль сотрудника'),
         ),

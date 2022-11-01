@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:atb_first_project/src/ui/screens/BookingListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/data/model/User.dart';
-import 'src/ui/screens/AccountScreen.dart';
+import 'src/routes/Routes.dart';
+import 'src/ui/screens/ProfileScreen.dart';
 import 'src/ui/screens/LogInScreen.dart';
 import 'src/ui/screens/BookingDetailScreen.dart';
+import 'src/ui/screens/TeamListScreen.dart';
 
 
 void main() {
@@ -24,9 +27,15 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child){
-        return const MaterialApp(
+        return  MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: LoginScreen(),
+          initialRoute: Routes.login,
+          routes: {
+            Routes.login: (BuildContext context) => const LoginScreen(),
+            Routes.profile: (BuildContext context) => const ProfileScreen(),
+            Routes.booking_list : (BuildContext context) => BookingListScreen(),
+            Routes.team_list : (BuildContext context) => TeamListScreen()
+          },
         );
       },
     );
