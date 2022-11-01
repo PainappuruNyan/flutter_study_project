@@ -1,15 +1,11 @@
-import 'dart:convert';
-
-import 'package:atb_first_project/src/ui/screens/BookingListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'src/data/model/User.dart';
-import 'src/routes/Routes.dart';
-import 'src/ui/screens/ProfileScreen.dart';
-import 'src/ui/screens/LogInScreen.dart';
-import 'src/ui/screens/BookingDetailScreen.dart';
-import 'src/ui/screens/TeamListScreen.dart';
+import 'src/routes/routes.dart';
+import 'src/ui/screens/booking_list_screen.dart';
+import 'src/ui/screens/log_in_screen.dart';
+import 'src/ui/screens/profile_screen.dart';
+import 'src/ui/screens/team_list_screen.dart';
 
 
 void main() {

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 
 class TeamCard extends StatelessWidget {
+
+  TeamCard(this.teamName, this.userName, this.userTeamRole, {super.key});
   String teamName = '';
   String userName = '';
   String userTeamRole = '';
-
-  TeamCard(String teamName, String userName, String userTeamRole) {
-    this.teamName = teamName;
-    this.userName = userName;
-    this.userTeamRole = userTeamRole;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +16,7 @@ class TeamCard extends StatelessWidget {
           Container(
               height: 135,
               decoration: BoxDecoration(
-                boxShadow: const [
+                boxShadow: const <BoxShadow> [
                   BoxShadow(
                     color: Colors.grey,
                     blurRadius: 4,
@@ -32,9 +26,9 @@ class TeamCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Column(
-                children: [
+                children: <Widget>[
                   Column(
-                    children: [
+                    children: <Widget>[
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(top: 9, bottom: 6),
@@ -59,7 +53,7 @@ class TeamCard extends StatelessWidget {
                   ),
                   Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 117),
+                          const EdgeInsets.symmetric(vertical: 10, horizontal: 117),
                       height: 58,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -69,9 +63,9 @@ class TeamCard extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             height: 37,
                             width: 130,
                             decoration: const BoxDecoration(
@@ -82,7 +76,7 @@ class TeamCard extends StatelessWidget {
                             child: Text(
                               userTeamRole,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),

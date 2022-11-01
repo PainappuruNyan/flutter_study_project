@@ -26,9 +26,9 @@ class BookingDetailScreen extends StatelessWidget {
                         ),
                       )))),
           body: Container(
-            padding: EdgeInsets.only(left: 40, right: 40),
+            padding: const EdgeInsets.only(left: 40, right: 40),
             child: Column(
-              children: [
+              children: <Widget>[
                 Container(
                   margin: const EdgeInsets.only(top: 35, bottom: 40),
                   height: 35,
@@ -58,7 +58,7 @@ class BookingDetailScreen extends StatelessWidget {
                             width: 1.2,
                           ))),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Container(
                           width: 300,
                           padding: const EdgeInsets.only(left: 10),
@@ -66,11 +66,10 @@ class BookingDetailScreen extends StatelessWidget {
                               border: Border(
                                   bottom: BorderSide(
                                     color: Colors.grey.shade300,
-                                    width: 1,
                                   ))),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children: const <Widget>[
                               Text.rich(
                                 TextSpan(
                                     style: TextStyle(
@@ -178,11 +177,11 @@ class BookingDetailScreen extends StatelessWidget {
                                 ))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: <Widget>[
                             SizedBox(
                               width: 103,
                               child: Column(
-                                children: const [
+                                children: const <Widget> [
                                   Text(
                                     'Дата начала:',
                                     style: TextStyle(
@@ -201,7 +200,7 @@ class BookingDetailScreen extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceAround,
-                                children: const [
+                                children: const <Widget>[
                                   Text(
                                     'Дата окончания:',
                                     style: TextStyle(
@@ -235,11 +234,11 @@ class BookingDetailScreen extends StatelessWidget {
                                 ))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: <Widget>[
                             SizedBox(
                               width: 115,
                               child: Column(
-                                children: const [
+                                children: const <Widget> [
                                   Text(
                                     'Время начала:',
                                     style: TextStyle(
@@ -261,7 +260,7 @@ class BookingDetailScreen extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceAround,
-                                children: const [
+                                children: const <Widget> [
                                   Text(
                                     'Время окончания:',
                                     style: TextStyle(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../widgets/BookingCard.dart' as booking;
-import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
+import '../widgets/booking_card.dart' as booking;
+import '../widgets/navigation_drawer.dart' as NavigationDrawer;
 
 TabBar get _tabBar =>
     const TabBar(
       labelColor: Colors.deepOrange,
       indicatorColor: Colors.deepOrangeAccent,
-      tabs: [
+      tabs: <Widget>[
         Tab(
           text: 'Текущее',
         ),
@@ -16,6 +16,8 @@ TabBar get _tabBar =>
     );
 
 class BookingListScreen extends StatelessWidget {
+  const BookingListScreen({super.key});
+
 
   static const String routeName = '/booking_list';
 
@@ -43,10 +45,10 @@ class BookingListScreen extends StatelessWidget {
               ),
             )),
         drawer: const NavigationDrawer.NavigationDrawer(),
-        body: TabBarView(children: [
+        body: TabBarView(children: <Widget>[
           Center(
               child: Column(
-                children: const [
+                children: const <Widget>[
                   booking.BookingCard('Владивосток, Окатовая 12',
                       'Рабочее место', 0000001, 0000001),
                   booking.BookingCard('Владивосток, Спортивная',
@@ -55,7 +57,7 @@ class BookingListScreen extends StatelessWidget {
               )),
           Center(
               child: Column(
-                children: const [
+                children: const <Widget>[
                   booking.BookingCard('Владивосток, Окатовая 12',
                       'Рабочее место', 0000001, 0000001),
                   booking.BookingCard('Владивосток, Спортивная 15',

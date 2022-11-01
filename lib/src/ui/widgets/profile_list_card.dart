@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileListCard extends StatefulWidget {
-  const ProfileListCard(this.title, this.innerElement, {Key? key}) : super(key: key);
+  const ProfileListCard(this.title, this.innerElement, {super.key});
 
   final String title;
   final Widget innerElement;

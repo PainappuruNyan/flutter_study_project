@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../routes/Routes.dart';
+import '../../routes/routes.dart';
 
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  const NavigationDrawer({super.key});
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -31,7 +31,7 @@ class NavigationDrawer extends StatelessWidget {
             bottom: 24,
           ),
           child: Column(
-            children: const [
+            children: const <Widget>[
               CircleAvatar(
                 radius: 52,
                 backgroundImage: NetworkImage(
@@ -56,7 +56,7 @@ class NavigationDrawer extends StatelessWidget {
   Widget buildMenuItems(BuildContext context) => Container(
     padding: const EdgeInsets.all(24),
     child: Column(
-      children: [
+      children: <Widget>[
         ListTile(
           leading: const Icon(Icons.account_circle_outlined),
           title: const Text('Профиль',

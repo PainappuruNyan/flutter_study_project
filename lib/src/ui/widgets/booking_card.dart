@@ -22,7 +22,7 @@ class BookingCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: myColors.kPrimary)),
+                  border: Border.all(color: MyColors.kPrimary)),
               child: Column(
                 children: <Widget>[
                   Column(
