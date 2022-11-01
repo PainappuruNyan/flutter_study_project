@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
         return  MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.login,
-          routes: {
+          routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),
-            Routes.booking_list : (BuildContext context) => BookingListScreen(),
-            Routes.team_list : (BuildContext context) => TeamListScreen()
+            Routes.booking_list : (BuildContext context) => const BookingListScreen(),
+            Routes.team_list : (BuildContext context) => const TeamListScreen()
           },
         );
       },

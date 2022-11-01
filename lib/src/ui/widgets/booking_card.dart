@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../constants/colors.dart';
 
@@ -26,7 +25,7 @@ class BookingCard extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Column(
-                    children: [
+                    children: <Widget>[
                       Container(
                         padding: const EdgeInsets.only(top: 7, left: 15),
                         alignment: Alignment.topLeft,
