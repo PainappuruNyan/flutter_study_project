@@ -3,10 +3,6 @@ import 'package:flutter/services.dart';
 import '../widgets/TeamCard.dart' as teams;
 import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
 
-void main() => runApp(
-      MyApp(),
-    );
-
 TabBar get _tabBar => const TabBar(
       labelColor: Colors.deepOrange,
       indicatorColor: Colors.deepOrangeAccent,
@@ -18,12 +14,13 @@ TabBar get _tabBar => const TabBar(
       ],
     );
 
-class MyApp extends StatelessWidget {
+class TeamListScreen extends StatelessWidget {
+
+  static const String routeName = '/team_list';
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: DefaultTabController(
+    return DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: AppBar(
@@ -75,6 +72,6 @@ class MyApp extends StatelessWidget {
               child: const Icon(Icons.add),
             ),
           ),
-        ));
+    );
   }
 }

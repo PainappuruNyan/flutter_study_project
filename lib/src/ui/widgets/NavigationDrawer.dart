@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../routes/Routes.dart';
+
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -59,17 +61,23 @@ class NavigationDrawer extends StatelessWidget {
           leading: const Icon(Icons.account_circle_outlined),
           title: const Text('Профиль',
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacementNamed(context, Routes.profile);
+          },
         ),
         ListTile(
           leading: const Icon(Icons.list_alt_rounded),
           title: const Text('Бронирования'),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacementNamed(context, Routes.booking_list);
+          },
         ),
         ListTile(
           leading: const Icon(Icons.group),
           title: const Text('Команды'),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacementNamed(context, Routes.team_list);
+          },
         ),
         ListTile(
           leading: const Icon(Icons.settings),

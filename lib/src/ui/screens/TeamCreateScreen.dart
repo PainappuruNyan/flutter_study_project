@@ -2,31 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
 
-void main() => runApp(
-      MyApp(),
-    );
-
-class MyApp extends StatelessWidget {
+class TeamCreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            systemOverlayStyle:
-                const SystemUiOverlayStyle(statusBarColor: Colors.deepOrange),
-            backgroundColor: Colors.deepOrange,
-            title: const Center(child: Text('Создание команды')),
-            actions: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(right: 19.5),
-                child: const Icon(Icons.search_rounded),
-              )
-            ],
-          ),
-          drawer: const NavigationDrawer.NavigationDrawer(),
-          body: Center(
-              child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle:
+        const SystemUiOverlayStyle(statusBarColor: Colors.deepOrange),
+        backgroundColor: Colors.deepOrange,
+        title: const Center(child: Text('Создание команды')),
+        actions: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(right: 19.5),
+            child: const Icon(Icons.search_rounded),
+          )
+        ],
+      ),
+      drawer: const NavigationDrawer.NavigationDrawer(),
+      body: Center(
+          child: Column(
             children: [
               Container(
                 padding: const EdgeInsets.only(
@@ -94,7 +88,7 @@ class MyApp extends StatelessWidget {
                   color: Colors.deepOrange,
                   child: const Text('Создать команду',
                       style:
-                          TextStyle(fontSize: 16.0, color: Colors.white)),
+                      TextStyle(fontSize: 16.0, color: Colors.white)),
                 ),
               ),
               Container(
@@ -119,6 +113,6 @@ class MyApp extends StatelessWidget {
               )
             ],
           )),
-        ));
+    );
   }
 }
