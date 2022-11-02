@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'src/routes/routes.dart';
-import 'src/ui/screens/booking_list_screen.dart';
-import 'src/ui/screens/log_in_screen.dart';
-import 'src/ui/screens/profile_screen.dart';
-import 'src/ui/screens/team_list_screen.dart';
+import 'src/presentation/routes/routes.dart';
+import 'src/presentation/screens/booking_list_screen.dart';
+import 'src/presentation/screens/log_in_screen.dart';
+import 'src/presentation/screens/profile_screen.dart';
+import 'src/presentation/screens/team_list_screen.dart';
 
 
 void main() {

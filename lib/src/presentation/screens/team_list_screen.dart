@@ -46,7 +46,7 @@ class TeamListScreen extends StatelessWidget {
                 )),
             drawer: const NavigationDrawer.NavigationDrawer(),
             body: TabBarView(children: <Widget>[
-              SingleChildScrollView(
+              Center(
                   child: Column(
                 children: <Widget>[
                   teams.TeamCard('Какое-то название',
@@ -55,11 +55,9 @@ class TeamListScreen extends StatelessWidget {
                       'Какое-то имя', 'Участник'),
                 ],
               )),
-              SingleChildScrollView(
+              Center(
                   child: Column(
                 children: <Widget>[
-                  teams.TeamCard('Какое-то название',
-                      'Какое-то имя', 'Участник'),
                   teams.TeamCard('Какое-то название',
                       'Какое-то имя', 'Участник'),
                   teams.TeamCard('Какое-то название',

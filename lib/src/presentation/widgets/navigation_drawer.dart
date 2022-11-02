@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../routes/routes.dart';
+import '../routes/routes.dart';
 
 
 class NavigationDrawer extends StatelessWidget {

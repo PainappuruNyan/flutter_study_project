@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors.dart';
+import '../../core/constants/colors.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard(this.address, this.placeType, this.bookingId, this.placeId,

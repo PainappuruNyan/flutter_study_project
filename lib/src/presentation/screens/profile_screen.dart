@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/colors.dart';
+import '../../core/constants/colors.dart';
 import '../widgets/booking_card.dart';
 import '../widgets/id_card.dart';
 import '../widgets/navigation_drawer.dart' as NavigationDrawer;

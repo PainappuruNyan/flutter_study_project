@@ -1,7 +1,7 @@
-import '../ui/screens/booking_list_screen.dart';
-import '../ui/screens/log_in_screen.dart';
-import '../ui/screens/profile_screen.dart';
-import '../ui/screens/team_list_screen.dart';
+import '../screens/booking_list_screen.dart';
+import '../screens/log_in_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/team_list_screen.dart';
 
 class Routes{
   static const String profile = ProfileScreen.routeName;

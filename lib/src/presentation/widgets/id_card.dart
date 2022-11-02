@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/colors.dart';
+import '../../core/constants/colors.dart';
 
 class IdCard extends StatelessWidget {
   const IdCard(this.id, this.role,{super.key});
