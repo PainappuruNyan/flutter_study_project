@@ -46,7 +46,7 @@ class BookingListScreen extends StatelessWidget {
             )),
         drawer: const NavigationDrawer.NavigationDrawer(),
         body: TabBarView(children: <Widget>[
-          Center(
+          SingleChildScrollView(
               child: Column(
                 children: const <Widget>[
                   booking.BookingCard('Владивосток, Окатовая 12',
@@ -55,7 +55,7 @@ class BookingListScreen extends StatelessWidget {
                       'Рабочее место', 0000002, 0000002),
                 ],
               )),
-          Center(
+          SingleChildScrollView(
               child: Column(
                 children: const <Widget>[
                   booking.BookingCard('Владивосток, Окатовая 12',
@@ -63,6 +63,8 @@ class BookingListScreen extends StatelessWidget {
                   booking.BookingCard('Владивосток, Спортивная 15',
                       'Рабочее место', 0000002, 0000002),
                   booking.BookingCard('Владивосток, Спортивная 11',
+                      'Рабочее место', 0000002, 0000002),
+                  booking.BookingCard('Владивосток, Спортивная 12',
                       'Рабочее место', 0000002, 0000002),
                   booking.BookingCard('Владивосток, Спортивная 12',
                       'Рабочее место', 0000002, 0000002),
