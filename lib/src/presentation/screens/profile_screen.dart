@@ -1,32 +1,30 @@
-import 'package:atb_first_project/src/ui/widgets/NavigationDrawer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../widgets/BookingCard.dart';
-import '../widgets/IdCard.dart';
-import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
-import '../widgets/UserCard.dart';
-import '../../constants/colors.dart';
-import '../widgets/ProfileListCard.dart';
+
+import '../../core/constants/colors.dart';
+import '../widgets/booking_card.dart';
+import '../widgets/id_card.dart';
+import '../widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../widgets/user_card.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   static const String routeName = '/profile';
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: myColors.kPrimary,
+      statusBarColor: MyColors.kPrimary,
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.light,
     ));
     return Scaffold(
-      backgroundColor: myColors.kFrameBackground,
+      backgroundColor: MyColors.kFrameBackground,
       drawer:  const NavigationDrawer.NavigationDrawer(),
       appBar: AppBar(
-        backgroundColor: myColors.kPrimary,
+        backgroundColor: MyColors.kPrimary,
         elevation: 0,
         title: const Center(
           child: Text('Профиль сотрудника'),
@@ -43,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: myColors.kPrimary,
+        backgroundColor: MyColors.kPrimary,
         child: const Icon(Icons.chat_outlined),
       ),
       body: SingleChildScrollView(
@@ -99,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 11),
                         decoration: const BoxDecoration(
                             border: Border(
-                                top: BorderSide(width: 1, color: Colors.grey))),
+                                top: BorderSide(color: Colors.grey))),
                         child: const Text('Посмотреть полный список'),
                       )
                     ],
@@ -131,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 11),
                       decoration: const BoxDecoration(
                           border: Border(
-                              top: BorderSide(width: 1, color: Colors.grey))),
+                              top: BorderSide(color: Colors.grey))),
                       child: const Text('Посмотреть полный список'),
                     )
                   ],

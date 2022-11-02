@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/colors.dart';
-import '../../routes/Routes.dart';
+import '../../core/constants/colors.dart';
+import '../routes/routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       statusBarIconBrightness: Brightness.dark,
     ));
     return Scaffold(
-      backgroundColor: myColors.kWhite,
+      backgroundColor: MyColors.kWhite,
       resizeToAvoidBottomInset: false,
       body:
           SingleChildScrollView(
@@ -62,45 +62,45 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.only(top: 120),
                     child: TextFormField(
-                      cursorColor: myColors.kPrimary,
+                      cursorColor: MyColors.kPrimary,
                       style: const TextStyle(fontSize: 14, fontFamily: 'Robot'),
                       decoration: const InputDecoration(
-                          floatingLabelStyle: TextStyle(color: myColors.kTextSecondary),
+                          floatingLabelStyle: TextStyle(color: MyColors.kTextSecondary),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: myColors.kPrimary
+                                  color: MyColors.kPrimary
                               )
                           ),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: myColors.kPrimary
+                                  color: MyColors.kPrimary
                               )
                           ),
                           labelText: 'Почта',
-                          prefixIcon: Icon(Icons.local_post_office_outlined, color: myColors.kTextSecondary,)
+                          prefixIcon: Icon(Icons.local_post_office_outlined, color: MyColors.kTextSecondary,)
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(top: 20),
                     child: TextFormField(
-                      cursorColor: myColors.kPrimary,
+                      cursorColor: MyColors.kPrimary,
                       style: const TextStyle(fontSize: 14, fontFamily: 'Robot'),
                       obscureText: true,
                       decoration: const InputDecoration(
-                          floatingLabelStyle: TextStyle(color: myColors.kTextSecondary),
+                          floatingLabelStyle: TextStyle(color: MyColors.kTextSecondary),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: myColors.kPrimary
+                                  color: MyColors.kPrimary
                               )
                           ),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: myColors.kPrimary
+                                  color: MyColors.kPrimary
                               )
                           ),
                           labelText: 'Пароль',
-                          prefixIcon: Icon(Icons.lock_outline, color: myColors.kTextSecondary,)
+                          prefixIcon: Icon(Icons.lock_outline, color: MyColors.kTextSecondary,)
                       ),
                     ),
                   ),
@@ -135,10 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       minWidth: 250.w,
                       height: 40.h,
                       shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: myColors.kPrimary,width: 2.0),
+                        side: const BorderSide(color: MyColors.kPrimary,width: 2.0),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      textColor: myColors.kPrimary,
+                      textColor: MyColors.kPrimary,
                       child: const Text('Регистрация',
                         style: TextStyle(
                             fontSize: 18

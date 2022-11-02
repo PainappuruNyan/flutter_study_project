@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../../constants/colors.dart';
+import '../../core/constants/colors.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard(this.address, this.placeType, this.bookingId, this.placeId,
@@ -22,11 +21,11 @@ class BookingCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: myColors.kPrimary)),
+                  border: Border.all(color: MyColors.kPrimary)),
               child: Column(
                 children: <Widget>[
                   Column(
-                    children: [
+                    children: <Widget>[
                       Container(
                         padding: const EdgeInsets.only(top: 7, left: 15),
                         alignment: Alignment.topLeft,

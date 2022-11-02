@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../widgets/TeamCard.dart' as teams;
-import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
+
+import '../widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../widgets/team_card.dart' as teams;
 
 TabBar get _tabBar => const TabBar(
       labelColor: Colors.deepOrange,
       indicatorColor: Colors.deepOrangeAccent,
-      tabs: [
+      tabs: <Widget>[
         Tab(
           text: 'Мои',
         ),
@@ -15,6 +16,8 @@ TabBar get _tabBar => const TabBar(
     );
 
 class TeamListScreen extends StatelessWidget {
+  const TeamListScreen({super.key});
+
 
   static const String routeName = '/team_list';
 
@@ -42,19 +45,21 @@ class TeamListScreen extends StatelessWidget {
                   ),
                 )),
             drawer: const NavigationDrawer.NavigationDrawer(),
-            body: TabBarView(children: [
-              Center(
+            body: TabBarView(children: <Widget>[
+              SingleChildScrollView(
                   child: Column(
-                children: [
+                children: <Widget>[
                   teams.TeamCard('Какое-то название',
                       'Какое-то имя', 'Участник'),
                   teams.TeamCard('Какое-то название',
                       'Какое-то имя', 'Участник'),
                 ],
               )),
-              Center(
+              SingleChildScrollView(
                   child: Column(
-                children: [
+                children: <Widget>[
+                  teams.TeamCard('Какое-то название',
+                      'Какое-то имя', 'Участник'),
                   teams.TeamCard('Какое-то название',
                       'Какое-то имя', 'Участник'),
                   teams.TeamCard('Какое-то название',

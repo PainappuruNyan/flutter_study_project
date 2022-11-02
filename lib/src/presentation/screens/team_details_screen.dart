@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TeamDetailsScreen extends StatelessWidget {
+  const TeamDetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class TeamDetailsScreen extends StatelessWidget {
                     ),
                   )))),
       body: Center(
-          child: Column(children: [
+          child: Column(children: <Widget>[
         Container(
           margin: const EdgeInsets.only(top: 35, bottom: 40),
           height: 35,
@@ -51,7 +52,7 @@ class TeamDetailsScreen extends StatelessWidget {
             width: 1.2,
           ))),
           child: Column(
-            children: [
+            children: <Widget>[
               Container(
                   width: 300,
                   padding: const EdgeInsets.only(left: 10),
@@ -60,11 +61,10 @@ class TeamDetailsScreen extends StatelessWidget {
                       border: Border(
                           bottom: BorderSide(
                     color: Colors.grey.shade300,
-                    width: 1,
                   ))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: const <Widget>[
                       Text.rich(
                         TextSpan(
                             style: TextStyle(
@@ -118,7 +118,7 @@ class TeamDetailsScreen extends StatelessWidget {
                               )),
                         ]),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               )
             ],

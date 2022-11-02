@@ -1,15 +1,11 @@
-import 'dart:convert';
-
-import 'package:atb_first_project/src/ui/screens/BookingListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'src/data/model/User.dart';
-import 'src/routes/Routes.dart';
-import 'src/ui/screens/ProfileScreen.dart';
-import 'src/ui/screens/LogInScreen.dart';
-import 'src/ui/screens/BookingDetailScreen.dart';
-import 'src/ui/screens/TeamListScreen.dart';
+import 'src/presentation/routes/routes.dart';
+import 'src/presentation/screens/booking_list_screen.dart';
+import 'src/presentation/screens/log_in_screen.dart';
+import 'src/presentation/screens/profile_screen.dart';
+import 'src/presentation/screens/team_list_screen.dart';
 
 
 void main() {
@@ -30,11 +26,11 @@ class MyApp extends StatelessWidget {
         return  MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.login,
-          routes: {
+          routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),
-            Routes.booking_list : (BuildContext context) => BookingListScreen(),
-            Routes.team_list : (BuildContext context) => TeamListScreen()
+            Routes.booking_list : (BuildContext context) => const BookingListScreen(),
+            Routes.team_list : (BuildContext context) => const TeamListScreen()
           },
         );
       },

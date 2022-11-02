@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../widgets/NavigationDrawer.dart' as NavigationDrawer;
+import '../widgets/navigation_drawer.dart' as NavigationDrawer;
 
 class TeamCreateScreen extends StatelessWidget {
+  const TeamCreateScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class TeamCreateScreen extends StatelessWidget {
       drawer: const NavigationDrawer.NavigationDrawer(),
       body: Center(
           child: Column(
-            children: [
+            children: <Widget>[
               Container(
                 padding: const EdgeInsets.only(
                     left: 36.5, right: 36.5, top: 70, bottom: 35),

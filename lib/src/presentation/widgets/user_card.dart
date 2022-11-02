@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../data/model/User.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard(this.name, this.email, {super.key});
@@ -28,9 +25,9 @@ class UserCard extends StatelessWidget {
               const Image(image: AssetImage('assets/images/Group 1740.png')),
               Container(
                 margin:  EdgeInsets.only(top: 16.h),
-                child: Text('$name'),
+                child: Text(name),
               ),
-              Text('$email')
+              Text(email)
             ],
           ),
         ),

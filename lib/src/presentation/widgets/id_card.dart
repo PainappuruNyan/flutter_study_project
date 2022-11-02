@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/colors.dart';
+import '../../core/constants/colors.dart';
 
 class IdCard extends StatelessWidget {
   const IdCard(this.id, this.role,{super.key});
@@ -12,7 +11,7 @@ class IdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 141.h,
       child: Card(
         elevation: 2,
@@ -30,7 +29,7 @@ class IdCard extends StatelessWidget {
                 children: <Widget> [
                   const Text(
                     'Роль: ',
-                    style: TextStyle(color: myColors.kPrimary,),
+                    style: TextStyle(color: MyColors.kPrimary,),
                   ),
                   Text(role)
                 ],
