@@ -57,6 +57,8 @@ dependencies:
   connectivity_plus: ^3.0.2
   # Local cache
   shared_preferences: ^2.0.15
+  #Internet connection checker
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

@@ -13,13 +13,12 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 12, left: 14.5, right: 14.5),
+    return Card(
+      margin: const EdgeInsets.only(left: 14.5, right: 14.5, top: 16),
       child: Column(
         children: <Widget>[
           Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(color: MyColors.kPrimary)),
               child: Column(
@@ -31,10 +30,7 @@ class BookingCard extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Text(
                           'id $bookingId',
-                          style: const TextStyle(
-                              color: Colors.grey,
-                              fontFamily: 'Roboto',
-                              fontSize: 12),
+                          style: Theme.of(context).textTheme.caption
                         ),
                       ),
                       Container(
@@ -43,8 +39,7 @@ class BookingCard extends StatelessWidget {
                             const EdgeInsets.only(top: 7, bottom: 11, left: 15),
                         child: Text(
                           'Офис: $address',
-                          style: const TextStyle(
-                              fontFamily: 'Roboto', fontSize: 12),
+                          style: Theme.of(context).textTheme.bodyText2
                         ),
                       ),
                       Container(
@@ -52,14 +47,12 @@ class BookingCard extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 11, left: 15),
                         child: Text.rich(TextSpan(
                             text: 'Место: $placeType ',
-                            style: const TextStyle(
-                                fontFamily: 'Roboto', fontSize: 12),
+                            style: Theme.of(context).textTheme.bodyText2,
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'id $placeId',
                                   style: const TextStyle(
-                                      color: Colors.deepOrange,
-                                      fontFamily: 'Roboto'))
+                                      color: Colors.deepOrange))
                             ])),
                       ),
                     ],
@@ -70,21 +63,18 @@ class BookingCard extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(4),
                           bottomRight: Radius.circular(4)),
-                      color: Colors.deepOrange,
+                      color: MyColors.kSecondary,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        const Expanded(
+                        Expanded(
                             child: Padding(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                     '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                        fontFamily: 'Roboto')))),
+                                    style: Theme.of(context).textTheme.bodyText1))),
                         Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: InkWell(

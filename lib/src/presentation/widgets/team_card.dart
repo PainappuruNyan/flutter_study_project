@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/colors.dart';
+
 class TeamCard extends StatelessWidget {
 
   TeamCard(this.teamName, this.userName, this.userTeamRole, {super.key});
@@ -34,10 +36,7 @@ class TeamCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 9, bottom: 6),
                         child: Text(
                           teamName,
-                          style: const TextStyle(
-                              fontFamily: 'Roboto',
-                              fontSize: 24,
-                              color: Colors.deepOrange),
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       Container(
@@ -45,8 +44,7 @@ class TeamCard extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 11),
                         child: Text(
                           userName,
-                          style: const TextStyle(
-                              fontFamily: 'Roboto', fontSize: 20),
+                          style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ),
                     ],
@@ -59,7 +57,7 @@ class TeamCard extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(4),
                             bottomRight: Radius.circular(4)),
-                        color: Colors.deepOrange,
+                        color: MyColors.kSecondary,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -68,20 +66,18 @@ class TeamCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             height: 37,
                             width: 130,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: MyColors.kWhite, width: 2),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              color: Colors.white,
+                                  const BorderRadius.all(Radius.circular(8)),
+                              color: MyColors.kSecondary,
                             ),
                             child: Text(
                               userTeamRole,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                              style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ),
-                          )
                         ],
                       )),
                 ],

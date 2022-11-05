@@ -22,7 +22,9 @@ class NavigationDrawer extends StatelessWidget {
   Widget buildHeader(BuildContext context) => Material(
       color: Colors.deepOrange,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushReplacementNamed(context, Routes.profile);
+        },
         child: Container(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.only(
@@ -59,7 +61,7 @@ class NavigationDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           leading: const Icon(Icons.account_circle_outlined),
-          title: const Text('Профиль',
+          title: Text('Профиль', style: Theme.of(context).textTheme.bodyText2,
           ),
           onTap: () {
             Navigator.pushReplacementNamed(context, Routes.profile);
@@ -67,21 +69,21 @@ class NavigationDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.list_alt_rounded),
-          title: const Text('Бронирования'),
+          title: Text('Бронирования', style: Theme.of(context).textTheme.bodyText2),
           onTap: () {
             Navigator.pushReplacementNamed(context, Routes.booking_list);
           },
         ),
         ListTile(
           leading: const Icon(Icons.group),
-          title: const Text('Команды'),
+          title: Text('Команды', style: Theme.of(context).textTheme.bodyText2),
           onTap: () {
             Navigator.pushReplacementNamed(context, Routes.team_list);
           },
         ),
         ListTile(
           leading: const Icon(Icons.settings),
-          title: const Text('Настройки'),
+          title: Text('Настройки', style: Theme.of(context).textTheme.bodyText2),
           onTap: () {},
         )
       ],

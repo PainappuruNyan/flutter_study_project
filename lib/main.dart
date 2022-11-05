@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'src/core/constants/theme.dart';
 import 'src/presentation/routes/routes.dart';
 import 'src/presentation/screens/booking_list_screen.dart';
 import 'src/presentation/screens/log_in_screen.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child){
         return  MaterialApp(
+          theme: basicTheme(),
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.login,
           routes: <String, Widget Function(BuildContext)>{

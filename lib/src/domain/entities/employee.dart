@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 class Employee extends Equatable{
-  Employee({
+  const Employee({
     required this.id,
     required this.name,
     required this.login,

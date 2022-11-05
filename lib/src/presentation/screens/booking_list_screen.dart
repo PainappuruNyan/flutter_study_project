@@ -5,8 +5,6 @@ import '../widgets/navigation_drawer.dart' as NavigationDrawer;
 
 TabBar get _tabBar =>
     const TabBar(
-      labelColor: Colors.deepOrange,
-      indicatorColor: Colors.deepOrangeAccent,
       tabs: <Widget>[
         Tab(
           text: 'Текущее',

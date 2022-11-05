@@ -1,17 +1,38 @@
+import 'package:dartz/dartz.dart' as fun;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants/colors.dart';
+import '../../core/error/failures.dart';
+import '../../core/network/network_info.dart';
+import '../../data/datasources/local_data_source.dart';
+import '../../data/datasources/remote_data_source.dart';
+import '../../data/repositories/employee_repository_impl.dart';
+import '../../domain/entities/employee.dart';
+import '../../domain/usecases/get_employee_by_id.dart';
 import '../widgets/booking_card.dart';
 import '../widgets/id_card.dart';
 import '../widgets/navigation_drawer.dart' as NavigationDrawer;
 import '../widgets/user_card.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   static const String routeName = '/profile';
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  Employee employee = Employee(id: 0, name: 'name', login: 'login', password: 'password', role: 'role');
+  late SharedPreferences sharedPreferences;
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +76,15 @@ class ProfileScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children:  <Widget>[
                   Expanded(
                     flex: 57,
                     child:
-                        UserCard('Роман Маленников', 'roman_mal@empl.atb.ru'),
+                        UserCard(employee.name, 'roman_mal@empl.atb.ru'),
                   ),
                   Expanded(
                     flex: 43,
-                    child: IdCard(00000001, 'Сотрудник'),
+                    child: IdCard(employee.id, employee.role),
                   )
                 ],
               ),
@@ -124,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Text('Здесь пока пусто'),
+                    Text('Здесь пока пусто', style: Theme.of(context).textTheme.caption,),
                     Container(
                       margin: const EdgeInsets.only(top: 11),
                       decoration: const BoxDecoration(
@@ -140,5 +161,30 @@ class ProfileScreen extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setupResources();
+  }
+
+  void setupResources() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    var repository = EmployeeRepositoryImpl(
+        networkInfo: NetworkInfoImpl(InternetConnectionChecker()),
+        remoteDataSource: RemoteImplWithHttp(client: Client()),
+        localDataSource: LocalDataSourceImpl(sharedPreferences: sharedPreferences));
+    final Future<fun.Either<Failure, Employee>> answer = GetEmployeeById(repository).execute(id: 1);
+    answer.then((value) {
+      value.fold((Failure l) => null, (Employee r) {
+        print(r);
+        setState(() {
+          employee = r;
+        });
+      }
+      );
+
+    });
   }
 }
