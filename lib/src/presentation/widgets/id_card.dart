@@ -11,32 +11,30 @@ class IdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 141.h,
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4)
-        ),
-        child: Container(
-          padding: EdgeInsets.all(9.sp),
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget> [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget> [
-                  const Text(
-                    'Роль: ',
-                    style: TextStyle(color: MyColors.kPrimary,),
-                  ),
-                  Text(role)
-                ],
-              ),
-              Text('Id ${id.toString()}'),
-            ],
-          ),
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4)
+      ),
+      child: Container(
+        padding: EdgeInsets.all(9.sp),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                const Text(
+                  'Роль: ',
+                  style: TextStyle(color: MyColors.kPrimary,),
+                ),
+                Text(role)
+              ],
+            ),
+            Text('Id ${id.toString()}', style: Theme.of(context).textTheme.bodySmall,),
+          ],
         ),
       ),
     );

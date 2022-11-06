@@ -14,6 +14,7 @@ import '../../data/datasources/remote_data_source.dart';
 import '../../data/repositories/employee_repository_impl.dart';
 import '../../domain/entities/employee.dart';
 import '../../domain/usecases/get_employee_by_id.dart';
+import '../routes/routes.dart';
 import '../widgets/booking_card.dart';
 import '../widgets/id_card.dart';
 import '../widgets/navigation_drawer.dart' as NavigationDrawer;
@@ -71,18 +72,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 160.h),
+            IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  <Widget>[
-                  Expanded(
+                  Flexible(
                     flex: 57,
-                    child:
-                        UserCard(employee.name, 'roman_mal@empl.atb.ru'),
+                    child: UserCard(employee.name, 'roman_mal@empl.atb.ru'),
                   ),
-                  Expanded(
+                  Flexible(
                     flex: 43,
                     child: IdCard(employee.id, employee.role),
                   )
@@ -107,8 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             EdgeInsets.only(top: 5.h, left: 4.w, right: 4.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const <Widget>[
-                            Text('Ближайшее бронирование'),
+                          children: <Widget>[
+                            Text('Ближайшее бронирование', style: Theme.of(context).textTheme.subtitle2,),
                             Image(image: AssetImage('assets/images/Union.png'))
                           ],
                         ),
@@ -119,7 +118,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: const BoxDecoration(
                             border: Border(
                                 top: BorderSide(color: Colors.grey))),
-                        child: const Text('Посмотреть полный список'),
+                        child: InkWell(
+                          child: Text('Посмотреть полный список'),
+                          onTap: (){Navigator.pushNamed(context, Routes.booking_list);},
+                        ),
                       )
                     ],
                   ),
@@ -130,30 +132,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               elevation: 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: 122.h),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 5.h, left: 6.w, right: 6.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const <Widget>[
-                          Text('Команды'),
-                          Image(image: AssetImage('assets/images/Union.png'))
-                        ],
+              child: Container(
+                padding: EdgeInsets.all(9.sp),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: 122.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 5.h, left: 6.w, right: 6.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Команды', style: Theme.of(context).textTheme.subtitle2,),
+                            Image(image: AssetImage('assets/images/Union.png'))
+                          ],
+                        ),
                       ),
-                    ),
-                    Text('Здесь пока пусто', style: Theme.of(context).textTheme.caption,),
-                    Container(
-                      margin: const EdgeInsets.only(top: 11),
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              top: BorderSide(color: Colors.grey))),
-                      child: const Text('Посмотреть полный список'),
-                    )
-                  ],
+                      Text('Здесь пока пусто', style: Theme.of(context).textTheme.caption,),
+                      Container(
+                        margin: const EdgeInsets.only(top: 11),
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                top: BorderSide(color: Colors.grey))),
+                        child:  InkWell(
+                          child: Text('Посмотреть полный список'),
+                          onTap: (){Navigator.pushNamed(context, Routes.team_list);},
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
