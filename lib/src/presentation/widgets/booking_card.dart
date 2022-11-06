@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/colors.dart';
+import '../routes/routes.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard(this.address, this.placeType, this.bookingId, this.placeId,
@@ -65,26 +66,28 @@ class BookingCard extends StatelessWidget {
                           bottomRight: Radius.circular(4)),
                       color: MyColors.kSecondary,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                    '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.bodyText1))),
-                        Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: InkWell(
-                              onTap: () {},
-                              child: const Icon(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, Routes.booking_details);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Expanded(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                      '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.bodyText1))),
+                          const Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Icon(
                                 Icons.menu_open_sharp,
                                 color: Colors.white,
-                              ),
-                            )),
-                      ],
+                              )),
+                        ],
+                      ),
                     ),
                   ),
                 ],

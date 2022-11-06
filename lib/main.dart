@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/core/constants/theme.dart';
+import 'src/presentation/booking/screens/booking_detail_screen.dart';
 import 'src/presentation/routes/routes.dart';
-import 'src/presentation/screens/booking_list_screen.dart';
+import 'src/presentation/booking/screens/booking_list_screen.dart';
 import 'src/presentation/screens/log_in_screen.dart';
-import 'src/presentation/screens/profile_screen.dart';
+import 'src/presentation/profile/screens/profile_screen.dart';
 import 'src/presentation/screens/team_list_screen.dart';
 
 
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),
             Routes.booking_list : (BuildContext context) => const BookingListScreen(),
-            Routes.team_list : (BuildContext context) => const TeamListScreen()
+            Routes.team_list : (BuildContext context) => const TeamListScreen(),
+            Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),
           },
         );
       },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../widgets/booking_card.dart' as booking;
-import '../widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../../widgets/booking_card.dart' as booking;
+import '../../widgets/navigation_drawer.dart' as NavigationDrawer;
 
 TabBar get _tabBar =>
     const TabBar(
