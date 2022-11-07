@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'colors.dart';
 
 ThemeData basicTheme() => ThemeData(
     brightness: Brightness.light,
     primaryColor: MyColors.kPrimary,
+  colorScheme: const ColorScheme.light(
+      primary: MyColors.kSecondary // circle color
+  ),
     tabBarTheme: const TabBarTheme(
-      labelColor: MyColors.kPrimary,
-      indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(color: MyColors.kPrimary)
-      )
+        labelColor: MyColors.kPrimary,
+        indicator: UnderlineTabIndicator(
+            borderSide: BorderSide(color: MyColors.kPrimary))),
+    appBarTheme: const AppBarTheme(
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarColor: MyColors.kPrimary),
+      backgroundColor: MyColors.kPrimary,
     ),
     textTheme: const TextTheme(
         headline6: TextStyle(
@@ -56,4 +63,33 @@ ThemeData basicTheme() => ThemeData(
             borderRadius: BorderRadius.circular(8),
             side: const BorderSide(color: MyColors.kPrimary, width: 2))),
     cardColor: MyColors.kWhite,
-    scaffoldBackgroundColor: MyColors.kFrameBackground);
+    inputDecorationTheme: const InputDecorationTheme(
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: MyColors.kPrimary,
+        ),
+      ),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: MyColors.kPrimary,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: MyColors.kTextSecondary,
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => MyColors.kPrimary)
+        )),
+    timePickerTheme: const TimePickerThemeData(
+      helpTextStyle: TextStyle(
+        fontFamily: 'Roboto',
+        color: MyColors.kPrimary
+      ),
+        entryModeIconColor: MyColors.kPrimary,
+        dialBackgroundColor: MyColors.kWhite,
+        dayPeriodTextColor: MyColors.kPrimary,
+        dialHandColor: MyColors.kPrimary,
+        hourMinuteTextColor: MyColors.kPrimary),
+    scaffoldBackgroundColor: MyColors.kFrameBackground,);

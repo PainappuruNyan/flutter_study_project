@@ -35,6 +35,7 @@ dependencies:
   convert:
   json_schema:
   retry:
+  intl:
 
   flutter:
     sdk: flutter
