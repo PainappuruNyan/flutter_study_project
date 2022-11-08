@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/core/constants/theme.dart';
+import 'src/presentation/administration/create_office_1.dart';
 import 'src/presentation/booking/screens/booking_detail_screen.dart';
-import 'src/presentation/routes/routes.dart';
 import 'src/presentation/booking/screens/booking_list_screen.dart';
-import 'src/presentation/screens/log_in_screen.dart';
 import 'src/presentation/profile/screens/profile_screen.dart';
+import 'src/presentation/routes/routes.dart';
+import 'src/presentation/screens/log_in_screen.dart';
 import 'src/presentation/screens/team_list_screen.dart';
 
 
@@ -28,13 +29,14 @@ class MyApp extends StatelessWidget {
         return  MaterialApp(
           theme: basicTheme(),
           debugShowCheckedModeBanner: false,
-          initialRoute: Routes.login,
+          initialRoute: Routes.create_office_1,
           routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),
             Routes.booking_list : (BuildContext context) => const BookingListScreen(),
             Routes.team_list : (BuildContext context) => const TeamListScreen(),
             Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),
+            Routes.create_office_1: (BuildContext context) => const CreateOffice1(),
           },
         );
       },
