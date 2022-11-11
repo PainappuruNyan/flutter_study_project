@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/constants/colors.dart';
 
 class BookingDetailScreen extends StatelessWidget {
   const BookingDetailScreen({super.key});
@@ -10,306 +11,283 @@ class BookingDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: Colors.deepOrange),
-          leading: const Icon(Icons.arrow_back_ios_new),
-          backgroundColor: Colors.deepOrange,
-          title: Center(
-              child: Container(
-                  padding: const EdgeInsets.only(right: 40),
-                  child: const Text(
-                    'Детали брони',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Roboto',
-                    ),
-                  )))),
-      body: Container(
-        padding: const EdgeInsets.only(left: 40, right: 40),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 35, bottom: 40),
-              height: 35,
-              width: 227,
-              decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: const Text(
+          title: const Text(
+        'Детали брони',
+      )),
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(left: 40.sp, right: 40.sp),
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 40.sp, bottom: 45.sp),
+                child: Text(
                   'Бронь 00000001',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white, fontFamily: 'Inter', fontSize: 20),
+                  style: Theme.of(context).textTheme.headline4,
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(right: 30, left: 10),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      left: BorderSide(
-                color: Colors.deepOrange,
-                width: 1.2,
-              ))),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      width: 300,
-                      padding: const EdgeInsets.only(left: 10),
+              Container(
+                padding: EdgeInsets.only(right: 30.sp, left: 10.sp),
+                decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(
+                  color: Colors.deepOrange,
+                  width: 1.2.w,
+                ))),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade300,
+                        ))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text.rich(
+                              TextSpan(
+                                  style: Theme.of(context).textTheme.headline6,
+                                  text: 'Этаж: ',
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '2',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                  ]),
+                            ),
+                            Text('id0000001',
+                                style: Theme.of(context).textTheme.caption)
+                          ],
+                        )),
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp, top: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade400,
+                          width: 0.5,
+                        ))),
+                        child: Text.rich(
+                          TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: 'Место: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'id00000001',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                )
+                              ]),
+                        )),
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp, top: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade400,
+                          width: 0.5.w,
+                        ))),
+                        child: Text.rich(
+                          TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: 'Офис: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Окатовая 12',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ]),
+                        )),
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp, top: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade400,
+                          width: 0.5,
+                        ))),
+                        child: Text.rich(
+                          TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: 'Город: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Владивосток',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ]),
+                        )),
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp, top: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade400,
+                          width: 0.5,
+                        ))),
+                        child: Text.rich(
+                          TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: 'Тип: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Переговорка',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ]),
+                        )),
+                    Container(
+                        width: 300.w,
+                        padding: EdgeInsets.only(left: 10.sp, top: 10.sp),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                          color: Colors.grey.shade400,
+                          width: 0.5,
+                        ))),
+                        child: Text.rich(
+                          TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: 'Забронировал: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'id0000001',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ]),
+                        )),
+                    Container(
+                      width: 300.w,
+                      padding: EdgeInsets.only(top: 10.sp),
+                      //
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
-                        color: Colors.grey.shade300,
+                        color: Colors.grey.shade400,
+                        width: 0.5.w,
                       ))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const <Widget>[
-                          Text.rich(
-                            TextSpan(
-                                style: TextStyle(
-                                  color: Colors.deepOrange,
-                                  fontFamily: 'Inter',
+                        children: <Widget>[
+                          SizedBox(
+                            width: 101.w,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Дата начала:',
+                                  style: Theme.of(context).textTheme.headline6,
                                 ),
-                                text: 'Этаж: ',
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: '2',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        color: Colors.black,
-                                      )),
-                                ]),
+                                SizedBox(height: 6.h),
+                                Text(
+                                  '01.01.2022(пн)',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            'id0000001',
-                            style: TextStyle(
-                                fontFamily: 'Inter', color: Colors.grey),
-                          )
+                          SizedBox(
+                            width: 140.w,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Text(
+                                  'Дата окончания:',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                SizedBox(height: 6.h),
+                                Text(
+                                  '01.01.2022(пн)',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
-                      )),
-                  Container(
-                      width: 300,
-                      padding: const EdgeInsets.only(left: 10, top: 10),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: Colors.grey.shade400,
-                        width: 0.5,
-                      ))),
-                      child: const Text.rich(
-                        TextSpan(
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                            text: 'Место: ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: 'id00000001',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  )),
-                            ]),
-                      )),
-                  Container(
-                      width: 300,
-                      padding: const EdgeInsets.only(left: 10, top: 10),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: Colors.grey.shade400,
-                        width: 0.5,
-                      ))),
-                      child: const Text.rich(
-                        TextSpan(
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                            text: 'Офис: ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: 'Окатовая 12',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  )),
-                            ]),
-                      )),
-                  Container(
-                      width: 300,
-                      padding: const EdgeInsets.only(left: 10, top: 10),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: Colors.grey.shade400,
-                        width: 0.5,
-                      ))),
-                      child: const Text.rich(
-                        TextSpan(
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                            text: 'Город: ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: 'Владивосток',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  )),
-                            ]),
-                      )),
-                  Container(
-                    width: 300,
-                    padding: const EdgeInsets.only(left: 10, top: 10),
-                    //
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: Colors.grey.shade400,
-                      width: 0.5,
-                    ))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 103,
-                          child: Column(
-                            children: const <Widget>[
-                              Text(
-                                'Дата начала:',
-                                style: TextStyle(
-                                    color: Colors.deepOrange, fontSize: 16),
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                '01.01.2022 (пн)',
-                                style: TextStyle(fontSize: 14),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 153,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const <Widget>[
-                              Text(
-                                'Дата окончания:',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.deepOrange,
-                                ),
-                              ),
-                              SizedBox(height: 6),
-                              SizedBox(
-                                width: 125,
-                                child: Text(
-                                  '01.01.2022 (пн)',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 300,
-                    padding: const EdgeInsets.only(left: 10, top: 10),
-                    //
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: Colors.grey.shade400,
-                      width: 0.5,
-                    ))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 115,
-                          child: Column(
-                            children: const <Widget>[
-                              Text(
-                                'Время начала:',
-                                style: TextStyle(
-                                    color: Colors.deepOrange, fontSize: 16),
-                              ),
-                              SizedBox(height: 6),
-                              SizedBox(
-                                width: 110,
-                                child: Text(
+                    Container(
+                      width: 300.w,
+                      padding: EdgeInsets.only(top: 10.sp),
+                      //
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.grey.shade400,
+                        width: 0.5.w,
+                      ))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 103.w,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Время начала:',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                SizedBox(height: 6.h),
+                                Text(
                                   '11:00',
-                                  style: TextStyle(fontSize: 14),
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 142,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const <Widget>[
-                              Text(
-                                'Время окончания:',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.deepOrange,
+                          SizedBox(
+                            width: 142.w,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Text(
+                                  'Время окончания:',
+                                  style: Theme.of(context).textTheme.headline6,
                                 ),
-                              ),
-                              SizedBox(height: 6),
-                              SizedBox(
-                                width: 136,
-                                child: Text(
+                                SizedBox(height: 6.h),
+                                Text(
                                   '17:00',
-                                  style: TextStyle(fontSize: 14),
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-                padding: const EdgeInsets.only(top: 54),
-                width: 286,
-                child: ElevatedButton(
+              Container(
+                padding: EdgeInsets.only(top: 54.sp),
+                width: 286.w,
+                child: MaterialButton(
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 9.5),
-                    backgroundColor: Colors.deepOrange,
-                  ),
+                  color: MyColors.kPrimary,
                   child: const Text('Удалить бронь',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          color: Colors.white)),
-                )),
-            Container(
-                padding: const EdgeInsets.only(top: 15),
-                width: 286,
-                child: ElevatedButton(
+                      style: TextStyle(fontSize: 16.0, color: Colors.white)),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 10.sp),
+                width: 286.w,
+                child: MaterialButton(
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 9.5),
-                    backgroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.deepOrange, width: 2),
-                  ),
                   child: const Text('Скопировать адрес',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          color: Colors.deepOrange)),
-                )),
-          ],
+                      style:
+                          TextStyle(fontSize: 16.0, color: MyColors.kPrimary)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/navigation_drawer.dart' as NavigationDrawer;
 import '../widgets/team_card.dart' as teams;
@@ -25,13 +25,10 @@ class TeamListScreen extends StatelessWidget {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
-                systemOverlayStyle: const SystemUiOverlayStyle(
-                    statusBarColor: Colors.deepOrange),
-                backgroundColor: Colors.deepOrange,
                 title: const Center(child: Text('Команды')),
                 actions: <Widget>[
                   Container(
-                    padding: const EdgeInsets.only(right: 19.5),
+                    padding: EdgeInsets.only(right: 19.5.sp),
                     child: const Icon(Icons.search_rounded),
                   )
                 ],

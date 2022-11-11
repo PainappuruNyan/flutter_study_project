@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../routes/routes.dart';
 
@@ -28,9 +29,9 @@ class NavigationDrawer extends StatelessWidget {
         child: Container(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.only(
-            left: 40,
-            top: 24 + MediaQuery.of(context).padding.top,
-            bottom: 24,
+            left: 40.sp,
+            top: 24.sp + MediaQuery.of(context).padding.top,
+            bottom: 24.sp,
           ),
           child: Column(
             children: const <Widget>[
@@ -56,7 +57,7 @@ class NavigationDrawer extends StatelessWidget {
       ));
 
   Widget buildMenuItems(BuildContext context) => Container(
-    padding: const EdgeInsets.all(24),
+    padding: EdgeInsets.all(24.sp),
     child: Column(
       children: <Widget>[
         ListTile(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/colors.dart';
+import '../../widgets/bottom_app_bar.dart';
 
 class BookingCreate2Screen extends StatefulWidget {
   const BookingCreate2Screen({super.key});
@@ -31,7 +33,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> datePicker(dynamic dateinput) async {
+    Future<void> datePicker(TextEditingController dateinput) async {
       assert(dateinput != null);
       final DateTime now = DateTime.now();
 
@@ -42,166 +44,106 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
           lastDate: DateTime(now.year + 10));
       if (pickedDate != null) {
         final String formattedDate =
-        DateFormat('yyyy-MM-dd').format(pickedDate);
+            DateFormat('yyyy-MM-dd').format(pickedDate);
         setState(() {
           dateinput.text = formattedDate;
         });
       }
     }
 
-    Future<void> timePicker(dynamic timeinput) async {
+    Future<void> timePicker(TextEditingController timeinput) async {
       final TimeOfDay? pickedTime = await showTimePicker(
         initialTime: TimeOfDay.now(),
         context: context,
       );
 
       if (pickedTime != null) {
-        final DateTime parsedTime = DateFormat.jm()
-            .parse(pickedTime.format(context).toString());
-        final String formattedTime =
-        DateFormat('HH:mm').format(parsedTime);
+        final DateTime parsedTime =
+            DateFormat.jm().parse(pickedTime.format(context).toString());
+        final String formattedTime = DateFormat('HH:mm').format(parsedTime);
         setState(() {
-          timeinput.text =
-              formattedTime;
+          timeinput.text = formattedTime;
         });
       }
     }
 
     return Scaffold(
-        appBar: AppBar(
-            leading: const Icon(Icons.arrow_back_ios_new),
-            title: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(right: 55),
+      appBar: AppBar(
+          title: const Text(
+        'Формирование брони',
+      )),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 12.sp),
               child: Text(
-                'Формирование брони',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6,
+                'Выберите дату',
+                style: Theme.of(context).textTheme.headline4,
               ),
-            )),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(top: 12),
-                child: const Text(
-                  'Выберите дату',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Roboto'),
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.only(left: 36.5, right: 36.5, top: 35),
-                  child: Center(
-                      child: TextField(
-                    style: Theme.of(context).textTheme.bodyText2,
-                    controller: dateinput,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.calendar_month,
-                        color: MyColors.kPrimary,
-                      ),
-                      labelText: 'Дата начала брони',
-                    ),
-                    readOnly: true,
-                    onTap: () => datePicker(dateinput)
-                  ))),
-              Container(
-                padding: const EdgeInsets.only(top: 70),
-                child: const Text(
-                  'Выберите время',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Roboto'),
-                ),
-              ),
-              Container(
+            ),
+            Container(
                 padding:
-                    const EdgeInsets.only(left: 36.5, right: 36.5, top: 35),
-                child: TextFormField(
-                  controller: begintimeinput,
-                  readOnly: true,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  decoration: const InputDecoration(
-                      labelText: 'Время начала брони',
-                      prefixIcon: Icon(
-                        Icons.watch_later_outlined,
-                        color: Colors.deepOrange,
-                      )),
-                  onTap: () => timePicker(begintimeinput),
-                ),
+                    EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                child: Center(
+                    child: TextField(
+                        style: Theme.of(context).textTheme.bodyText2,
+                        controller: dateinput,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.calendar_month,
+                            color: MyColors.kPrimary,
+                          ),
+                          labelText: 'Дата начала брони',
+                        ),
+                        readOnly: true,
+                        onTap: () => datePicker(dateinput)))),
+            Container(
+              padding: EdgeInsets.only(top: 70.sp),
+              child: Text(
+                'Выберите время',
+                style: Theme.of(context).textTheme.headline4,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.only(left: 36.5, right: 36.5, bottom: 200),
-                child: TextFormField(
-                  controller: endtimeinput,
-                  readOnly: true,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  decoration: const InputDecoration(
-                      labelText: 'Время конца брони',
-                      prefixIcon: Icon(
-                        Icons.watch_later_outlined,
-                        color: Colors.deepOrange,
-                      )),
-                  onTap: () => timePicker(endtimeinput),
-                ),
+            ),
+            Container(
+              padding:
+                  EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+              child: TextFormField(
+                controller: begintimeinput,
+                readOnly: true,
+                style: Theme.of(context).textTheme.bodyText2,
+                decoration: const InputDecoration(
+                    labelText: 'Время начала брони',
+                    prefixIcon: Icon(
+                      Icons.watch_later_outlined,
+                      color: Colors.deepOrange,
+                    )),
+                onTap: () => timePicker(begintimeinput),
               ),
-            ],
-          ),
+            ),
+            Container(
+              padding:
+                  EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+              child: TextFormField(
+                controller: endtimeinput,
+                readOnly: true,
+                style: Theme.of(context).textTheme.bodyText2,
+                decoration: const InputDecoration(
+                    labelText: 'Время конца брони',
+                    prefixIcon: Icon(
+                      Icons.watch_later_outlined,
+                      color: MyColors.kPrimary,
+                    )),
+                onTap: () => timePicker(endtimeinput),
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        color: MyColors.kFrameBackground,
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {},
-                    child: TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.close,
-                        size: 24.0,
-                        color: Colors.deepOrange,
-                      ),
-                      label: const Text(
-                        'Отмена',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.deepOrange,
-                            fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  const Text('2/3',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.deepOrange,
-                          fontSize: 16)),
-                  TextButton(
-                    onPressed: () {},
-                    child: TextButton.icon(
-                      onPressed: () {},
-                      label: const Text(
-                        'Дальше',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.deepOrange,
-                            fontSize: 16),
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_forward_outlined,
-                        size: 24.0,
-                        color: Colors.deepOrange,
-                      ),
-                    ),
-                  )
-                ]))),);
+      ),
+      bottomNavigationBar: const CustomBottomAppBar(
+        pageCount: '3',
+        pageNum: '2',
+      ),
+    );
   }
 }

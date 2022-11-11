@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/colors.dart';
 import '../routes/routes.dart';
@@ -15,7 +16,7 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(left: 14.5, right: 14.5, top: 16),
+      margin: EdgeInsets.only(left: 14.5.sp, right: 14.5.sp, top: 16.sp),
       child: Column(
         children: <Widget>[
           Container(
@@ -27,7 +28,7 @@ class BookingCard extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.only(top: 7, left: 15),
+                        padding: EdgeInsets.only(top: 7.sp, left: 15.sp),
                         alignment: Alignment.topLeft,
                         child: Text(
                           'id $bookingId',
@@ -37,7 +38,7 @@ class BookingCard extends StatelessWidget {
                       Container(
                         alignment: Alignment.topLeft,
                         padding:
-                            const EdgeInsets.only(top: 7, bottom: 11, left: 15),
+                            EdgeInsets.only(top: 7.sp, bottom: 10.sp, left: 15.sp),
                         child: Text(
                           'Офис: $address',
                           style: Theme.of(context).textTheme.bodyText2
@@ -45,7 +46,7 @@ class BookingCard extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.topLeft,
-                        padding: const EdgeInsets.only(bottom: 11, left: 15),
+                        padding: EdgeInsets.only(bottom: 10.sp, left: 15.sp),
                         child: Text.rich(TextSpan(
                             text: 'Место: $placeType ',
                             style: Theme.of(context).textTheme.bodyText2,
@@ -75,7 +76,7 @@ class BookingCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                               child: Padding(
-                                  padding: const EdgeInsets.only(left: 10),
+                                  padding: EdgeInsets.only(left: 10.sp),
                                   child: Text(
                                       '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
                                       textAlign: TextAlign.center,
@@ -83,7 +84,7 @@ class BookingCard extends StatelessWidget {
                           const Padding(
                               padding: EdgeInsets.only(right: 10),
                               child: Icon(
-                                Icons.menu_open_sharp,
+                                Icons.edit_outlined,
                                 color: Colors.white,
                               )),
                         ],
