@@ -17,7 +17,9 @@ ThemeData basicTheme() => ThemeData(
         elevation: 0,
         centerTitle: true,
         systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarColor: MyColors.kPrimary),
+            SystemUiOverlayStyle(
+              statusBarColor: MyColors.kPrimary,
+              statusBarIconBrightness: Brightness.light,),
         backgroundColor: MyColors.kPrimary,
         titleTextStyle: TextStyle(
             fontFamily: 'Roboto',
@@ -27,7 +29,7 @@ ThemeData basicTheme() => ThemeData(
       ),
       bottomAppBarTheme: const BottomAppBarTheme(
         elevation: 0,
-        color: MyColors.kFrameBackground,
+        color: MyColors.kWhite,
       ),
       textTheme: const TextTheme(
           headline6: TextStyle(
@@ -63,7 +65,7 @@ ThemeData basicTheme() => ThemeData(
               fontFamily: 'Roboto',
               fontSize: 20,
               color: MyColors.kPrimaryText,
-              fontWeight: FontWeight.w400)),
+              fontWeight: FontWeight.w500)),
       iconTheme: const IconThemeData(color: MyColors.kWhite),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: MyColors.kPrimary, foregroundColor: MyColors.kWhite),
@@ -102,5 +104,5 @@ ThemeData basicTheme() => ThemeData(
           dayPeriodTextColor: MyColors.kPrimary,
           dialHandColor: MyColors.kPrimary,
           hourMinuteTextColor: MyColors.kPrimary),
-      scaffoldBackgroundColor: MyColors.kFrameBackground,
+      scaffoldBackgroundColor: MyColors.kWhite,
     );

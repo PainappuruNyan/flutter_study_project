@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../core/constants/colors.dart';
 import '../../widgets/booking_card.dart' as booking;
 import '../../widgets/navigation_drawer.dart' as NavigationDrawer;
 
@@ -22,6 +24,7 @@ class BookingListScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: MyColors.kFrameBackground,
         appBar: AppBar(
             title: const Center(child: Text('Бронирования')),
             actions: <Widget>[

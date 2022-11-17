@@ -15,6 +15,8 @@ class CustomBottomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool lastPageCheck = false;
+    pageNum == pageCount? lastPageCheck = false: lastPageCheck = true;
     return BottomAppBar(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 15.sp),
@@ -36,25 +38,45 @@ class CustomBottomAppBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    '$pageNum/$pageCount',
-                    style: Theme.of(context).textTheme.headline6,
+                  Visibility(
+                    visible: lastPageCheck,
+                    child: Text(
+                      '$pageNum/$pageCount',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: TextButton.icon(
+                  if (pageCount != pageNum)
+                    TextButton(
                       onPressed: () {},
-                      label: Text(
-                        'Дальше',
-                        style: Theme.of(context).textTheme.headline6,
+                      child: TextButton.icon(
+                        onPressed: () {},
+                        label: Text(
+                          'Дальше',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_forward_outlined,
+                          size: 24.0,
+                          color: MyColors.kPrimary,
+                        ),
                       ),
-                      icon: const Icon(
-                        Icons.arrow_forward_outlined,
-                        size: 24.0,
-                        color: MyColors.kPrimary,
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {},
+                      child: TextButton.icon(
+                        onPressed: () {},
+                        label: Text(
+                          'Подтвердить',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        icon: const Icon(
+                          Icons.check,
+                          size: 24.0,
+                          color: MyColors.kPrimary,
+                        ),
                       ),
                     ),
-                  )
                 ])));
   }
 }

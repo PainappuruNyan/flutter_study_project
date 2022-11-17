@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         return  MaterialApp(
           theme: basicTheme(),
           debugShowCheckedModeBanner: false,
-          initialRoute: Routes.create_office_1,
+          initialRoute: Routes.login,
           routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),

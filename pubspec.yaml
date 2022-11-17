@@ -36,6 +36,7 @@ dependencies:
   json_schema:
   retry:
   intl:
+  icon_decoration:
 
   flutter:
     sdk: flutter
@@ -93,6 +94,7 @@ flutter:
     - assets/files/posts.json
     - assets/images/Group 1740.png
     - assets/images/Union.png
+    - assets/images/coolLogo.png
 #     - For Honor2021-3-20-23-48-43.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
