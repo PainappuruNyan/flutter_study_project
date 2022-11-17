@@ -14,6 +14,7 @@ ThemeData basicTheme() => ThemeData(
           indicator: UnderlineTabIndicator(
               borderSide: BorderSide(color: MyColors.kPrimary))),
       appBarTheme: const AppBarTheme(
+        elevation: 0,
         centerTitle: true,
         systemOverlayStyle:
             SystemUiOverlayStyle(statusBarColor: MyColors.kPrimary),
