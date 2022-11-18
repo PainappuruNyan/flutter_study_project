@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../core/constants/colors.dart';
-import '../widgets/bottom_app_bar.dart';
+import '../../../core/constants/colors.dart';
+import '../../shared_widgets/bottom_app_bar.dart';
 
 class CreateOffice1 extends StatefulWidget {
   const CreateOffice1({super.key});

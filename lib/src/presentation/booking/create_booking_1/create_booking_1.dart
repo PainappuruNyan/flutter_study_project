@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/constants/colors.dart';
-import '../../../../domain/entities/office.dart';
-import '../../../widgets/bottom_app_bar.dart';
-import 'office_expandable.dart';
+import '../../../core/constants/colors.dart';
+import '../../../domain/entities/office.dart';
+import '../../shared_widgets/bottom_app_bar.dart';
+import 'widgets/office_expandable.dart';
 
 class CreateBooking1 extends StatefulWidget {
   const CreateBooking1({super.key});

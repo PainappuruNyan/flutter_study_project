@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/colors.dart';
-import '../../widgets/bottom_app_bar.dart';
+import '../../shared_widgets/bottom_app_bar.dart';
 
 class BookingCreate2Screen extends StatefulWidget {
   const BookingCreate2Screen({super.key});

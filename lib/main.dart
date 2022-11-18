@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/core/constants/theme.dart';
-import 'src/presentation/administration/create_office_1.dart';
-import 'src/presentation/booking/screens/booking_detail_screen.dart';
-import 'src/presentation/booking/screens/booking_list_screen.dart';
-import 'src/presentation/profile/screens/profile_screen.dart';
+import 'src/presentation/administration/create_office_1/create_office_1.dart';
+import 'src/presentation/booking/booking_details/booking_detail_screen.dart';
+import 'src/presentation/booking/booking_list/booking_list_screen.dart';
+import 'src/presentation/profile/profile_screen.dart';
 import 'src/presentation/routes/routes.dart';
-import 'src/presentation/screens/log_in_screen.dart';
-import 'src/presentation/screens/team_list_screen.dart';
+import 'src/presentation/log_in/log_in/log_in_screen.dart';
+import 'src/presentation/teams/team_list/team_list_screen.dart';
 
 
 void main() {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/constants/colors.dart';
-import '../widgets/navigation_drawer.dart' as NavigationDrawer;
-import '../widgets/team_card.dart' as teams;
+import '../../../core/constants/colors.dart';
+import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../../shared_widgets/team_card.dart' as teams;
 
 TabBar get _tabBar => const TabBar(
       tabs: <Widget>[
