@@ -5,7 +5,6 @@ import 'src/core/constants/theme.dart';
 import 'src/presentation/administration/create_office_1/create_office_1.dart';
 import 'src/presentation/booking/booking_details/booking_detail_screen.dart';
 import 'src/presentation/booking/booking_list/booking_list_screen.dart';
-import 'src/presentation/profile/profile_screen.dart';
 import 'src/presentation/routes/routes.dart';
 import 'src/presentation/log_in/log_in/log_in_screen.dart';
 import 'src/presentation/teams/team_list/team_list_screen.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
           initialRoute: Routes.login,
           routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
-            Routes.profile: (BuildContext context) => const ProfileScreen(),
+            // Routes.profile: (BuildContext context) => const ProfileScreen(login: 'test'),
             Routes.booking_list : (BuildContext context) => const BookingListScreen(),
             Routes.team_list : (BuildContext context) => const TeamListScreen(),
             Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),

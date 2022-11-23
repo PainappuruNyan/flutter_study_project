@@ -2,18 +2,22 @@ import 'package:equatable/equatable.dart';
 class Employee extends Equatable{
   const Employee({
     required this.id,
-    required this.name,
+    required this.role,
+    required this.fullName,
     required this.login,
-    required this.password,
-    required this.role
+    required this.email,
+    required this.phoneNumber,
+    required this.photo,
   });
 
   final int id;
-  final String name;
-  final String login;
-  final String password;
   final String role;
+  final String fullName;
+  final String login;
+  final String email;
+  final String phoneNumber;
+  final String? photo;
 
   @override
-  List<Object> get props => [id, name, login, password, role];
+  List<Object> get props => [id, role, fullName,  login, email, phoneNumber];
 }

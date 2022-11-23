@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/colors.dart';
-import '../../routes/routes.dart';
+import '../../profile/profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,7 +16,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-
+  final TextEditingController login = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -62,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.only(top: 120),
                     child: TextFormField(
+                      controller: login,
                       cursorColor: MyColors.kPrimary,
                       style: const TextStyle(fontSize: 14, fontFamily: 'Robot'),
                       decoration: const InputDecoration(
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: MyColors.kPrimary
                               )
                           ),
-                          labelText: 'Почта',
+                          labelText: 'Логин',
                           prefixIcon: Icon(Icons.local_post_office_outlined, color: MyColors.kTextSecondary,)
                       ),
                     ),
@@ -84,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.only(top: 20),
                     child: TextFormField(
+                      controller: password,
                       cursorColor: MyColors.kPrimary,
                       style: const TextStyle(fontSize: 14, fontFamily: 'Robot'),
                       obscureText: true,
@@ -109,7 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(top: 50.0),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, Routes.profile);
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (BuildContext context) => ProfileScreen(login: login.text,),
+                        ));
                       },
                       minWidth: 250,
                       height: 40,

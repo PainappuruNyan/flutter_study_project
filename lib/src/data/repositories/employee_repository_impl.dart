@@ -23,6 +23,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository{
 
   @override
   Future<Either<Failure, Employee>> getEmployeeById(int id) async{
+
     if(await networkInfo.isConnected){
       try{
         final EmployeeModel remoteEmployee = await remoteDataSource.getEmployeeById(id);
@@ -33,6 +34,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository{
         return Left(ServerFailure());
       }
     }else{
+
       try{
         final EmployeeModel localEmployee = await localDataSource.getCachedEmployee();
         return Right(localEmployee);
@@ -45,24 +47,26 @@ class EmployeeRepositoryImpl implements EmployeeRepository{
 
   @override
   Future<Either<Failure, Employee>> getEmployeeByLogin(String login) async {
-    if(await networkInfo.isConnected){
+    // if(await networkInfo.isConnected){
       try{
         final EmployeeModel remoteEmployee = await remoteDataSource.getEmployeeByLogin(login);
         localDataSource.cacheEmployee(remoteEmployee);
         return Right(remoteEmployee);
       }
       on ServerException{
+        print('server exception');
         return Left(ServerFailure());
       }
-    }else{
-      try{
-        final EmployeeModel localEmployee = await localDataSource.getCachedEmployee();
-        return Right(localEmployee);
-      }
-      on EmptyCacheException{
-        return Left(EmptyCasheFailure());
-      }
-    }
+    // }else{
+    //   print('Not Connected');
+    //   try{
+    //     final EmployeeModel localEmployee = await localDataSource.getCachedEmployee();
+    //     return Right(localEmployee);
+    //   }
+    //   on EmptyCacheException{
+    //     return Left(EmptyCasheFailure());
+    //   }
+    // }
   }
 
   // Future<Either<Failure, Employee>> _getEmployee(
