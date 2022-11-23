@@ -1,14 +1,15 @@
 import '../administration/create_office_1/create_office_1.dart';
-import '../booking/create_booking_2/booking_create_2.dart';
-import '../booking/create_booking_3/booking_create_3.dart';
 import '../booking/booking_details/booking_detail_screen.dart';
 import '../booking/booking_list/booking_list_screen.dart';
-import '../profile/profile_screen.dart';
+import '../booking/create_booking_1/create_booking_1.dart';
+import '../booking/create_booking_2/booking_create_2.dart';
+import '../booking/create_booking_3/booking_create_3.dart';
 import '../log_in/log_in/log_in_screen.dart';
+import '../profile/profile_screen.dart';
 import '../teams/team_create/team_create_screen.dart';
 import '../teams/team_details/team_details_screen.dart';
 import '../teams/team_list/team_list_screen.dart';
-// import '../screens/teammate_list.dart';
+import '../teams/teammate_list/teammate_list.dart';
 
 class Routes{
   static const String profile = ProfileScreen.routeName;
@@ -21,5 +22,6 @@ class Routes{
   static const String team_create_screen = TeamCreateScreen.routeName;
   static const String team_details_screen = TeamDetailsScreen.routeName;
   static const String booking_create_3 = BookingCreate3Screen.routeName;
-  // static const String teammate_list = TeamMateList.routeName;
+  static const String teammate_list = TeamMateList.routeName;
+  static const String booking_create_1 = CreateBooking1.routeName;
 }
