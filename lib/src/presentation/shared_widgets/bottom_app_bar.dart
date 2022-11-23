@@ -26,7 +26,7 @@ class CustomBottomAppBar extends StatelessWidget {
                   TextButton(
                     onPressed: () {},
                     child: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {Navigator.pop(context);},
                       icon: const Icon(
                         Icons.close,
                         size: 24.0,

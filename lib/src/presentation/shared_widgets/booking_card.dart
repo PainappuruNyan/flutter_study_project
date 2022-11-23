@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/colors.dart';
-import '../routes/routes.dart';
+import '../booking/booking_details/booking_detail_screen.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard(this.address, this.placeType, this.bookingId, this.placeId,
@@ -28,21 +28,17 @@ class BookingCard extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.only(top: 7.sp, left: 15.sp),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'id $bookingId',
-                          style: Theme.of(context).textTheme.caption
-                        ),
+                        padding: EdgeInsets.only(top: 7.sp, right: 15.sp),
+                        alignment: Alignment.topRight,
+                        child: Text('id $bookingId',
+                            style: Theme.of(context).textTheme.caption),
                       ),
                       Container(
                         alignment: Alignment.topLeft,
-                        padding:
-                            EdgeInsets.only(top: 7.sp, bottom: 10.sp, left: 15.sp),
-                        child: Text(
-                          'Офис: $address',
-                          style: Theme.of(context).textTheme.bodyText2
-                        ),
+                        padding: EdgeInsets.only(
+                            top: 7.sp, bottom: 10.sp, left: 15.sp),
+                        child: Text('Офис: $address',
+                            style: Theme.of(context).textTheme.bodyText2),
                       ),
                       Container(
                         alignment: Alignment.topLeft,
@@ -53,8 +49,8 @@ class BookingCard extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'id $placeId',
-                                  style: const TextStyle(
-                                      color: Colors.deepOrange))
+                                  style:
+                                      const TextStyle(color: Colors.deepOrange))
                             ])),
                       ),
                     ],
@@ -68,8 +64,9 @@ class BookingCard extends StatelessWidget {
                       color: MyColors.kSecondary,
                     ),
                     child: InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, Routes.booking_details);
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BookingDetailScreen()));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -80,7 +77,9 @@ class BookingCard extends StatelessWidget {
                                   child: Text(
                                       '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.bodyText1))),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1))),
                           const Padding(
                               padding: EdgeInsets.only(right: 10),
                               child: Icon(
