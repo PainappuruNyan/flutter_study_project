@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 
 import '../../../core/constants/colors.dart';
+import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 
 class BookingCreate3Screen extends StatefulWidget {
@@ -282,6 +283,7 @@ class _BookingCreate3Screen extends State<BookingCreate3Screen> {
       bottomNavigationBar: const CustomBottomAppBar(
         pageCount: '3',
         pageNum: '3',
+        nextRoute: Routes.profile,
       ),
     );
   }

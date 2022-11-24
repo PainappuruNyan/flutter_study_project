@@ -29,4 +29,15 @@ class ProfileRepositoryImpl implements ProfileRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, Profile>> getProfileByCredits(String username, String password) async {
+    try{
+      final ProfileModel remoteProfile = await remoteDataSource.getProfileByCredits(username, password);
+      return Right(remoteProfile);
+    }
+    on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
 }

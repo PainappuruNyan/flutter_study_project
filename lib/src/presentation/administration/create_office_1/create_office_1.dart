@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/colors.dart';
+import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 
 class CreateOffice1 extends StatefulWidget {
@@ -139,7 +140,7 @@ class _CreateOffice1 extends State<CreateOffice1> {
                       ),
                     ))),
       ])),
-      bottomNavigationBar: const CustomBottomAppBar(pageNum: '1', pageCount: '3',)
+      bottomNavigationBar: const CustomBottomAppBar(pageNum: '1', pageCount: '3',nextRoute: Routes.profile,)
     );
   }
 }

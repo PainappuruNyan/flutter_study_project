@@ -8,8 +8,10 @@ class CustomBottomAppBar extends StatelessWidget {
     super.key,
     this.pageNum,
     this.pageCount,
+    required this.nextRoute,
   });
 
+  final String nextRoute;
   final String? pageCount;
   final String? pageNum;
 
@@ -49,7 +51,9 @@ class CustomBottomAppBar extends StatelessWidget {
                     TextButton(
                       onPressed: () {},
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, nextRoute);
+                        },
                         label: Text(
                           'Дальше',
                           style: Theme.of(context).textTheme.headline6,

@@ -25,7 +25,7 @@ class ProfileModel extends Profile{
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
     'employee': employee.toJson(),
     'bookings': List<dynamic>.from(bookings!.map((x) => x.toJson())),
     'teams': List<dynamic>.from(teams!.map((x) => x.toJson())),

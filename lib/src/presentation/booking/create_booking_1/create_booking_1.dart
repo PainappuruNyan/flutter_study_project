@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/office.dart';
+import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import 'widgets/office_expandable.dart';
 
 class CreateBooking1 extends StatefulWidget {
   const CreateBooking1({super.key});
 
-  static const String routeName = '/create_office/1';
+  static const String routeName = '/create_booking/1';
 
   @override
   State<CreateBooking1> createState() => _CreateBooking1State();
@@ -62,7 +63,7 @@ class _CreateBooking1State extends State<CreateBooking1> {
         title: const Text('Новая бронь'),
       ),
       bottomNavigationBar:
-          const CustomBottomAppBar(pageNum: '1', pageCount: '3'),
+          const CustomBottomAppBar(pageNum: '1', pageCount: '3', nextRoute: Routes.booking_create_2,),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

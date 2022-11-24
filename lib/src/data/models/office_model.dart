@@ -1,7 +1,7 @@
 import '../../domain/entities/office.dart';
 
 class OfficeModel extends Office{
-  OfficeModel({
+  const OfficeModel({
     required super.id,
     required super.city,
     required super.address,

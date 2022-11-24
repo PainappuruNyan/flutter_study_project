@@ -14,13 +14,12 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc({required this.login})
+  ProfileBloc()
       : super(ProfileLoading())  {
     on<ProfileStarted>(_onStarted);
   }
 
   late ProfileRepositoryImpl profileRepositoryImpl;
-  final String login;
 
   Future<void> _onStarted(
       ProfileStarted event, Emitter<ProfileState> emit) async {

@@ -16,6 +16,7 @@ class UserCard extends StatelessWidget {
       ),
       child: Container(
         padding: EdgeInsets.all(9.sp),
+        alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
