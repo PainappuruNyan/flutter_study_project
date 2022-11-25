@@ -1,29 +1,40 @@
+import 'package:intl/intl.dart';
+
 import '../../domain/entities/office.dart';
 
 class OfficeModel extends Office{
   const OfficeModel({
     required super.id,
-    required super.city,
+    required super.cityName,
     required super.address,
-    required super.administrator,
-    required super.contactNumber});
+    required super.workNumber,
+    required super.startOfDay,
+    required super.endOfDay,
+    required super.bookingRange,
+  });
 
   factory OfficeModel.fromJson(Map<String, dynamic> json) {
+    DateFormat format = DateFormat('hh:mm:ss');
     return OfficeModel(
         id: json['id'] as int,
-        city: json['city'] as String,
+        cityName: json['cityName'] as String,
         address: json['address'] as String,
-        administrator:json['administrator'] as String,
-        contactNumber: json['contactNumber'] as String);
+        workNumber: json['workNumber'] as String,
+        startOfDay: format.parse(json['startOfDay'] as String),
+        endOfDay: format.parse(json['endOfDay'] as String),
+        bookingRange: json['bookingRange'] as int,
+    );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id':id,
-      'city':city,
+      'city':cityName,
       'address':address,
-      'administrator':administrator,
-      'contactNumber':contactNumber
+      'contactNumber':workNumber,
+      'startOfDay':startOfDay,
+      'endOfDay': endOfDay,
+      'bookingRange': bookingRange
     };
   }
 }

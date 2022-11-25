@@ -137,7 +137,7 @@ class RemoteImplWithHttp implements RemoteDataSource {
         headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
     if (response.statusCode == 200) {
       final List<dynamic> decodeJsonData =
-      jsonDecode(response.body) as List<dynamic>;
+      jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
       final OfficeListModel jsonToOfficeListModel = OfficeListModel.fromJson(decodeJsonData);
       return Future<OfficeListModel>.value(jsonToOfficeListModel);
     } else {

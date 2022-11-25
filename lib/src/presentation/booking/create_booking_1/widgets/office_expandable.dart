@@ -54,12 +54,7 @@ class _OfficeExpandableState extends State<OfficeExpandable> {
 }
 
 class OfficeAddressCard extends StatelessWidget {
-  const OfficeAddressCard({super.key, this.office = const Office(
-      id: 1,
-      city: 'Владивосток',
-      address: 'Океанская 12д',
-      administrator: 'Мамаев Мамай',
-      contactNumber: '+79099099090')});
+  const OfficeAddressCard({super.key, required this.office});
 
   final Office office;
 
@@ -126,7 +121,7 @@ class OfficeAddressCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Text(office.contactNumber, style: textStyle.copyWith(fontWeight: FontWeight.normal)),
+                      Text(office.workNumber, style: textStyle.copyWith(fontWeight: FontWeight.normal)),
                     ],
                   )
                 ],

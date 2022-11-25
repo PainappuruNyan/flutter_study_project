@@ -8,13 +8,7 @@ class OfficeWidgetHeader extends StatefulWidget {
   OfficeWidgetHeader({
     super.key,
     this.isFavorite = false,
-    this.office = const Office(
-      id: 1,
-      city: 'Владивосток',
-      address: 'Океанская 12д',
-      administrator: 'Мамаев Мамай',
-      contactNumber: '+7(999)-900-09-09',
-    ),
+    required this.office
   });
 
   bool isFavorite;
@@ -73,8 +67,7 @@ class _OfficeWidgetHeaderState extends State<OfficeWidgetHeader> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Администратор: ${widget.office.administrator}'),
-              Text(widget.office.contactNumber, style: Theme
+              Text(widget.office.workNumber, style: Theme
                   .of(context)
                   .textTheme
                   .bodySmall,),

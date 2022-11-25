@@ -3,18 +3,22 @@ import 'package:equatable/equatable.dart';
 class Office extends Equatable{
   const Office({
     required this.id,
-    required this.city,
+    required this.cityName,
     required this.address,
-    required this.administrator,
-    required this.contactNumber
+    required this.workNumber,
+    required this.startOfDay,
+    required this.endOfDay,
+    required this.bookingRange,
 });
 
   final int id;
-  final String city;
+  final String cityName;
   final String address;
-  final String administrator;
-  final String contactNumber;
+  final String workNumber;
+  final DateTime startOfDay;
+  final DateTime endOfDay;
+  final int bookingRange;
 
   @override
-  List<Object> get props => [id, city, address, administrator, contactNumber];
+  List<Object> get props => [id, cityName, address, workNumber, startOfDay, endOfDay, bookingRange];
 }

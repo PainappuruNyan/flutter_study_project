@@ -20,5 +20,10 @@ class BookingCreate1Loaded extends BookingCreate1State {
   final List<String> cites;
 
   @override
-  List<Object?> get props => [offices, cites];
+  List<Object> get props => [offices, cites];
+}
+class BookingCreate1Error extends BookingCreate1State{
+
+  @override
+  List<Object> get props => [];
 }
