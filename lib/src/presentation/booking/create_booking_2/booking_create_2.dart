@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import '../../../bloc/booking_create_2/booking_create2_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
@@ -18,19 +20,11 @@ class BookingCreate2Screen extends StatefulWidget {
 }
 
 class _BookingCreate2Screen extends State<BookingCreate2Screen> {
-  TextEditingController dateinput = TextEditingController();
-  TextEditingController begintimeinput = TextEditingController();
-  TextEditingController endtimeinput = TextEditingController();
+  TextEditingController date = TextEditingController();
+  TextEditingController beginTime = TextEditingController();
+  TextEditingController endTime = TextEditingController();
 
   //text editing controller for text field
-
-  @override
-  void initState() {
-    dateinput.text = '';
-    begintimeinput.text = '';
-    endtimeinput.text = '';
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,83 +62,114 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-        'Формирование брони',
-      )),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 12.sp),
-              child: Text(
-                'Выберите дату',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ),
-            Container(
-                padding:
-                    EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-                child: Center(
-                    child: TextField(
-                        style: Theme.of(context).textTheme.bodyText2,
-                        controller: dateinput,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.calendar_month,
-                            color: MyColors.kPrimary,
-                          ),
-                          labelText: 'Дата начала брони',
-                        ),
+    return BlocProvider<BookingCreate2Bloc>(
+      create: (BuildContext context) =>
+          BookingCreate2Bloc()..add(BookingCreate2Start()),
+      child: Scaffold(
+        appBar: AppBar(
+            title: const Text(
+          'Формирование брони',
+        )),
+        body: BlocBuilder<BookingCreate2Bloc, BookingCreate2State>(
+          builder: (BuildContext context, BookingCreate2State state) {
+            if (state is BookingCreate2Loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is BookingCreate2Loaded) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 12.sp),
+                      child: Text(
+                        'Выберите дату',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4,
+                      ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.only(
+                            left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                        child: Center(
+                            child: TextField(
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodyText2,
+                                controller: date,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.calendar_month,
+                                    color: MyColors.kPrimary,
+                                  ),
+                                  labelText: 'Дата начала брони',
+                                ),
+                                readOnly: true,
+                                onTap: () => datePicker(date)))),
+                    Container(
+                      padding: EdgeInsets.only(top: 70.sp),
+                      child: Text(
+                        'Выберите время',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                      child: TextFormField(
+                        controller: beginTime,
                         readOnly: true,
-                        onTap: () => datePicker(dateinput)))),
-            Container(
-              padding: EdgeInsets.only(top: 70.sp),
-              child: Text(
-                'Выберите время',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ),
-            Container(
-              padding:
-                  EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-              child: TextFormField(
-                controller: begintimeinput,
-                readOnly: true,
-                style: Theme.of(context).textTheme.bodyText2,
-                decoration: const InputDecoration(
-                    labelText: 'Время начала брони',
-                    prefixIcon: Icon(
-                      Icons.watch_later_outlined,
-                      color: Colors.deepOrange,
-                    )),
-                onTap: () => timePicker(begintimeinput),
-              ),
-            ),
-            Container(
-              padding:
-                  EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-              child: TextFormField(
-                controller: endtimeinput,
-                readOnly: true,
-                style: Theme.of(context).textTheme.bodyText2,
-                decoration: const InputDecoration(
-                    labelText: 'Время конца брони',
-                    prefixIcon: Icon(
-                      Icons.watch_later_outlined,
-                      color: MyColors.kPrimary,
-                    )),
-                onTap: () => timePicker(endtimeinput),
-              ),
-            ),
-          ],
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText2,
+                        decoration: const InputDecoration(
+                            labelText: 'Время начала брони',
+                            prefixIcon: Icon(
+                              Icons.watch_later_outlined,
+                              color: Colors.deepOrange,
+                            )),
+                        onTap: () => timePicker(beginTime),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                      child: TextFormField(
+                        controller: endTime,
+                        readOnly: true,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText2,
+                        decoration: const InputDecoration(
+                            labelText: 'Время конца брони',
+                            prefixIcon: Icon(
+                              Icons.watch_later_outlined,
+                              color: MyColors.kPrimary,
+                            )),
+                        onTap: () => timePicker(endTime),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(child: Text('Ошибка'),);
+          },
         ),
-      ),
-      bottomNavigationBar: const CustomBottomAppBar(
-        pageCount: '3',
-        pageNum: '2',
-        nextRoute: Routes.booking_create_3,
+        bottomNavigationBar: const CustomBottomAppBar(
+          pageCount: '3',
+          pageNum: '2',
+          nextRoute: Routes.booking_create_3,
+        ),
       ),
     );
   }
