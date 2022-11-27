@@ -22,12 +22,12 @@ class BookingModel extends Booking{
   );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
+    // 'id': id,
     'holderId': holder,
-    'makerId': maker,
-    'workplaceId': workplace,
-    'start': start.toIso8601String(),
-    'end': end.toIso8601String(),
+    // 'makerId': maker,
+    'workPlaceId': workplace,
+    'start': '${start.toIso8601String()}Z',
+    'end': '${end.toIso8601String()}Z',
     'guests': guests,
   };
 }

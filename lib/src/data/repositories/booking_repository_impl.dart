@@ -8,6 +8,7 @@ import '../../domain/entities/office_list_.dart';
 import '../../domain/repository/booking_list_repository.dart';
 import '../datasources/remote_data_source.dart';
 import '../models/booking_list_model.dart';
+import '../models/booking_model.dart';
 import '../models/office_list_model.dart';
 
 
@@ -48,6 +49,17 @@ class BookingRepositoryImpl implements BookingListRepository{
     try{
       final BookingListModel remoteSelfBookings = await remoteDataSource.getAllSelf();
       return Right(remoteSelfBookings);
+    }
+    on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> postBooking({required BookingModel booking}) async {
+    try{
+      final String successString = await remoteDataSource.postNewBooking(booking: booking);
+      return Right(successString);
     }
     on ServerException {
       return Left(ServerFailure());

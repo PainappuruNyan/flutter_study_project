@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/exeptions/exceptions.dart';
 import '../models/booking_list_model.dart';
+import '../models/booking_model.dart';
 import '../models/employee_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +27,9 @@ abstract class RemoteDataSource {
 
   Future<BookingListModel> getAllActual();
   Future<BookingListModel> getAllSelf();
+
+  Future<String> postNewBooking({required BookingModel booking});
+
 }
 
 const String BASE_URL = 'http://10.0.2.2:8080';
@@ -181,6 +185,33 @@ class RemoteImplWithHttp implements RemoteDataSource {
       throw ServerException();
     }
   }
+
+  @override
+  Future<String> postNewBooking({required BookingModel booking}) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final String body = json.encode(booking.toJson()) ;
+    print(body);
+    final http.Response response = await client.post(
+        Uri.parse('$BASE_URL/booking/'),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+          HttpHeaders.contentTypeHeader: 'application/json'
+        },
+        body: body
+    );
+    if (response.statusCode == 200) {
+      final String decodeJsonData =
+      utf8.decode(response.bodyBytes);
+      return Future<String>.value(decodeJsonData);
+    } else {
+      print(response.body);
+      throw ServerException();
+    }
+  }
+
+
 
 
 }
