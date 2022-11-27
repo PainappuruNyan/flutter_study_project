@@ -43,4 +43,15 @@ class BookingCreate3FloorMapLoading extends BookingCreate3State {
   @override
   List<Object?> get props => [];
 }
+class BookingCreate3FloorMapLoaded extends BookingCreate3State{
+  const BookingCreate3FloorMapLoaded({required this.floors});
+
+  final List<int> floors;
+  @override
+  List<Object?> get props => [floors];
+}
+class BookingSuccess extends BookingCreate3State{
+  @override
+  List<Object?> get props => [];
+}
 

@@ -130,9 +130,8 @@ class LoginScreenView extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 50.0),
                       child: BlocListener<LoginBloc, LoginState>(
                         // bloc: BlocProvider.of<LoginBloc>(context),
-                        listener: (BuildContext context, state) {
+                        listener: (BuildContext context, LoginState state) {
                           if (state is LoginSuccess) {
-                            print('слушатель услышал');
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -144,45 +143,14 @@ class LoginScreenView extends StatelessWidget {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Ошибка подключения'),
-                                    content: Container(
-                                      alignment: Alignment.center,
-                                      child: Text(state.errorMessage),
-                                    ),
-                                    actions: <Widget>[
-                                      MaterialButton(
-                                        onPressed: () {},
-                                        child: Text('ОК',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText2),
-                                      )
-                                    ],
-                                  );
+                                  return ErrorDialog(errorMessage: state.errorMessage);
                                 });
                           }
                           if (state is LoginLocalError) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title:
-                                        const Text('Введены неверные данные'),
-                                    content: Container(
-                                      alignment: Alignment.center,
-                                      child: Text(state.errorMessage),
-                                    ),
-                                    actions: <Widget>[
-                                      MaterialButton(
-                                        onPressed: () {},
-                                        child: Text('ОК',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText2),
-                                      )
-                                    ],
-                                  );
+                                  return ErrorDialog(errorMessage: state.errorMessage);
                                 });
                           }
                         },
@@ -233,3 +201,34 @@ class LoginScreenView extends StatelessWidget {
     );
   }
 }
+
+class ErrorDialog extends StatelessWidget {
+  const ErrorDialog({super.key, required this.errorMessage});
+
+  final String errorMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title:
+      const Text('Введены неверные данные'),
+      content: Container(
+        height: 100.h,
+        alignment: Alignment.center,
+        child: Text(errorMessage),
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+            },
+          child: Text('ОК',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2),
+        )
+      ],
+    );
+  }
+}
+

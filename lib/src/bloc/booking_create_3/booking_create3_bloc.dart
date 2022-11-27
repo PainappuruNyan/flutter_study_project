@@ -23,16 +23,16 @@ class BookingCreate3Bloc
     on<BookingCreate3ChangeFloor>(_onChangeFloor);
     on<BookingCreate3WorkplaceSelected>(_onWorkplaceSelected);
   }
-
+  final List<int> floors = [
+    1,
+    2,
+    3,
+    4,
+  ];
   FutureOr<void> _onStart(
       BookingCreate3Start event, Emitter<BookingCreate3State> emit) async {
     emit(BookingCreate3Initial());
-    final List<int> floors = [
-      1,
-      2,
-      3,
-      4,
-    ];
+
     final List<Workplace> favoriteList = [
       const Workplace(true, id: 1, type_id: 1, floor_id: 1, capacity: 1),
       const Workplace(false, id: 3, type_id: 1, floor_id: 3, capacity: 1),
@@ -55,10 +55,14 @@ class BookingCreate3Bloc
   }
 
   FutureOr<void> _onChangeToMap(
-      BookingCreate3ChangeToMap event, Emitter<BookingCreate3State> emit) {}
+      BookingCreate3ChangeToMap event, Emitter<BookingCreate3State> emit) {
+    emit(BookingCreate3FloorMapLoaded(floors: floors));
+  }
 
   FutureOr<void> _onChangeToList(
-      BookingCreate3ChangeToList event, Emitter<BookingCreate3State> emit) {}
+      BookingCreate3ChangeToList event, Emitter<BookingCreate3State> emit) {
+    add(BookingCreate3Start());
+  }
 
   FutureOr<void> _onChangeFloor(
       BookingCreate3ChangeFloor event, Emitter<BookingCreate3State> emit) {}
@@ -72,7 +76,7 @@ class BookingCreate3Bloc
         .postBooking(booking: event.booking)
         .then((Either<Failure, String> value) {
       value.fold((Failure l) => print(l.toString()), (String r) async {
-        print('Успех');
+        emit(BookingSuccess());
       });
     });
   }

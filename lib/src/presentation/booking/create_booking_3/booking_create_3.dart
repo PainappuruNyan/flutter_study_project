@@ -4,19 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../bloc/booking_create_3/booking_create3_bloc.dart';
 import '../../../core/constants/colors.dart';
+import '../../profile/profile_screen.dart';
 import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import '../../shared_widgets/workplace_card.dart';
 
 class BookingCreate3Screen extends StatefulWidget {
   const BookingCreate3Screen({super.key});
+
   static const String routeName = '/booking_create/3';
+
   @override
   State<BookingCreate3Screen> createState() => _BookingCreate3ScreenState();
 }
 
 class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
-
   // final List<bool> _isFavorited = List<bool>.filled(favoriteList.length, false);
 
   int? selectedFloor = 1;
@@ -24,24 +26,23 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
   bool mapChecked = false;
   String searchString = '';
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BookingCreate3Bloc>(
-      create: (BuildContext context) => BookingCreate3Bloc()..add(BookingCreate3Start()),
+      create: (BuildContext context) =>
+          BookingCreate3Bloc()..add(BookingCreate3Start()),
       child: Scaffold(
         backgroundColor: MyColors.kWhite,
         appBar: AppBar(
             title: const Text(
-              'Формирование брони',
-            )),
-        body: BlocBuilder<BookingCreate3Bloc, BookingCreate3State>(
+          'Формирование брони',
+        )),
+        body: BlocConsumer<BookingCreate3Bloc, BookingCreate3State>(
           builder: (BuildContext context, BookingCreate3State state) {
             if (state is BookingCreate3FloorLoading) {
-              return const Center(child: CircularProgressIndicator(),);
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             if (state is BookingCreate3FloorLoaded) {
               return SingleChildScrollView(
@@ -69,20 +70,12 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                             padding: EdgeInsets.only(left: 20.sp),
                             child: TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    mapChecked = true;
-                                    listChecked = false;
-                                  });
+                                  context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToMap());
                                 },
-                                child: mapChecked
-                                    ? const Text('Карта',
-                                    style: TextStyle(
-                                        color: MyColors.kSecondary,
-                                        fontSize: 18))
-                                    : const Text('Карта',
-                                    style: TextStyle(
-                                        color: MyColors.kTextSecondary,
-                                        fontSize: 18))),
+                                child: const Text('Карта',
+                                        style: TextStyle(
+                                            color: MyColors.kTextSecondary,
+                                            fontSize: 18))),
                           ),
                           SizedBox(
                             height: 20.h,
@@ -94,19 +87,12 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                           ),
                           TextButton(
                               onPressed: () {
-                                setState(() {
-                                  mapChecked = false;
-                                  listChecked = true;
-                                });
+                                context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToList());
                               },
-                              child: listChecked
-                                  ? const Text('Список',
-                                  style: TextStyle(
-                                      color: MyColors.kSecondary, fontSize: 18))
-                                  : const Text('Список',
-                                  style: TextStyle(
-                                      color: MyColors.kTextSecondary,
-                                      fontSize: 18))),
+                              child: const Text('Список',
+                                      style: TextStyle(
+                                          color: MyColors.kSecondary,
+                                          fontSize: 18))),
                         ],
                       ),
                     ),
@@ -122,10 +108,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                         color: Colors.grey.shade300,
                       ),
                       child: TextField(
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyText2,
+                        style: Theme.of(context).textTheme.bodyText2,
                         onChanged: (String value) {
                           setState(() {
                             searchString = value.toLowerCase();
@@ -133,10 +116,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Поиск',
-                          hintStyle: Theme
-                              .of(context)
-                              .textTheme
-                              .caption,
+                          hintStyle: Theme.of(context).textTheme.caption,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.grey.shade300,
@@ -156,16 +136,13 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                     ),
                     //expansions
                     Container(
-                        padding:
-                        EdgeInsets.only(left: 30.sp, top: 15.sp, right: 30.sp),
+                        padding: EdgeInsets.only(
+                            left: 30.sp, top: 15.sp, right: 30.sp),
                         alignment: Alignment.topLeft,
                         child: ExpansionTile(
                           title: Text(
                             'Избранное',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline4,
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                           children: <Widget>[
                             ListView.builder(
@@ -175,51 +152,17 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
                                       workplace: state.favorites[index]);
-                                  // Card(
-                                  //   elevation: 4,
-                                  //   child: ListTile(
-                                  //     title: Text(
-                                  //       'id${favoriteList[index]}',
-                                  //       style:
-                                  //       Theme.of(context).textTheme.subtitle2,
-                                  //     ),
-                                  //     onTap: () {
-                                  //       context.read<BookingCreate3Bloc>().add(BookingCreate3WorkplaceSelected(booking: BookingModel(id: -1, holder: 1, maker: -1, workplace: favoriteList[index], start: DateTime(2022, 11, 27, 10), end: DateTime(2022, 11, 27, 20), guests: 0,)));
-                                  //     },
-                                  //     trailing: const DecoratedIcon(
-                                  //       icon: Icon(Icons.star,
-                                  //           color: MyColors.kSecondary),
-                                  //       decoration: IconDecoration(
-                                  //           border: IconBorder(
-                                  //               color: MyColors.kPrimaryText,
-                                  //               width: 2)),
-                                  //     ),
-                                  //     // trailing: IconButton(
-                                  //     //   onPressed: () => setState(() =>
-                                  //     //       _isFavorited[index] =
-                                  //     //           !_isFavorited[index]),
-                                  //     //   icon: _isFavorited[index]
-                                  //     //       ? const Icon(
-                                  //     //           Icons.star,
-                                  //     //           color: MyColors.kSecondary,
-                                  //     //         )
-                                  //     //       : const Icon(Icons.star_border),
-                                  //     // ),
-                                  //   ));
                                 }),
                           ],
                         )),
                     Container(
-                        padding:
-                        EdgeInsets.only(left: 30.sp, top: 15.sp, right: 30.sp),
+                        padding: EdgeInsets.only(
+                            left: 30.sp, top: 15.sp, right: 30.sp),
                         alignment: Alignment.topLeft,
                         child: ExpansionTile(
                           title: Text(
                             'Рабочие места',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline4,
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                           children: <Widget>[
                             ListView.builder(
@@ -233,16 +176,13 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                           ],
                         )),
                     Container(
-                        padding:
-                        EdgeInsets.only(left: 30.sp, top: 15.sp, right: 30.sp),
+                        padding: EdgeInsets.only(
+                            left: 30.sp, top: 15.sp, right: 30.sp),
                         alignment: Alignment.topLeft,
                         child: ExpansionTile(
                           title: Text(
                             'Переговорки',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline4,
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                           children: <Widget>[
                             ListView.builder(
@@ -259,7 +199,72 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                 ),
               );
             }
+            if (state is BookingCreate3FloorMapLoaded) {
+              return SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(top: 30.sp, bottom: 20.sp),
+                  child: Row(
+                    children: <Widget>[
+                      //Выбор этажа
+                      Container(
+                        padding: EdgeInsets.only(left: 30.sp),
+                        child: CustomDropDown(
+                          value: '$selectedFloor Этаж',
+                          itemsList: state.floors,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              selectedFloor = value as int;
+                            });
+                          },
+                        ),
+                      ),
+                      //Карта и Спислк
+                      Container(
+                        padding: EdgeInsets.only(left: 20.sp),
+                        child: TextButton(
+                            onPressed: () {
+                              context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToMap());
+                            },
+                            child: const Text('Карта',
+                                    style: TextStyle(
+                                        color: MyColors.kSecondary,
+                                        fontSize: 18)))
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                        child: const VerticalDivider(
+                          color: MyColors.kPrimaryText,
+                          thickness: 2,
+                          width: 15,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToList());
+                          },
+                          child:  const Text('Список',
+                                  style: TextStyle(
+                                      color: MyColors.kTextSecondary,
+                                      fontSize: 18))),
+                    ],
+                  ),
+                ),
+                    Container(padding: EdgeInsets.only(top:200.h),
+                      child: Text('На стадии разработки', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),),)
+              ]));
+            }
             return const Text('error');
+          },
+          listener: (BuildContext context, BookingCreate3State state){
+            if(state is BookingSuccess){
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        ProfileScreen(),
+                  ));
+            }
           },
         ),
         bottomNavigationBar: const CustomBottomAppBar(
@@ -304,7 +309,8 @@ class CustomDropDown extends StatelessWidget {
             ),
             isExpanded: true,
             value: value,
-            items: itemsList.map((int item) => DropdownMenuItem<String>(
+            items: itemsList
+                .map((int item) => DropdownMenuItem<String>(
                       value: '$item Этаж',
                       child: Text(
                         '$item Этаж',
