@@ -72,7 +72,7 @@ class BookingCard extends StatelessWidget {
                               child: Padding(
                                   padding: EdgeInsets.only(left: 10.sp),
                                   child: Text(
-                                      '01.02.2022 (пн) - 02.02.2022 (вт)\n21:00 - 05:00',
+                                      '${booking.start.day} - ${booking.end.day}\n${booking.start.hour} - ${booking.end.hour}',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme

@@ -162,7 +162,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Забронировал: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'id0000001',
+                                  text: e.holder.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -190,7 +190,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  '01.01.2022(пн)',
+                                  e.start.day.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -207,7 +207,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  '01.01.2022(пн)',
+                                  e.end.day.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -239,7 +239,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  '11:00',
+                                  e.start.hour.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -256,7 +256,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  '17:00',
+                                  e.end.hour.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
