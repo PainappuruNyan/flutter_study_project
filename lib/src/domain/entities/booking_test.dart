@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 class BookingTest extends Equatable{
   const BookingTest({
     required this.bookingId,
@@ -19,10 +20,10 @@ class BookingTest extends Equatable{
 class BookingListTest {
 
   BookingListTest({
-    required this.BookingActual,
-    required this.BookingHistory,
+    required this.bookingActual,
+    required this.bookingHistory,
 });
 
-  final List<BookingTest> BookingActual;
-  final List<BookingTest> BookingHistory;
+  final List<BookingTest> bookingActual;
+  final List<BookingTest> bookingHistory;
 }

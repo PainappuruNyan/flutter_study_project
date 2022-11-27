@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/colors.dart';
+import '../../domain/entities/booking.dart';
 import '../booking/booking_details/booking_detail_screen.dart';
 
 class BookingCard extends StatelessWidget {
-  const BookingCard(this.address, this.placeType, this.bookingId, this.placeId,
-      {super.key});
+  const BookingCard({super.key, required this.booking});
 
-  final String address;
-  final String placeType;
-  final int bookingId;
-  final int placeId;
+  final Booking booking;
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +27,25 @@ class BookingCard extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(top: 7.sp, right: 15.sp),
                         alignment: Alignment.topRight,
-                        child: Text('id $bookingId',
+                        child: Text('id ${booking.id}',
                             style: Theme.of(context).textTheme.caption),
                       ),
                       Container(
                         alignment: Alignment.topLeft,
                         padding: EdgeInsets.only(
                             top: 7.sp, bottom: 10.sp, left: 15.sp),
-                        child: Text('Офис: $address',
+                        child: Text('Офис: ДЕМО',
                             style: Theme.of(context).textTheme.bodyText2),
                       ),
                       Container(
                         alignment: Alignment.topLeft,
                         padding: EdgeInsets.only(bottom: 10.sp, left: 15.sp),
                         child: Text.rich(TextSpan(
-                            text: 'Место: $placeType ',
+                            text: 'Место: ${booking.workplace} ',
                             style: Theme.of(context).textTheme.bodyText2,
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'id $placeId',
+                                  text: 'id ${booking.workplace}',
                                   style:
                                       const TextStyle(color: Colors.deepOrange))
                             ])),
@@ -66,7 +63,7 @@ class BookingCard extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => BookingDetailScreen()));
+                            builder: (_) => BookingDetailScreen(e:booking)));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

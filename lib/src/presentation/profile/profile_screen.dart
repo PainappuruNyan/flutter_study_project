@@ -20,25 +20,14 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProfileBloc()..add(ProfileStarted()),
+      create: (BuildContext context) => ProfileBloc()..add(ProfileStarted()),
       child: Scaffold(
           backgroundColor: MyColors.kFrameBackground,
           drawer: const NavigationDrawer.NavigationDrawer(),
           appBar: AppBar(
             backgroundColor: MyColors.kPrimary,
             elevation: 0,
-            title: const Center(
-              child: Text('Профиль сотрудника'),
-            ),
-            actions: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(right: 19.5),
-                child: InkWell(
-                  onTap: () {},
-                  child: const Icon(Icons.search_rounded),
-                ),
-              )
-            ],
+            title: const Text('Профиль сотрудника'),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
@@ -69,7 +58,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
       statusBarIconBrightness: Brightness.light,
     ));
     return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
+      builder: (BuildContext context, ProfileState state) {
         if (state is ProfileLoading) {
           return Center(child: CircularProgressIndicator(),);
         }
@@ -131,8 +120,18 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                 ],
                               ),
                             ),
-                            const BookingCard(
-                                'Окатовая 12', 'Рабочее место', 1, 1),
+                            if(state.profile.bookings!.isNotEmpty)...[
+                              BookingCard(booking: state.profile.bookings![0]),
+                            ]
+                            else...[
+                              Text(
+                                'Здесь пока пусто',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .caption,
+                              ),
+                            ],
                             Container(
                               margin: const EdgeInsets.only(top: 11),
                               decoration: const BoxDecoration(

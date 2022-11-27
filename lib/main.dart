@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dependency_injection_container.dart' as di;
 import 'src/core/constants/theme.dart';
 import 'src/presentation/administration/create_office_1/create_office_1.dart';
-import 'src/presentation/booking/booking_details/booking_detail_screen.dart';
 import 'src/presentation/booking/booking_list/booking_list_screen.dart';
 import 'src/presentation/booking/create_booking_1/create_booking_1.dart';
 import 'src/presentation/booking/create_booking_2/booking_create_2.dart';
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
             Routes.profile: (BuildContext context) => const ProfileScreen(),
             Routes.booking_list : (BuildContext context) => const BookingListScreen(),
             Routes.team_list : (BuildContext context) => const TeamListScreen(),
-            Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),
+            // Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),
             Routes.create_office_1: (BuildContext context) => const CreateOffice1(),
             Routes.booking_create_1: (BuildContext context) => const CreateBooking1(),
             Routes.booking_create_2: (BuildContext context) => const BookingCreate2Screen(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
@@ -27,13 +26,7 @@ class TeamListScreen extends StatelessWidget {
           child: Scaffold(
             backgroundColor: MyColors.kFrameBackground,
             appBar: AppBar(
-                title: const Center(child: Text('Команды')),
-                actions: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 19.5.sp),
-                    child: const Icon(Icons.search_rounded),
-                  )
-                ],
+                title: const Text('Команды'),
                 bottom: PreferredSize(
                   preferredSize: _tabBar.preferredSize,
                   child: Material(

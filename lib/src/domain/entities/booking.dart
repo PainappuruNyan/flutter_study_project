@@ -1,8 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import '../../data/models/employee_model.dart';
-import '../../data/models/workplase_model.dart';
-
 class Booking extends Equatable{
   const Booking({
     required this.id,
@@ -15,9 +12,9 @@ class Booking extends Equatable{
   });
 
   final int id;
-  final EmployeeModel holder;
-  final EmployeeModel maker;
-  final WorkplaceModel workplace;
+  final int holder;
+  final int maker;
+  final int workplace;
   final DateTime start;
   final DateTime end;
   final int guests;

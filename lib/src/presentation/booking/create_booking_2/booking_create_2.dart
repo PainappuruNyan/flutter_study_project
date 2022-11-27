@@ -50,6 +50,13 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
       final TimeOfDay? pickedTime = await showTimePicker(
         initialTime: TimeOfDay.now(),
         context: context,
+          builder: (BuildContext context, Widget? child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                  alwaysUse24HourFormat: true),
+              child: child ?? Container(),
+            );
+          }
       );
 
       if (pickedTime != null) {

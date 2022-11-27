@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../bloc/booking_list/booking_list_bloc.dart';
 import '../../../core/constants/colors.dart';
+import '../../routes/routes.dart';
 import '../../shared_widgets/booking_card.dart';
 import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
-import '../../../bloc/booking_list/booking_list_bloc.dart';
-import '../../routes/routes.dart';
-import '../../../data/repositories/booking_repository_test.dart';
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
 TabBar get _tabBar =>
     const TabBar(
@@ -27,19 +26,13 @@ class BookingListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BookingListBloc>(
-      create: (BuildContext context) => BookingListBloc(FakeBookingRepository())..add(GetBookingList()),
+      create: (BuildContext context) => BookingListBloc(di.sl())..add(GetBookingList()),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
           backgroundColor: MyColors.kFrameBackground,
           appBar: AppBar(
-              title: const Center(child: Text('Бронирования')),
-              actions: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(right: 19.5.sp),
-                  child: const Icon(Icons.search_rounded),
-                )
-              ],
+              title: const Text('Бронирования'),
               bottom: PreferredSize(
                 preferredSize: _tabBar.preferredSize,
                 child: Material(
@@ -82,7 +75,7 @@ class _BookingListView extends State<BookingListView> {
                   shrinkWrap: true,
                   itemCount: state.lengthActual,
                   itemBuilder: (BuildContext context, int index) {
-                    return BookingCard(state.bookingListActual[index].address, state.bookingListActual[index].place, state.bookingListActual[index].bookingId, state.bookingListActual[index].placeId);
+                    return BookingCard(booking: state.bookingListActual.bookings[index]);
                   });
             }
             else if (state is BookingListError) {
@@ -104,7 +97,7 @@ class _BookingListView extends State<BookingListView> {
                   shrinkWrap: true,
                   itemCount: state.lengthHistory,
                   itemBuilder: (BuildContext context, int index) {
-                    return BookingCard(state.bookingListHistory[index].address, state.bookingListHistory[index].place, state.bookingListHistory[index].bookingId, state.bookingListHistory[index].placeId);
+                    return BookingCard(booking: state.bookingListHistory.bookings[index]);
                   });
             }
             else if (state is BookingListError) {

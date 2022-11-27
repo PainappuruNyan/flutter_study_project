@@ -12,13 +12,7 @@ class TeamCreateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Создание команды')),
-        actions: <Widget>[
-          Container(
-            padding: EdgeInsets.only(right: 19.5.sp),
-            child: const Icon(Icons.search_rounded),
-          )
-        ],
+        title: const Text('Создание команды'),
       ),
       drawer: const NavigationDrawer.NavigationDrawer(),
       body: SingleChildScrollView(

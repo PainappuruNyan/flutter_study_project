@@ -1,7 +1,4 @@
-import 'package:atb_first_project/src/data/models/workplase_model.dart';
-
 import '../../domain/entities/booking.dart';
-import 'employee_model.dart';
 
 class BookingModel extends Booking{
   BookingModel({
@@ -16,9 +13,9 @@ class BookingModel extends Booking{
 
   factory BookingModel.fromJson(Map<String, dynamic> json) => BookingModel(
     id: json['id'] as int,
-    holder: EmployeeModel.fromJson(json['holder'] as Map<String, dynamic>),
-    maker: EmployeeModel.fromJson(json['maker'] as Map<String, dynamic>),
-    workplace: WorkplaceModel.fromJson(json['workplace'] as Map<String, dynamic>),
+    holder: json['holderId'] as int,
+    maker: json['makerId'] as int,
+    workplace: json['workplaceId'] as int,
     start: DateTime.parse(json['start'] as String),
     end: DateTime.parse(json['end'] as String),
     guests: json['guests'] as int,
@@ -26,9 +23,9 @@ class BookingModel extends Booking{
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'holder': holder.toJson(),
-    'maker': maker.toJson(),
-    'workplace': workplace.toJson(),
+    'holderId': holder,
+    'makerId': maker,
+    'workplaceId': workplace,
     'start': start.toIso8601String(),
     'end': end.toIso8601String(),
     'guests': guests,

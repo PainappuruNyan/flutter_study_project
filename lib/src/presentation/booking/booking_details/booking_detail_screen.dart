@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/colors.dart';
+import '../../../domain/entities/booking.dart';
 
 class BookingDetailScreen extends StatelessWidget {
-  const BookingDetailScreen({super.key});
+  const BookingDetailScreen({super.key, required this.e});
+  final Booking e;
 
   static const String routeName = '/booking_details';
 
@@ -23,7 +25,7 @@ class BookingDetailScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 40.sp, bottom: 45.sp),
                 child: Text(
-                  'Бронь 00000001',
+                  'Бронь ${e.id}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline4,
                 ),
@@ -80,7 +82,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Место: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'id00000001',
+                                  text: e.workplace.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 )
                               ]),
@@ -100,7 +102,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Офис: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Окатовая 12',
+                                  text: 'Океанская 12д',
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -140,7 +142,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Тип: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Переговорка',
+                                  text: e.workplace.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
