@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/booking.dart';
 
@@ -11,6 +12,17 @@ class BookingDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateStart = DateTime.parse(e.start.toString());
+    final DateTime dateEnd = DateTime.parse(e.end.toString());
+    final DateTime timeStart = DateTime.parse(e.start.toString());
+    final DateTime timeEnd = DateTime.parse(e.end.toString());
+
+    final DateFormat date = DateFormat('yyyy-MM-dd');
+    final DateFormat time = DateFormat('HH:mm');
+    final String startDate = date.format(dateStart);
+    final String endDate = date.format(dateEnd);
+    final String startTime = time.format(timeStart);
+    final String endTime = time.format(timeEnd);
     return Scaffold(
       appBar: AppBar(
           title: const Text(
@@ -190,7 +202,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  e.start.day.toString(),
+                                  startDate,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -207,7 +219,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  e.end.day.toString(),
+                                  endDate,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -239,7 +251,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  e.start.hour.toString(),
+                                  startTime,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
@@ -256,7 +268,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6.h),
                                 Text(
-                                  e.end.hour.toString(),
+                                  endTime,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],

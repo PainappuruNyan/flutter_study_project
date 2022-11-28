@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/constants/colors.dart';
 import '../../domain/entities/booking.dart';
@@ -12,6 +13,17 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateStart = DateTime.parse(booking.start.toString());
+    final DateTime dateEnd = DateTime.parse(booking.end.toString());
+    final DateTime timeStart = DateTime.parse(booking.start.toString());
+    final DateTime timeEnd = DateTime.parse(booking.end.toString());
+
+    final DateFormat date = DateFormat('yyyy.MM.dd');
+    final DateFormat time = DateFormat('HH:mm');
+    final String startDate = date.format(dateStart);
+    final String endDate = date.format(dateEnd);
+    final String startTime = time.format(timeStart);
+    final String endTime = time.format(timeEnd);
     return Card(
       margin: EdgeInsets.only(left: 14.5.sp, right: 14.5.sp, top: 16.sp),
       child: Column(
@@ -72,7 +84,7 @@ class BookingCard extends StatelessWidget {
                               child: Padding(
                                   padding: EdgeInsets.only(left: 10.sp),
                                   child: Text(
-                                      '${booking.start.day} - ${booking.end.day}\n${booking.start.hour} - ${booking.end.hour}',
+                                      '$startDate - $endDate\n$startTime - $endTime',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
