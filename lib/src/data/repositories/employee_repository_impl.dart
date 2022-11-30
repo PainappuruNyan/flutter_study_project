@@ -5,7 +5,7 @@ import '../../core/exeptions/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/entities/employee.dart';
 import '../../domain/repository/employee_repository.dart';
-import '../datasources/local_data_source.dart';
+import '../datasources/local/local_data_source.dart';
 import '../datasources/remote_data_source.dart';
 import '../models/employee_model.dart';
 
