@@ -11,7 +11,7 @@ class CustomBottomAppBar extends StatelessWidget {
     required this.nextRoute,
   });
 
-  final String nextRoute;
+  final Widget nextRoute;
   final String? pageCount;
   final String? pageNum;
 
@@ -52,7 +52,11 @@ class CustomBottomAppBar extends StatelessWidget {
                       onPressed: () {},
                       child: TextButton.icon(
                         onPressed: () {
-                          Navigator.pushNamed(context, nextRoute);
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => nextRoute
+                            ),
+                          );
                         },
                         label: Text(
                           'Дальше',

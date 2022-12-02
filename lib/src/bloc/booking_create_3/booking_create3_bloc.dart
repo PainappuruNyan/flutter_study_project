@@ -14,6 +14,8 @@ part 'booking_create3_event.dart';
 
 part 'booking_create3_state.dart';
 
+int toInt(bool? val) => val! ? 1 : 0;
+
 class BookingCreate3Bloc
     extends Bloc<BookingCreate3Event, BookingCreate3State> {
   BookingCreate3Bloc() : super(BookingCreate3Initial()) {
@@ -23,12 +25,14 @@ class BookingCreate3Bloc
     on<BookingCreate3ChangeFloor>(_onChangeFloor);
     on<BookingCreate3WorkplaceSelected>(_onWorkplaceSelected);
   }
+
   final List<int> floors = [
     1,
     2,
     3,
     4,
   ];
+
   FutureOr<void> _onStart(
       BookingCreate3Start event, Emitter<BookingCreate3State> emit) async {
     emit(BookingCreate3Initial());
@@ -39,19 +43,29 @@ class BookingCreate3Bloc
       const Workplace(true, id: 4, type_id: 1, floor_id: 1, capacity: 1),
       const Workplace(false, id: 5, type_id: 1, floor_id: 2, capacity: 1),
     ];
+    favoriteList.sort((Workplace a, Workplace b) =>
+        toInt(a.isFree).compareTo(toInt(b.isFree)));
     final List<Workplace> workplaceList = [
       const Workplace(true, id: 2, type_id: 1, floor_id: 1, capacity: 1),
       const Workplace(false, id: 6, type_id: 1, floor_id: 3, capacity: 1),
       const Workplace(true, id: 7, type_id: 1, floor_id: 1, capacity: 1),
       const Workplace(true, id: 8, type_id: 1, floor_id: 2, capacity: 1),
     ];
+    workplaceList.sort((Workplace a, Workplace b) =>
+        toInt(a.isFree).compareTo(toInt(b.isFree)));
     final List<Workplace> meetingroomList = [
-      const Workplace(true, id: 9, type_id: 1, floor_id: 1, capacity: 6),
-      const Workplace(false, id: 10, type_id: 1, floor_id: 3, capacity: 4),
-      const Workplace(false, id: 11, type_id: 1, floor_id: 1, capacity: 4),
-      const Workplace(true, id: 12, type_id: 1, floor_id: 2, capacity: 8),
+      const Workplace(true, id: 9, type_id: 2, floor_id: 1, capacity: 6),
+      const Workplace(false, id: 10, type_id: 2, floor_id: 3, capacity: 4),
+      const Workplace(false, id: 11, type_id: 2, floor_id: 1, capacity: 4),
+      const Workplace(true, id: 12, type_id: 2, floor_id: 2, capacity: 8),
     ];
-    emit(BookingCreate3FloorLoaded(floors: floors,favorites: favoriteList, usualWorkplaces: workplaceList, meetengRoom: meetingroomList));
+    meetingroomList.sort((Workplace a, Workplace b) =>
+        toInt(a.isFree).compareTo(toInt(b.isFree)));
+    emit(BookingCreate3FloorLoaded(
+        floors: floors,
+        favorites: favoriteList,
+        usualWorkplaces: workplaceList,
+        meetengRoom: meetingroomList));
   }
 
   FutureOr<void> _onChangeToMap(

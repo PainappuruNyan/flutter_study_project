@@ -11,6 +11,11 @@ class BookingCreate2Loading extends BookingCreate2State {
 }
 
 class BookingCreate2Loaded extends BookingCreate2State {
+  const BookingCreate2Loaded({
+    required this.selectedOffice,
+  });
+
+  final int? selectedOffice;
 
   @override
   List<Object> get props => [];

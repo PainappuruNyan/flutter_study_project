@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/office.dart';
+import '../../create_booking_2/booking_create_2.dart';
 
 class OfficeExpandable extends StatefulWidget {
   const OfficeExpandable({super.key, required this.offices, required this.city});
@@ -60,6 +61,7 @@ class OfficeAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int selectedOffice = office.id;
     return InkWell(
       child: Card(
         color: MyColors.kPrimaryLight,
@@ -79,7 +81,14 @@ class OfficeAddressCard extends StatelessWidget {
                     const ShapeDecoration(
                         color: MyColors.kPrimary, shape: CircleBorder())
                       , child: const Icon(Icons.done, color: MyColors.kWhite,),),
-                      onTap: () {},)
+                      onTap: () {Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => BookingCreate2Screen(
+                            selectedOffice: selectedOffice,
+                          ),
+                        ),
+                      );},)
                   ],
                 )
               ],
@@ -129,7 +138,17 @@ class OfficeAddressCard extends StatelessWidget {
             ),
             actions: <Widget>[
               MaterialButton(onPressed: (){}, child: Text('Избранное', style: Theme.of(context).textTheme.bodyText2),),
-              MaterialButton(onPressed: (){}, child: Text('Выбрать', style: Theme.of(context).textTheme.bodyText2),),
+              MaterialButton(onPressed: (){
+                selectedOffice = office.id;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => BookingCreate2Screen(
+                      selectedOffice: selectedOffice,
+                    ),
+                  ),
+                );
+              }, child: Text('Выбрать', style: Theme.of(context).textTheme.bodyText2),),
             ],
           );
         });

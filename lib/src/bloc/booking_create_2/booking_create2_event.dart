@@ -6,6 +6,12 @@ abstract class BookingCreate2Event extends Equatable{
 }
 
 class BookingCreate2Start extends BookingCreate2Event {
+  const BookingCreate2Start({
+    required this.selectedOffice,
+  });
+
+  final int? selectedOffice;
+
   @override
   List<Object?> get props => [];
 }

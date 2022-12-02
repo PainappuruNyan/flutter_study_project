@@ -12,7 +12,7 @@ class BookingCreate2Bloc extends Bloc<BookingCreate2Event, BookingCreate2State> 
   }
 
   void _onStart(BookingCreate2Event event, Emitter<BookingCreate2State> emit) {
-    emit(BookingCreate2Loaded());
+    emit(const BookingCreate2Loaded(selectedOffice: null));
   }
 
   void _onDatetimeSelected(BookingCreate2Event event, Emitter<BookingCreate2State> emit) {

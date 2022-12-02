@@ -37,7 +37,7 @@ class BookingCreate1Bloc extends Bloc<BookingCreate1Event, BookingCreate1State> 
           startOfDay: DateFormat('HH:mm').parse("08:00"),
           endOfDay: DateFormat('HH:mm').parse("19:00")),
       Office(
-          id: 1,
+          id: 2,
           address: 'Шепеткова 8д',
           bookingRange: 7,
           cityName: 'Владивосток',
@@ -45,7 +45,7 @@ class BookingCreate1Bloc extends Bloc<BookingCreate1Event, BookingCreate1State> 
           startOfDay: DateFormat('HH:mm').parse("08:00"),
           endOfDay: DateFormat('HH:mm').parse("19:00")),
       Office(
-          id: 1,
+          id: 3,
           address: 'Краснофлотская 135',
           bookingRange: 7,
           cityName: 'Благовещенск',
@@ -53,7 +53,7 @@ class BookingCreate1Bloc extends Bloc<BookingCreate1Event, BookingCreate1State> 
           startOfDay: DateFormat('HH:mm').parse("08:00"),
           endOfDay: DateFormat('HH:mm').parse("19:00")),
       Office(
-          id: 1,
+          id: 4,
           address: 'Красноармейская 123',
           bookingRange: 7,
           cityName: 'Благовещенск',
@@ -76,7 +76,7 @@ class BookingCreate1Bloc extends Bloc<BookingCreate1Event, BookingCreate1State> 
           startOfDay: DateFormat('HH:mm').parse("08:00"),
           endOfDay: DateFormat('HH:mm').parse("19:00")),
       Office(
-          id: 1,
+          id: 3,
           address: 'Краснофлотская 135',
           bookingRange: 7,
           cityName: 'Благовещенск',

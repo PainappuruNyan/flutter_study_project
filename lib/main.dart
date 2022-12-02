@@ -1,6 +1,7 @@
 import 'package:atb_first_project/src/presentation/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dependency_injection_container.dart' as di;
 import 'src/core/constants/theme.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final SharedPreferences prefs = di.sl();
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         return  MaterialApp(
           theme: basicTheme(),
           debugShowCheckedModeBanner: false,
-          initialRoute: Routes.login,
+          initialRoute: prefs.containsKey('username') && prefs.containsKey('password')? Routes.profile:Routes.login  ,
           routes: <String, Widget Function(BuildContext)>{
             Routes.login: (BuildContext context) => const LoginScreen(),
             Routes.profile: (BuildContext context) => const ProfileScreen(),
@@ -43,8 +44,8 @@ class MyApp extends StatelessWidget {
             // Routes.booking_details: (BuildContext context) => const BookingDetailScreen(),
             Routes.create_office_1: (BuildContext context) => const CreateOffice1(),
             Routes.booking_create_1: (BuildContext context) => const CreateBooking1(),
-            Routes.booking_create_2: (BuildContext context) => const BookingCreate2Screen(),
-            Routes.booking_create_3: (BuildContext context) => const BookingCreate3Screen(),
+            Routes.booking_create_2: (BuildContext context) => const BookingCreate2Screen(selectedOffice: 0,),
+            Routes.booking_create_3: (BuildContext context) => const BookingCreate3Screen(selectedOffice: null, dateStart: null, timeStart: null, timeEnd: null,),
           },
         );
       },

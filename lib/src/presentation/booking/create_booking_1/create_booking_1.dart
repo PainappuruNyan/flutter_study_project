@@ -7,6 +7,7 @@ import '../../../core/constants/colors.dart';
 import '../../../domain/entities/office.dart';
 import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
+import '../create_booking_2/booking_create_2.dart';
 import 'widgets/office_expandable.dart';
 
 class CreateBooking1 extends StatefulWidget {
@@ -42,10 +43,12 @@ class CreateBooking1View extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Новая бронь'),
         ),
-        bottomNavigationBar: const CustomBottomAppBar(
+        bottomNavigationBar: CustomBottomAppBar(
           pageNum: '1',
           pageCount: '3',
-          nextRoute: Routes.booking_create_2,
+          nextRoute: BookingCreate2Screen(
+            selectedOffice: 1,
+          ),
         ),
         body: BlocBuilder<BookingCreate1Bloc, BookingCreate1State>(
           builder: (BuildContext context, BookingCreate1State state) {

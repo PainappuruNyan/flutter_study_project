@@ -4,22 +4,40 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../bloc/booking_create_3/booking_create3_bloc.dart';
 import '../../../core/constants/colors.dart';
-import '../../profile/profile_screen.dart';
-import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import '../../shared_widgets/workplace_card.dart';
+import '../booking_list/booking_list_screen.dart';
 
 class BookingCreate3Screen extends StatefulWidget {
-  const BookingCreate3Screen({super.key});
+  const BookingCreate3Screen({
+    super.key,
+    required this.selectedOffice,
+    required this.dateStart,
+    required this.timeStart,
+    required this.timeEnd,
+  });
+
+  final int? selectedOffice;
+  final String? dateStart;
+  final String? timeStart;
+  final String? timeEnd;
 
   static const String routeName = '/booking_create/3';
 
   @override
-  State<BookingCreate3Screen> createState() => _BookingCreate3ScreenState();
+  State<BookingCreate3Screen> createState() =>
+      _BookingCreate3ScreenState(selectedOffice, dateStart, timeStart, timeEnd);
 }
 
 class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
   // final List<bool> _isFavorited = List<bool>.filled(favoriteList.length, false);
+  _BookingCreate3ScreenState(
+      this.selectedOffice, this.dateStart, this.timeStart, this.timeEnd);
+
+  final int? selectedOffice;
+  final String? dateStart;
+  final String? timeStart;
+  final String? timeEnd;
 
   int? selectedFloor = 1;
   bool listChecked = true;
@@ -28,6 +46,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateTimeStart = DateTime.parse('$dateStart $timeStart');
+    final DateTime dateTimeEnd = DateTime.parse('$dateStart $timeEnd');
     return BlocProvider<BookingCreate3Bloc>(
       create: (BuildContext context) =>
           BookingCreate3Bloc()..add(BookingCreate3Start()),
@@ -70,12 +90,14 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                             padding: EdgeInsets.only(left: 20.sp),
                             child: TextButton(
                                 onPressed: () {
-                                  context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToMap());
+                                  context
+                                      .read<BookingCreate3Bloc>()
+                                      .add(BookingCreate3ChangeToMap());
                                 },
                                 child: const Text('Карта',
-                                        style: TextStyle(
-                                            color: MyColors.kTextSecondary,
-                                            fontSize: 18))),
+                                    style: TextStyle(
+                                        color: MyColors.kTextSecondary,
+                                        fontSize: 18))),
                           ),
                           SizedBox(
                             height: 20.h,
@@ -87,12 +109,14 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                           ),
                           TextButton(
                               onPressed: () {
-                                context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToList());
+                                context
+                                    .read<BookingCreate3Bloc>()
+                                    .add(BookingCreate3ChangeToList());
                               },
                               child: const Text('Список',
-                                      style: TextStyle(
-                                          color: MyColors.kSecondary,
-                                          fontSize: 18))),
+                                  style: TextStyle(
+                                      color: MyColors.kSecondary,
+                                      fontSize: 18))),
                         ],
                       ),
                     ),
@@ -151,7 +175,11 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemCount: state.favorites.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
-                                      workplace: state.favorites[index]);
+                                      workplace: state.favorites[index],
+                                      onApprove:
+                                          context.read<BookingCreate3Bloc>(),
+                                      dateTimeStart: dateTimeStart,
+                                      dateTimeEnd: dateTimeEnd);
                                 }),
                           ],
                         )),
@@ -171,7 +199,11 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemCount: state.usualWorkplaces.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
-                                      workplace: state.usualWorkplaces[index]);
+                                      workplace: state.usualWorkplaces[index],
+                                      onApprove:
+                                          context.read<BookingCreate3Bloc>(),
+                                      dateTimeStart: dateTimeStart,
+                                      dateTimeEnd: dateTimeEnd);
                                 }),
                           ],
                         )),
@@ -191,7 +223,11 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemCount: state.meetengRoom.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
-                                      workplace: state.meetengRoom[index]);
+                                      workplace: state.meetengRoom[index],
+                                      onApprove:
+                                          context.read<BookingCreate3Bloc>(),
+                                      dateTimeStart: dateTimeStart,
+                                      dateTimeEnd: dateTimeEnd);
                                 }),
                           ],
                         )),
@@ -221,16 +257,17 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                       ),
                       //Карта и Спислк
                       Container(
-                        padding: EdgeInsets.only(left: 20.sp),
-                        child: TextButton(
-                            onPressed: () {
-                              context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToMap());
-                            },
-                            child: const Text('Карта',
-                                    style: TextStyle(
-                                        color: MyColors.kSecondary,
-                                        fontSize: 18)))
-                      ),
+                          padding: EdgeInsets.only(left: 20.sp),
+                          child: TextButton(
+                              onPressed: () {
+                                context
+                                    .read<BookingCreate3Bloc>()
+                                    .add(BookingCreate3ChangeToMap());
+                              },
+                              child: const Text('Карта',
+                                  style: TextStyle(
+                                      color: MyColors.kSecondary,
+                                      fontSize: 18)))),
                       SizedBox(
                         height: 20.h,
                         child: const VerticalDivider(
@@ -241,28 +278,38 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeToList());
+                            context
+                                .read<BookingCreate3Bloc>()
+                                .add(BookingCreate3ChangeToList());
                           },
-                          child:  const Text('Список',
-                                  style: TextStyle(
-                                      color: MyColors.kTextSecondary,
-                                      fontSize: 18))),
+                          child: const Text('Список',
+                              style: TextStyle(
+                                  color: MyColors.kTextSecondary,
+                                  fontSize: 18))),
                     ],
                   ),
                 ),
-                    Container(padding: EdgeInsets.only(top:200.h),
-                      child: Text('На стадии разработки', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),),)
+                Container(
+                  padding: EdgeInsets.only(top: 200.h),
+                  child: Text(
+                    'На стадии разработки',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontSize: 30),
+                  ),
+                )
               ]));
             }
             return const Text('error');
           },
-          listener: (BuildContext context, BookingCreate3State state){
-            if(state is BookingSuccess){
+          listener: (BuildContext context, BookingCreate3State state) {
+            if (state is BookingSuccess) {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        ProfileScreen(),
+                        const BookingListScreen(),
                   ));
             }
           },
@@ -270,7 +317,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
         bottomNavigationBar: const CustomBottomAppBar(
           pageCount: '3',
           pageNum: '3',
-          nextRoute: Routes.profile,
+          nextRoute: BookingListScreen(),
         ),
       ),
     );
