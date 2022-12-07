@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../bloc/booking_create_1/booking_create1_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/office.dart';
-import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import '../create_booking_2/booking_create_2.dart';
 import 'widgets/office_expandable.dart';
@@ -43,12 +42,13 @@ class CreateBooking1View extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Новая бронь'),
         ),
-        bottomNavigationBar: CustomBottomAppBar(
+        bottomNavigationBar: const CustomBottomAppBar(
           pageNum: '1',
           pageCount: '3',
           nextRoute: BookingCreate2Screen(
             selectedOffice: 1,
           ),
+          nextPageButton: false,
         ),
         body: BlocBuilder<BookingCreate1Bloc, BookingCreate1State>(
           builder: (BuildContext context, BookingCreate1State state) {
@@ -127,7 +127,7 @@ class CreateBooking1View extends StatelessWidget {
                 ),
               );
             }
-            return Center(
+            return const Center(
               child: Text('Ошибка'),
             );
           },

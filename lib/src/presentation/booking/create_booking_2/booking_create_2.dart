@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import '../../../bloc/booking_create_2/booking_create2_bloc.dart';
 import '../../../core/constants/colors.dart';
-import '../../routes/routes.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import '../create_booking_3/booking_create_3.dart';
 
@@ -24,6 +23,7 @@ class BookingCreate2Screen extends StatefulWidget {
 
 class _BookingCreate2Screen extends State<BookingCreate2Screen> {
   _BookingCreate2Screen(this.selectedOffice);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   int? selectedOffice;
   TextEditingController dateinput = TextEditingController();
@@ -95,72 +95,93 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
       return const Center(child: CircularProgressIndicator(),);
     }
     if (state is BookingCreate2Loaded) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 12.sp),
-                      child: Text(
-                        'Выберите дату',
-                        style: Theme.of(context).textTheme.headline4,
+              return Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 12.sp),
+                        child: Text(
+                          'Выберите дату',
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
                       ),
-                    ),
-                    Container(
+                      Container(
+                          padding: EdgeInsets.only(
+                              left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                          child: Center(
+                              child: TextFormField(
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  validator: (String? value) {
+                                    if (value!.isEmpty) {
+                                      return 'Выберите дату брони';
+                                    }
+                                    return null;
+                                  },
+                                  controller: dateinput,
+                                  decoration: const InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.calendar_month,
+                                      color: MyColors.kPrimary,
+                                    ),
+                                    labelText: 'Дата начала брони',
+                                  ),
+                                  readOnly: true,
+                                  onTap: () => datePicker(dateinput)))),
+                      Container(
+                        padding: EdgeInsets.only(top: 70.sp),
+                        child: Text(
+                          'Выберите время',
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ),
+                      Container(
                         padding: EdgeInsets.only(
                             left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-                        child: Center(
-                            child: TextField(
-                                style: Theme.of(context).textTheme.bodyText2,
-                                controller: dateinput,
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.calendar_month,
-                                    color: MyColors.kPrimary,
-                                  ),
-                                  labelText: 'Дата начала брони',
-                                ),
-                                readOnly: true,
-                                onTap: () => datePicker(dateinput)))),
-                    Container(
-                      padding: EdgeInsets.only(top: 70.sp),
-                      child: Text(
-                        'Выберите время',
-                        style: Theme.of(context).textTheme.headline4,
+                        child: TextFormField(
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return 'Выберите время начала брони';
+                            }
+                            return null;
+                          },
+                          controller: begintimeinput,
+                          readOnly: true,
+                          style: Theme.of(context).textTheme.bodyText2,
+                          decoration: const InputDecoration(
+                              labelText: 'Время начала брони',
+                              prefixIcon: Icon(
+                                Icons.watch_later_outlined,
+                                color: Colors.deepOrange,
+                              )),
+                          onTap: () => timePicker(begintimeinput),
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-                      child: TextFormField(
-                        controller: begintimeinput,
-                        readOnly: true,
-                        style: Theme.of(context).textTheme.bodyText2,
-                        decoration: const InputDecoration(
-                            labelText: 'Время начала брони',
-                            prefixIcon: Icon(
-                              Icons.watch_later_outlined,
-                              color: Colors.deepOrange,
-                            )),
-                        onTap: () => timePicker(begintimeinput),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: 36.5.sp, right: 36.5.sp, top: 35.sp),
+                        child: TextFormField(
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return 'Выберите время конца брони';
+                            }
+                            return null;
+                          },
+                          controller: endtimeinput,
+                          readOnly: true,
+                          style: Theme.of(context).textTheme.bodyText2,
+                          decoration: const InputDecoration(
+                              labelText: 'Время конца брони',
+                              prefixIcon: Icon(
+                                Icons.watch_later_outlined,
+                                color: MyColors.kPrimary,
+                              )),
+                          onTap: () => timePicker(endtimeinput),
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-                      child: TextFormField(
-                        controller: endtimeinput,
-                        readOnly: true,
-                        style: Theme.of(context).textTheme.bodyText2,
-                        decoration: const InputDecoration(
-                            labelText: 'Время конца брони',
-                            prefixIcon: Icon(
-                              Icons.watch_later_outlined,
-                              color: MyColors.kPrimary,
-                            )),
-                        onTap: () => timePicker(endtimeinput),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             }
@@ -170,12 +191,14 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
         bottomNavigationBar: CustomBottomAppBar(
           pageCount: '3',
           pageNum: '2',
+          dateValid: _formKey.currentState?.validate(),
           nextRoute: BookingCreate3Screen(
             selectedOffice: selectedOffice,
             dateStart: dateinput.text,
             timeStart: begintimeinput.text,
             timeEnd: endtimeinput.text,
           ),
+          nextPageButton: true,
         ),
       ),
     );

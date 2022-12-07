@@ -318,6 +318,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
           pageCount: '3',
           pageNum: '3',
           nextRoute: BookingListScreen(),
+          nextPageButton: true,
         ),
       ),
     );
