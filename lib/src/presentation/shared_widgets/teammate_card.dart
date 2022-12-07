@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/entities/teammate.dart';
+
+
 class TeammateCard extends StatelessWidget {
 
-  const TeammateCard(this.userName, this.userTeamRole, this.userId,
-      {super.key});
+  const TeammateCard(
+      {super.key, required this.teammate});
 
-  final String userName;
-  final String userTeamRole;
-  final String userId;
+  final Teammate teammate;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class TeammateCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            userName,
+                            'Милое имя',
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Padding(
@@ -45,7 +46,7 @@ class TeammateCard extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: userTeamRole,
+                                        text: 'Роль',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2)
@@ -58,7 +59,7 @@ class TeammateCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headline6,
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: userId,
+                                      text: teammate.employeeId.toString(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText2)

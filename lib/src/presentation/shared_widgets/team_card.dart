@@ -1,14 +1,16 @@
+import 'package:atb_first_project/src/data/models/team_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../bloc/team_list/team_list_bloc.dart';
 import '../../core/constants/colors.dart';
+import '../teams/team_details/team_details_screen.dart';
 
 class TeamCard extends StatelessWidget {
 
-  TeamCard(this.teamName, this.userName, this.userTeamRole, {super.key});
-  String teamName = '';
-  String userName = '';
-  String userTeamRole = '';
+  const TeamCard({super.key, required this.team,});
+  final TeamModel team;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class TeamCard extends StatelessWidget {
                           alignment: Alignment.center,
                           padding: EdgeInsets.only(top: 9.sp, bottom: 6.sp),
                           child: Text(
-                            teamName,
+                            team.name,
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
@@ -36,7 +38,7 @@ class TeamCard extends StatelessWidget {
                           alignment: Alignment.center,
                           padding: EdgeInsets.only(bottom: 11.sp),
                           child: Text(
-                            userName,
+                            'Лидер: ${team.leaderId}',
                             style: Theme.of(context).textTheme.subtitle2,
                           ),
                         ),
@@ -53,26 +55,32 @@ class TeamCard extends StatelessWidget {
                               bottomRight: Radius.circular(4)),
                           color: MyColors.kSecondary,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 10.sp),
-                              height: 39.h,
-                              width: 130.w,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: MyColors.kWhite, width: 1.w),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                color: MyColors.kSecondary,
-                              ),
-                              child: Text(
-                                userTeamRole,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText1,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => TeamDetailsScreen(e:team, bloc: context.read<TeamListBloc>(),)));
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                                height: 39.h,
+                                width: 130.w,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: MyColors.kWhite, width: 1.w),
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(8)),
+                                  color: MyColors.kSecondary,
                                 ),
-                              ),
-                          ],
+                                child: Text(
+                                  'Роль',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ),
+                            ],
+                          ),
                         )),
                   ],
                 ))

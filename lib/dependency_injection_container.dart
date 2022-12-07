@@ -1,4 +1,5 @@
 import 'package:atb_first_project/src/data/datasources/local/database.dart';
+import 'package:atb_first_project/src/data/repositories/teammate_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,8 @@ import 'src/data/repositories/booking_repository_impl.dart';
 import 'src/data/repositories/office_repository_impl.dart';
 import 'src/data/repositories/profile_repository_impl.dart';
 import 'package:http/http.dart' as http;
+
+import 'src/data/repositories/team_repository_impl.dart';
 
 final sl = GetIt.instance;
 
@@ -30,6 +33,10 @@ Future<void> init() async{
   sl.registerLazySingleton(() => BookingRepositoryImpl(networkInfo: sl(), remoteDataSource: sl()));
 
   sl.registerLazySingleton(() => OfficeRepositoryImpl(networkInfo: sl(), remoteDataSource: sl()));
+
+  sl.registerLazySingleton(() => TeamRepositoryImpl(networkInfo: sl(), remoteDataSource: sl()));
+
+  sl.registerLazySingleton(() => TeammateRepositoryImpl(networkInfo: sl(), remoteDataSource: sl()));
 
   sl.registerSingletonAsync<AppDatabase>(
           () async =>$FloorAppDatabase.databaseBuilder('app_database.db').build());

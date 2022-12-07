@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../bloc/team_list/team_list_bloc.dart';
 import '../../../core/constants/colors.dart';
+import '../../../data/models/team_model.dart';
+import '../team_list/team_list_screen.dart';
+import '../teammate_list/teammate_list.dart';
 
 class TeamDetailsScreen extends StatelessWidget {
-  const TeamDetailsScreen({super.key});
+  const TeamDetailsScreen({super.key, required this.e, required this.bloc});
+
+  final TeamModel e;
+  final TeamListBloc bloc;
 
   static const String routeName = '/team_details_screen';
 
@@ -20,7 +27,7 @@ class TeamDetailsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 30, bottom: 40),
             child: Text(
-              'Название команды',
+              e.name,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline4,
             ),
@@ -52,7 +59,7 @@ class TeamDetailsScreen extends StatelessWidget {
                               text: 'Лидер: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: 'Какое-то имя',
+                                    text: e.leaderId.toString(),
                                     style: Theme.of(context).textTheme.bodyText2),
                               ]),
                         ),
@@ -77,7 +84,7 @@ class TeamDetailsScreen extends StatelessWidget {
                           text: 'Id: ',
                           children: <TextSpan>[
                             TextSpan(
-                                text: 'id00000001',
+                                text: e.id.toString(),
                                 style: Theme.of(context).textTheme.bodyText2),
                           ]),
                     )),
@@ -101,7 +108,10 @@ class TeamDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.sp),
             width: 286.w,
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute<TeamMateList>(
+                    builder: (_) => TeamMateList(teamName: e.name, teamId: e.id,)));
+              },
               color: MyColors.kWhite,
               child: const Text('Участники команды',
                   style: TextStyle(fontSize: 16.0, color: MyColors.kPrimary)),
@@ -121,7 +131,11 @@ class TeamDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.sp),
             width: 286.w,
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                bloc.add(TeamDelete(id: e.id));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const TeamListScreen()));
+              },
               color: MyColors.kWhite,
               child: const Text('Удалить команду',
                   style: TextStyle(
@@ -133,7 +147,8 @@ class TeamDetailsScreen extends StatelessWidget {
         ])),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+        },
         child: const Icon(
           Icons.edit,
         ),
