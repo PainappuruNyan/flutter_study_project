@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../../domain/entities/office.dart';
 
 class OfficeModel extends Office{
-  const OfficeModel({
+  OfficeModel({
     required super.id,
     required super.cityName,
     required super.address,
@@ -11,6 +11,7 @@ class OfficeModel extends Office{
     required super.startOfDay,
     required super.endOfDay,
     required super.bookingRange,
+    required super.isFavorite,
   });
 
   factory OfficeModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +24,7 @@ class OfficeModel extends Office{
         startOfDay: format.parse(json['startOfDay'] as String),
         endOfDay: format.parse(json['endOfDay'] as String),
         bookingRange: json['bookingRange'] as int,
+        isFavorite: false,
     );
   }
 

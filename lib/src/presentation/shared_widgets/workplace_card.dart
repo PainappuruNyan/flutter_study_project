@@ -33,7 +33,7 @@ class WorkplaceCard extends StatelessWidget {
           onTap: () {
             workplace.isFree!
                 ? null
-                : workplace.type_id == 1
+                : workplace.typeName == '1'
                     ? showDialog(
                         context: context,
                         builder: (BuildContext context) {

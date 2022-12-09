@@ -10,19 +10,20 @@ class BookingCreate3Initial extends BookingCreate3State {
 }
 
 class BookingCreate3FloorLoading extends BookingCreate3State {
-  const BookingCreate3FloorLoading({required this.floorNumber, required this.floorId});
+  const BookingCreate3FloorLoading({required this.floorNumber, required this.officeId});
 
 
   final int floorNumber;
-  final int floorId;
+  final int officeId;
 
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [floorNumber];
 }
 
 class BookingCreate3FloorLoaded extends BookingCreate3State {
-  const BookingCreate3FloorLoaded({
+  BookingCreate3FloorLoaded(
+      this.selectedFloor, {
     required this.floors,
     required this.favorites,
     required this.usualWorkplaces,
@@ -30,14 +31,43 @@ class BookingCreate3FloorLoaded extends BookingCreate3State {
   });
 
 
-  final List<int> floors;
+  final List<Floor> floors;
   final List<Workplace> favorites;
   final List<Workplace> usualWorkplaces;
   final List<Workplace> meetengRoom;
+  int selectedFloor;
+
+  BookingCreate3FloorLoaded copyWith({
+    List<Floor>? floors,
+    List<Workplace>? favorites,
+    List<Workplace>? usualWorkplaces,
+    List<Workplace>? meetengRoom,
+    int? selectedFloor,
+}){
+    return BookingCreate3FloorLoaded(
+        selectedFloor ?? this.selectedFloor,
+        floors: floors ?? this.floors,
+        favorites: favorites ?? this.favorites,
+        usualWorkplaces: usualWorkplaces ?? this.usualWorkplaces,
+        meetengRoom: meetengRoom ?? this.meetengRoom);
+  }
 
   @override
-  List<Object> get props => [floors, usualWorkplaces, meetengRoom];
+  List<Object> get props => [floors, usualWorkplaces, meetengRoom, selectedFloor];
 }
+
+// class BookingCreate3WorkplacesLoading extends BookingCreate3State{
+//   const BookingCreate3WorkplacesLoading({
+//     required this.selectedFloor
+//   });
+//
+//   final int selectedFloor;
+//
+//   @override
+//   List<Object?> get props => [selectedFloor];
+//
+// }
+
 
 class BookingCreate3FloorMapLoading extends BookingCreate3State {
   @override
@@ -46,7 +76,7 @@ class BookingCreate3FloorMapLoading extends BookingCreate3State {
 class BookingCreate3FloorMapLoaded extends BookingCreate3State{
   const BookingCreate3FloorMapLoaded({required this.floors});
 
-  final List<int> floors;
+  final List<Floor> floors;
   @override
   List<Object?> get props => [floors];
 }

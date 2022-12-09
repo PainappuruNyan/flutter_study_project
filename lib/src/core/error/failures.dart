@@ -18,3 +18,9 @@ class EmptyCasheFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class EmptyFavoritesFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+
+}

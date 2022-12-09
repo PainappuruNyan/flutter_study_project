@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `FavoritesOffices` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `officeId` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `FavoritesOffices` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `officeId` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `FavoritesPlaces` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `placeId` INTEGER NOT NULL)');
 
@@ -116,12 +116,6 @@ class _$FavoritesDao extends FavoritesDao {
             'FavoritesPlaces',
             (PlaceId item) =>
                 <String, Object?>{'id': item.id, 'placeId': item.placeId}),
-        _officeIdDeletionAdapter = DeletionAdapter(
-            database,
-            'FavoritesOffices',
-            ['id'],
-            (OfficeId item) =>
-                <String, Object?>{'id': item.id, 'officeId': item.officeId}),
         _placeIdDeletionAdapter = DeletionAdapter(
             database,
             'FavoritesPlaces',
@@ -139,15 +133,20 @@ class _$FavoritesDao extends FavoritesDao {
 
   final InsertionAdapter<PlaceId> _placeIdInsertionAdapter;
 
-  final DeletionAdapter<OfficeId> _officeIdDeletionAdapter;
-
   final DeletionAdapter<PlaceId> _placeIdDeletionAdapter;
 
   @override
   Future<List<OfficeId>> getAllOffices() async {
     return _queryAdapter.queryList('SELECT * FROM FavoritesOffices',
         mapper: (Map<String, Object?> row) =>
-            OfficeId(row['id'] as int, row['officeId'] as int));
+            OfficeId(id: row['id'] as int?, officeId: row['officeId'] as int));
+  }
+
+  @override
+  Future<void> deleteFavoriteOffice(int id) async {
+    await _queryAdapter.queryNoReturn(
+        'DELETE FROM FavoritesOffices WHERE officeId = ?1',
+        arguments: [id]);
   }
 
   @override
@@ -165,11 +164,6 @@ class _$FavoritesDao extends FavoritesDao {
   @override
   Future<void> insertFavoritePlace(PlaceId place) async {
     await _placeIdInsertionAdapter.insert(place, OnConflictStrategy.replace);
-  }
-
-  @override
-  Future<void> deleteFavoriteOffice(OfficeId office) async {
-    await _officeIdDeletionAdapter.delete(office);
   }
 
   @override

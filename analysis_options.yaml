@@ -29,7 +29,7 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
-    - 'lib/src/data/datasources/local/database.g.dart'
+#    - 'lib/src/data/datasources/local/database.g.dart'
 
 linter:
   rules:

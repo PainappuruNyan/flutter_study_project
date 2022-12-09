@@ -12,8 +12,8 @@ abstract class FavoritesDao{
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertFavoriteOffice(OfficeId office);
 
-  @delete
-  Future<void> deleteFavoriteOffice(OfficeId office);
+  @Query('DELETE FROM FavoritesOffices WHERE officeId = :id')
+  Future<void> deleteFavoriteOffice(int id);
 
   @Query('SELECT * FROM FavoritesPlaces')
   Future<List<PlaceId>> getAllPlaces();

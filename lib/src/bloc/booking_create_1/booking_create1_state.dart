@@ -14,15 +14,13 @@ class BookingCreate1Loaded extends BookingCreate1State {
   const BookingCreate1Loaded({
     required this.offices,
     required this.cites,
-    required this.favorites
   });
 
   final List<Office> offices;
   final List<String> cites;
-  final List<Office> favorites;
 
   @override
-  List<Object> get props => [offices, cites, favorites];
+  List<Object> get props => [offices, cites];
 }
 class BookingCreate1Error extends BookingCreate1State{
 

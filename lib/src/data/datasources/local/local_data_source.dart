@@ -6,12 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/exeptions/exceptions.dart';
 import '../../models/employee_model.dart';
 import '../../models/profile_model.dart';
+import 'DAO/favorite_office_id.dart';
+import 'DAO/favorites_dao.dart';
 
 abstract class LocalDataSource{
   Future<EmployeeModel> getCachedEmployee();
   Future<Unit> cacheEmployee(EmployeeModel employeeModel);
   Future<Unit> cacheProfile(ProfileModel profileModel);
   Future<ProfileModel> getCachedProfile();
+  Future<List<OfficeId>> getFavoritesOffices();
+  Future<void> changeFavorite(int id, bool isFavorite);
 }
 
 const String CASHED_EMPLOYEE = 'CACHED_EMPLOYEE';
@@ -20,9 +24,11 @@ const String CASHED_PROFILE = 'CASHED_PROFILE';
 
 class LocalDataSourceImpl implements LocalDataSource{
   LocalDataSourceImpl({
-    required this.sharedPreferences
+    required this.sharedPreferences,
+    required this.daoFavorites,
   });
 
+  final FavoritesDao daoFavorites;
   final SharedPreferences sharedPreferences;
 
   @override
@@ -62,5 +68,22 @@ class LocalDataSourceImpl implements LocalDataSource{
       throw EmptyCacheException();
     }
   }
-  
+
+  @override
+  Future<List<OfficeId>> getFavoritesOffices() async {
+    final List<OfficeId> favoriteList = await daoFavorites.getAllOffices();
+    return Future.value(favoriteList);
+  }
+
+  @override
+  Future<void> changeFavorite(int id, bool isFavorite) async {
+    if(isFavorite){
+      OfficeId office = OfficeId(officeId: id);
+      await daoFavorites.insertFavoriteOffice(office);
+    }
+    else{
+     await daoFavorites.deleteFavoriteOffice(id);
+    }
+  }
+
 }

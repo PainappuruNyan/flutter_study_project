@@ -24,13 +24,12 @@ class BookingCreate3FavoriteChanged extends BookingCreate3Event{
 }
 
 class BookingCreate3ChangeFloor extends BookingCreate3Event{
-  const BookingCreate3ChangeFloor({required this.floorNumber, required this.floorId});
+  const BookingCreate3ChangeFloor({required this.floorNumber});
 
   final int floorNumber;
-  final int floorId;
 
   @override
-  List<Object> get props => [floorNumber, floorId];
+  List<Object> get props => [floorNumber];
 }
 
 class BookingCreate3WorkplaceSelected extends BookingCreate3Event{

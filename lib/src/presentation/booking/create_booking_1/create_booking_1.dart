@@ -109,7 +109,7 @@ class CreateBooking1View extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               late List<Office> cityOffices;
                               if (state.cites[index] == 'Избранное') {
-                                cityOffices = state.favorites;
+                                cityOffices = state.offices.where((element) => element.isFavorite==true).toList();
                               } else {
                                 cityOffices = state.offices
                                     .where((Office element) =>

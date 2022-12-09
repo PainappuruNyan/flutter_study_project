@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             Routes.create_office_1: (BuildContext context) => const CreateOffice1(),
             Routes.booking_create_1: (BuildContext context) => const CreateBooking1(),
             Routes.booking_create_2: (BuildContext context) => const BookingCreate2Screen(selectedOffice: 0,),
-            Routes.booking_create_3: (BuildContext context) => const BookingCreate3Screen(selectedOffice: null, dateStart: null, timeStart: null, timeEnd: null,),
+            Routes.booking_create_3: (BuildContext context) => const BookingCreate3Screen(selectedOffice: -1, dateStart: null, timeStart: null, timeEnd: null,),
           },
         );
       },

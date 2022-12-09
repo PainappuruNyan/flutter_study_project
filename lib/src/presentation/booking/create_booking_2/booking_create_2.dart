@@ -11,7 +11,7 @@ import '../create_booking_3/booking_create_3.dart';
 class BookingCreate2Screen extends StatefulWidget {
   const BookingCreate2Screen({super.key, required this.selectedOffice});
 
-  final int? selectedOffice;
+  final int selectedOffice;
 
   static const String routeName = '/booking_create/2';
 
@@ -25,7 +25,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
   _BookingCreate2Screen(this.selectedOffice);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  int? selectedOffice;
+  int selectedOffice;
   TextEditingController dateinput = TextEditingController();
   TextEditingController begintimeinput = TextEditingController();
   TextEditingController endtimeinput = TextEditingController();

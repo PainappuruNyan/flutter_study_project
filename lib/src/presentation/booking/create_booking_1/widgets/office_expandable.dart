@@ -1,7 +1,9 @@
 import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../bloc/booking_create_1/booking_create1_bloc.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/office.dart';
 import '../../create_booking_2/booking_create_2.dart';
@@ -45,7 +47,7 @@ class _OfficeExpandableState extends State<OfficeExpandable> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.offices.length,
               itemBuilder: (BuildContext context, int index){
-                return OfficeAddressCard(office: widget.offices[index]);
+                return OfficeAddressCard(office: widget.offices[index], dialogBloc: context.read<BookingCreate1Bloc>());
               },
               shrinkWrap: true,
             ),
@@ -55,9 +57,10 @@ class _OfficeExpandableState extends State<OfficeExpandable> {
 }
 
 class OfficeAddressCard extends StatelessWidget {
-  const OfficeAddressCard({super.key, required this.office});
+  const OfficeAddressCard({super.key, required this.office, required this.dialogBloc});
 
   final Office office;
+  final BookingCreate1Bloc dialogBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +140,9 @@ class OfficeAddressCard extends StatelessWidget {
               ),
             ),
             actions: <Widget>[
-              MaterialButton(onPressed: (){}, child: Text('Избранное', style: Theme.of(context).textTheme.bodyText2),),
+              MaterialButton(onPressed: (){
+                dialogBloc.add(BookingCreate1FavoriteChanged(id: office.id, isFavorite: !office.isFavorite));
+              }, child: Text('Избранное', style: Theme.of(context).textTheme.bodyText2),),
               MaterialButton(onPressed: (){
                 selectedOffice = office.id;
                 Navigator.push(

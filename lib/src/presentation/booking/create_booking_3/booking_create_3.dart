@@ -17,7 +17,7 @@ class BookingCreate3Screen extends StatefulWidget {
     required this.timeEnd,
   });
 
-  final int? selectedOffice;
+  final int selectedOffice;
   final String? dateStart;
   final String? timeStart;
   final String? timeEnd;
@@ -34,7 +34,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
   _BookingCreate3ScreenState(
       this.selectedOffice, this.dateStart, this.timeStart, this.timeEnd);
 
-  final int? selectedOffice;
+  final int selectedOffice;
   final String? dateStart;
   final String? timeStart;
   final String? timeEnd;
@@ -50,7 +50,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
     final DateTime dateTimeEnd = DateTime.parse('$dateStart $timeEnd');
     return BlocProvider<BookingCreate3Bloc>(
       create: (BuildContext context) =>
-          BookingCreate3Bloc()..add(BookingCreate3Start()),
+          BookingCreate3Bloc(selectedOffice)..add(BookingCreate3Start()),
       child: Scaffold(
         backgroundColor: MyColors.kWhite,
         appBar: AppBar(
@@ -76,12 +76,12 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                           Container(
                             padding: EdgeInsets.only(left: 30.sp),
                             child: CustomDropDown(
-                              value: '$selectedFloor Этаж',
-                              itemsList: state.floors,
+                              value: '${state.selectedFloor} Этаж',
+                              itemsList: state.floors.map((e) => e.floorNumber).toList(),
                               onChanged: (dynamic value) {
-                                setState(() {
-                                  selectedFloor = value as int;
-                                });
+                                final String selected = value as String;
+                                final int result = int.parse(selected.substring(0, selected.indexOf(' ')));
+                                context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeFloor(floorNumber: result));
                               },
                             ),
                           ),
@@ -247,7 +247,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                         padding: EdgeInsets.only(left: 30.sp),
                         child: CustomDropDown(
                           value: '$selectedFloor Этаж',
-                          itemsList: state.floors,
+                          itemsList: state.floors.map((e) => e.floorNumber).toList(),
                           onChanged: (dynamic value) {
                             setState(() {
                               selectedFloor = value as int;

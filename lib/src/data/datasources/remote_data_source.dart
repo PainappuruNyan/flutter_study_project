@@ -6,11 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/exeptions/exceptions.dart';
 import '../models/booking_list_model.dart';
 import '../models/booking_model.dart';
+import '../models/city_list_model.dart';
 import '../models/employee_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
+import '../models/floor_list_model.dart';
 import '../models/office_list_model.dart';
 import '../models/office_model.dart';
 import '../models/profile_model.dart';
@@ -33,6 +35,8 @@ abstract class RemoteDataSource {
 
   Future<String> postNewBooking({required BookingModel booking});
 
+  Future<CityListModel> getCitesAll();
+
   Future<TeamListModel> getMyTeam();
   Future<TeamListModel> getAllTeam();
 
@@ -41,6 +45,8 @@ abstract class RemoteDataSource {
   Future<String> editTeam({required TeamModel team});
 
   Future<TeammateListModel> getTeammate({required int teamId});
+
+  Future<FloorListModel> getFloors(int officeId);
 
 }
 
@@ -153,9 +159,9 @@ class RemoteImplWithHttp implements RemoteDataSource {
         Uri.parse('$BASE_URL/office/all'),
         headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
     if (response.statusCode == 200) {
-      final List<dynamic> decodeJsonData =
-      jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
-      final OfficeListModel jsonToOfficeListModel = OfficeListModel.fromJson(decodeJsonData);
+      final Map<String, dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      final OfficeListModel jsonToOfficeListModel = OfficeListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
       return Future<OfficeListModel>.value(jsonToOfficeListModel);
     } else {
       throw ServerException();
@@ -219,6 +225,24 @@ class RemoteImplWithHttp implements RemoteDataSource {
       return Future<String>.value(decodeJsonData);
     } else {
       print(response.body);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<CityListModel> getCitesAll() async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.get(
+        Uri.parse('$BASE_URL/city/all'),
+        headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
+    if (response.statusCode == 200) {
+      final List<dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+      final CityListModel jsonToCityListModel = CityListModel.fromJson(decodeJsonData);
+      return Future<CityListModel>.value(jsonToCityListModel);
+    } else {
       throw ServerException();
     }
   }
@@ -344,6 +368,24 @@ class RemoteImplWithHttp implements RemoteDataSource {
       jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
       final TeammateListModel jsonToTeammateListModel = TeammateListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
       return Future<TeammateListModel>.value(jsonToTeammateListModel);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<FloorListModel> getFloors(int officeId) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.get(
+        Uri.parse('$BASE_URL/floor/all?officeId=$officeId&page=0&size=20'),
+        headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      final FloorListModel jsonToFloorListModel = FloorListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
+      return Future<FloorListModel>.value(jsonToFloorListModel);
     } else {
       throw ServerException();
     }
