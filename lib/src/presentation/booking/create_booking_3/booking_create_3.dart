@@ -30,7 +30,7 @@ class BookingCreate3Screen extends StatefulWidget {
 }
 
 class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
-  // final List<bool> _isFavorited = List<bool>.filled(favoriteList.length, false);
+
   _BookingCreate3ScreenState(
       this.selectedOffice, this.dateStart, this.timeStart, this.timeEnd);
 
@@ -50,7 +50,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
     final DateTime dateTimeEnd = DateTime.parse('$dateStart $timeEnd');
     return BlocProvider<BookingCreate3Bloc>(
       create: (BuildContext context) =>
-          BookingCreate3Bloc(selectedOffice)..add(BookingCreate3Start()),
+          BookingCreate3Bloc(selectedOffice, dateTimeStart, dateTimeEnd)..add(BookingCreate3Start()),
       child: Scaffold(
         backgroundColor: MyColors.kWhite,
         appBar: AppBar(

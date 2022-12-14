@@ -29,11 +29,10 @@ class WorkplaceCard extends StatelessWidget {
             'id${workplace.id}',
             style: Theme.of(context).textTheme.subtitle2,
           ),
-          tileColor: workplace.isFree! ? Colors.grey.shade400 : null,
+          tileColor: !workplace.isFree ? Colors.grey.shade400 : null,
           onTap: () {
-            workplace.isFree!
-                ? null
-                : workplace.typeName == '1'
+            !workplace.isFree? null
+                : workplace.typeName == 'Одиночное место'
                     ? showDialog(
                         context: context,
                         builder: (BuildContext context) {

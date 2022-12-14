@@ -13,6 +13,8 @@ import '../../domain/entities/floor_list.dart';
 import '../../domain/entities/workplace.dart';
 import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
+import '../../domain/entities/workplace_list.dart';
+
 part 'booking_create3_event.dart';
 
 part 'booking_create3_state.dart';
@@ -22,7 +24,7 @@ int toInt(bool? val) => val! ? 1 : 0;
 class BookingCreate3Bloc
     extends Bloc<BookingCreate3Event, BookingCreate3State> {
 
-  BookingCreate3Bloc(this.officeId) : super(BookingCreate3Initial()) {
+  BookingCreate3Bloc(this.officeId, this.start, this.end) : super(BookingCreate3Initial()) {
     on<BookingCreate3Start>(_onStart);
     on<BookingCreate3ChangeToMap>(_onChangeToMap);
     on<BookingCreate3ChangeToList>(_onChangeToList);
@@ -30,9 +32,12 @@ class BookingCreate3Bloc
     on<BookingCreate3WorkplaceSelected>(_onWorkplaceSelected);
   }
 
+
   int officeId;
   final WorkplaceRepositoryImpl repository = di.sl();
   List<Floor> floors = [];
+  DateTime start;
+  DateTime end;
 
   FutureOr<void> _onStart(
       BookingCreate3Start event, Emitter<BookingCreate3State> emit) async {
@@ -40,46 +45,48 @@ class BookingCreate3Bloc
     await repository.getFloors(officeId).then((Either<Failure, FloorList> value)
     => value.fold(
             (Failure l) async {
+              print(l.toString());
             },
             (FloorList r) async {
+              print(r.floors.first.id);
               floors = r.floors;
             }));
 
-    _downloadWorkplaces(floors.first.floorNumber);
+    _downloadWorkplaces(floors.first);
   }
 
-  Future<void> _downloadWorkplaces(int selectedFloor) async {
+  Future<void> _downloadWorkplaces(Floor selectedFloor) async {
     //загружаем места
-    final List<Workplace> favoriteList = [
-      const Workplace(true, id: 1, typeName: '1', floorId: 1, capacity: 1),
-      const Workplace(false, id: 3, typeName: '1', floorId: 3, capacity: 1),
-      const Workplace(true, id: 4, typeName: '1', floorId: 1, capacity: 1),
-      const Workplace(false, id: 5, typeName: '1', floorId: 2, capacity: 1),
-    ];
-    favoriteList.sort((Workplace a, Workplace b) =>
-        toInt(a.isFree).compareTo(toInt(b.isFree)));
-    final List<Workplace> workplaceList = [
-      const Workplace(true, id: 2, typeName: '1', floorId: 1, capacity: 1),
-      const Workplace(false, id: 6, typeName: '1', floorId: 3, capacity: 1),
-      const Workplace(true, id: 7, typeName: '1', floorId: 1, capacity: 1),
-      const Workplace(true, id: 8, typeName: '1', floorId: 2, capacity: 1),
-    ];
-    workplaceList.sort((Workplace a, Workplace b) =>
-        toInt(a.isFree).compareTo(toInt(b.isFree)));
-    final List<Workplace> meetingroomList = [
-      const Workplace(true, id: 9, typeName: '2', floorId: 1, capacity: 6),
-      const Workplace(false, id: 10, typeName: '2', floorId: 3, capacity: 4),
-      const Workplace(false, id: 11, typeName: '2', floorId: 1, capacity: 4),
-      const Workplace(true, id: 12, typeName: '2', floorId: 2, capacity: 8),
-    ];
-    meetingroomList.sort((Workplace a, Workplace b) =>
-        toInt(a.isFree).compareTo(toInt(b.isFree)));
+
+    List<Workplace> workplaceList = [];
+    List<Workplace> meetingroomList = [];
+    List<Workplace> favorites = [];
+    await repository.getWorkplaces(selectedFloor.id, start, end).then((Either<Failure, WorkplaceList> value) =>
+    value.fold(
+            (Failure l) {
+              return null;
+            },
+            (WorkplaceList r) {
+              workplaceList = r.places;
+              print(start.toString());
+              print(end.toString());
+            }
+    ));
+    await repository.getMeetingRooms(selectedFloor.id, start, end).then((Either<Failure, WorkplaceList> value) =>
+    value.fold(
+            (Failure l) async {
+              return null;
+            },
+            (WorkplaceList r) async {
+              meetingroomList = r.places;
+            }
+    ));
     emit(BookingCreate3FloorLoaded(
         floors: floors,
-        favorites: favoriteList,
+        favorites: favorites,
         usualWorkplaces: workplaceList,
         meetengRoom: meetingroomList,
-        selectedFloor
+        selectedFloor.floorNumber
     ));
   }
 
@@ -96,7 +103,7 @@ class BookingCreate3Bloc
   FutureOr<void> _onChangeFloor(
       BookingCreate3ChangeFloor event, Emitter<BookingCreate3State> emit) {
     emit(BookingCreate3FloorLoading(floorNumber: event.floorNumber, officeId: officeId));
-    _downloadWorkplaces(event.floorNumber);
+    _downloadWorkplaces(floors.firstWhere((element) => element.floorNumber == event.floorNumber));
   }
 
   Future<void> _onWorkplaceSelected(BookingCreate3WorkplaceSelected event,

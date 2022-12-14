@@ -5,10 +5,10 @@ import 'workplace.dart';
 class WorkplaceList extends Equatable{
 
   const WorkplaceList({
-    required this.floors
+    required this.places
   });
-  final List<Workplace> floors;
+  final List<Workplace> places;
 
   @override
-  List<Object> get props => [floors];
+  List<Object> get props => [places];
 }

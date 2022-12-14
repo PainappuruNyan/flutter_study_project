@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class Workplace extends Equatable{
-  const Workplace(this.isFree, {
+  const Workplace({
+    required this.isFree,
     required this.id,
     required this.typeName,
     required this.floorId,
@@ -12,8 +13,8 @@ class Workplace extends Equatable{
   final String typeName;
   final int floorId;
   final int capacity;
-  final bool? isFree;
+  final bool isFree;
 
   @override
-  List<Object> get props => [id, typeName, floorId, capacity];
+  List<Object> get props => [id, typeName, floorId, capacity, isFree];
 }
