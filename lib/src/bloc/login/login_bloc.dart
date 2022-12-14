@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/error/failures.dart';
 import '../../data/repositories/profile_repository_impl.dart';
@@ -21,6 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   late ProfileRepositoryImpl profileRepositoryImpl;
+  final SharedPreferences pref = di.sl();
 
   Future<void> _onExecute(LoginExecute event, Emitter<LoginState> emit) async {
     emit(LoginExecuting(event.username, event.password));
@@ -35,6 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(LoginRemoteError(l.toString()));
         }, (Profile r) async {
           print('провиль получили. Успех');
+          pref.setString('role', r.employee.role);
           emit(LoginSuccess(r));
         });
       });

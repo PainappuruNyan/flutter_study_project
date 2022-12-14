@@ -27,17 +27,17 @@ class FloorExpandable extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(color: MyColors.kPrimaryText),
+              .copyWith(color: MyColors.kPrimaryText, fontSize: 22.sp),
         ),
         children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Column(
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Flexible(
                       child: TextFormField(
                         keyboardType: TextInputType.number,
