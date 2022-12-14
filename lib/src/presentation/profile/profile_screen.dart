@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../dependency_injection_container.dart' as di;
 import '../../bloc/profile/profile_bloc.dart';
 import '../../core/constants/colors.dart';
 import '../../data/repositories/employee_repository_impl.dart';
@@ -48,6 +50,7 @@ class ProfileScreenView extends StatefulWidget {
 
 class _ProfileScreenViewState extends State<ProfileScreenView> {
 
+  final SharedPreferences prefs = di.sl();
   late EmployeeRepositoryImpl employeeRepositoryImpl;
 
   @override
@@ -63,6 +66,8 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
           return Center(child: CircularProgressIndicator(),);
         }
         if (state is ProfileLoaded) {
+          prefs.setString('login', state.profile.employee.login);
+          prefs.setString('role', state.profile.employee.role);
           return SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(top: 14.h, left: 13.w, right: 13.w),
