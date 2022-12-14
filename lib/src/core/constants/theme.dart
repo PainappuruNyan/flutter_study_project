@@ -6,6 +6,7 @@ import 'colors.dart';
 ThemeData basicTheme() => ThemeData(
       brightness: Brightness.light,
       primaryColor: MyColors.kPrimary,
+      dividerColor: Colors.transparent,
       colorScheme:
           const ColorScheme.light(primary: MyColors.kSecondary // circle color
               ),
