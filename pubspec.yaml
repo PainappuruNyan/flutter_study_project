@@ -37,6 +37,9 @@ dependencies:
   retry:
   intl:
   icon_decoration:
+  bloc_concurrency:
+  stream_transform:
+  dio:
 
   flutter:
     sdk: flutter

@@ -8,6 +8,7 @@ import '../../core/utils/date_time_parser.dart';
 import '../models/booking_list_model.dart';
 import '../models/booking_model.dart';
 import '../models/city_list_model.dart';
+import '../models/employee_list_model.dart';
 import '../models/employee_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,6 +26,7 @@ import '../models/workplace_list_model.dart';
 abstract class RemoteDataSource {
   Future<EmployeeModel> getEmployeeById(int id);
   Future<EmployeeModel> getEmployeeByLogin(String login);
+  Future<EmployeeListModel> getEmployeeByName(String name, int page);
 
   Future<ProfileModel> getProfile();
   Future<ProfileModel> getProfileByCredits(String username, String password);
@@ -98,6 +100,32 @@ class RemoteImplWithHttp implements RemoteDataSource {
       throw ServerException();
     }
   }
+
+  @override
+  Future<EmployeeListModel> getEmployeeByName(String query, int page) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.get(
+        Uri.parse('$BASE_URL/employee/allByName').replace(queryParameters: {
+          'name': query,
+          'page': page,
+        }.map((String key, Object value) => MapEntry(key, value.toString())),),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'
+        }
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      final EmployeeListModel jsonToEmployeeListModel =
+      EmployeeListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
+      return Future<EmployeeListModel>.value(jsonToEmployeeListModel);
+    } else {
+      throw ServerException();
+    }
+  }
+
 
   @override
   Future<ProfileModel> getProfile() async {

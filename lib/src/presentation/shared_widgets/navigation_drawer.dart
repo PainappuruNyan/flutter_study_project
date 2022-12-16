@@ -96,7 +96,9 @@ class NavigationDrawer extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: Text('Настройки',
                   style: Theme.of(context).textTheme.bodyText2),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.user_list);
+              },
             )
           ],
         ),

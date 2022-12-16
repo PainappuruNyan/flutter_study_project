@@ -1,5 +1,6 @@
 
 import '../administration/create_office_1/create_office_1.dart';
+import '../administration/user_list/user_list.dart';
 import '../booking/booking_details/booking_detail_screen.dart';
 import '../booking/booking_list/booking_list_screen.dart';
 import '../booking/create_booking_1/create_booking_1.dart';
@@ -25,4 +26,5 @@ class Routes{
   static const String booking_create_3 = BookingCreate3Screen.routeName;
   static const String teammate_list = TeamMateList.routeName;
   static const String booking_create_1 = CreateBooking1.routeName;
+  static const String user_list = UserList.routeName;
 }
