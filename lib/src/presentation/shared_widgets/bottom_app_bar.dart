@@ -19,7 +19,7 @@ class CustomBottomAppBar extends StatelessWidget {
   final bool? dateValid;
   final bool? startTimeValid;
   final bool? endTimeValid;
-  final Widget nextRoute;
+  final dynamic nextRoute;
   final String? pageCount;
   final String? pageNum;
   final bool nextPageButton;
@@ -67,11 +67,7 @@ class CustomBottomAppBar extends StatelessWidget {
                     child: TextButton.icon(
                       onPressed: () {
                         if (dateValid ?? false) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => nextRoute),
-                          );
+                          nextRoute();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Заполните все поля')),
@@ -94,7 +90,9 @@ class CustomBottomAppBar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 5),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      nextRoute();
+                    },
                     child: TextButton.icon(
                       onPressed: () {},
                       label: Text(

@@ -42,6 +42,16 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
 
   @override
   Widget build(BuildContext context) {
+    void nextRoute() {
+      Navigator.of(context).push(MaterialPageRoute<BookingCreate3Screen>(
+          builder: (_) => BookingCreate3Screen(
+        selectedOffice: selectedOffice,
+        dateStart: dateinput.text,
+        timeStart: begintimeinput.text,
+        timeEnd: endtimeinput.text,
+      )));
+    }
+
     Future<void> datePicker(TextEditingController dateinput) async {
       assert(dateinput != null);
       final DateTime now = DateTime.now();
@@ -192,12 +202,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
           pageCount: '3',
           pageNum: '2',
           dateValid: _formKey.currentState?.validate(),
-          nextRoute: BookingCreate3Screen(
-            selectedOffice: selectedOffice,
-            dateStart: dateinput.text,
-            timeStart: begintimeinput.text,
-            timeEnd: endtimeinput.text,
-          ),
+          nextRoute: nextRoute,
           nextPageButton: true,
         ),
       ),
