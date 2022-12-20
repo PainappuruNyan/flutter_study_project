@@ -54,3 +54,13 @@ class OfficeCreate1Initial extends OfficeCreate1State {
   List<Object> get props =>
       [beginningTime, endTime, bookingRange, floorsCount, city, address];
 }
+
+class OfficeCreated extends OfficeCreate1State{
+  @override
+  List<Object?> get props => [];
+}
+
+class StartingState extends OfficeCreate1State{
+  @override
+  List<Object?> get props => [];
+}

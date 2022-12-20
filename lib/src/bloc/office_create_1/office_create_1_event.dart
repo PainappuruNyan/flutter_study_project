@@ -15,3 +15,18 @@ class FieldChanged extends OfficeCreate1Event{
   @override
   List<Object?> get props => [nText, fieldChanged];
 }
+
+class Starting extends OfficeCreate1Event{
+  @override
+  List<Object?> get props => [];
+}
+
+class ConfirmCreation extends OfficeCreate1Event{
+  const ConfirmCreation({required this.office});
+
+  final Office office;
+
+  @override
+  List<Object?> get props => [office];
+
+}

@@ -137,7 +137,7 @@ class RemoteImplWithHttp implements RemoteDataSource {
     final String? username = sharedPreference.getString('username');
     final String? password = sharedPreference.getString('password');
     final http.Response response = await client.get(
-        Uri.parse('$BASE_URL/profile'),
+        Uri.parse('$BASE_URL/profile/profile'),
         headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
     if (response.statusCode == 200) {
       final Map<String, dynamic> decodeJsonData =
@@ -145,6 +145,7 @@ class RemoteImplWithHttp implements RemoteDataSource {
       final ProfileModel jsonToProfileModel = ProfileModel.fromJson(decodeJsonData);
       return Future.value(jsonToProfileModel);
     } else {
+      print(utf8.decode(response.bodyBytes));
       throw ServerException();
     }
   }
@@ -230,9 +231,9 @@ class RemoteImplWithHttp implements RemoteDataSource {
         Uri.parse('$BASE_URL/booking/allSelf?pageNumber=0'),
         headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
     if (response.statusCode == 200) {
-      final List<dynamic> decodeJsonData =
-      jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
-      final BookingListModel jsonToBookingListModel = BookingListModel.fromJson(decodeJsonData);
+      final Map<String, dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      final BookingListModel jsonToBookingListModel = BookingListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
       return Future<BookingListModel>.value(jsonToBookingListModel);
     } else {
       throw ServerException();
