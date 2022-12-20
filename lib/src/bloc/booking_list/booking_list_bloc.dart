@@ -16,7 +16,7 @@ class BookingListBloc extends Bloc<BookingListEvent, BookingListState> {
     on<GetBookingList>(
         (GetBookingList event, Emitter<BookingListState> emit) async {
       emit(const BookingListLoading());
-      BookingList bookingListActual = BookingList(bookings: []);
+      BookingList bookingListActual = const BookingList(bookings: []);
       await _bookingRepository
           .getAllActual()
           .then((Either<Failure, BookingList> value) {
@@ -27,7 +27,7 @@ class BookingListBloc extends Bloc<BookingListEvent, BookingListState> {
         });
       });
 
-      BookingList bookingHistory = BookingList(bookings: []);
+      BookingList bookingHistory = const BookingList(bookings: []);
       await _bookingRepository
           .getAllSelf()
           .then((Either<Failure, BookingList> value) {
@@ -40,6 +40,34 @@ class BookingListBloc extends Bloc<BookingListEvent, BookingListState> {
       emit(BookingListLoaded(
           bookingListActual: bookingListActual,
           bookingListHistory: bookingHistory));
+    });
+
+    on<BookingDelete>((BookingDelete event, Emitter<BookingListState> emit) async {
+      await _bookingRepository
+          .deleteBooking(id: event.id)
+          .then((Either<Failure, String> value) => const GetBookingList())
+          .catchError(onError);
+      emit(const BookingListLoading());
+      BookingList bookingListActual = const BookingList(bookings: []);
+      await _bookingRepository.getAllActual().then((Either<Failure, BookingList> value) {
+        value.fold((Failure l) async {
+          emit(BookingListError(l.toString()));
+        }, (BookingList r) async {
+          bookingListActual = r;
+        });
+      });
+
+      BookingList bookingListHistory = const BookingList(bookings: []);
+      await _bookingRepository
+          .getAllActual()
+          .then((Either<Failure, BookingList> value) {
+        value.fold((Failure l) async {
+          emit(BookingListError(l.toString()));
+        }, (BookingList r) async {
+          bookingListHistory = r;
+        });
+      });
+      emit(BookingListLoaded(bookingListActual: bookingListActual, bookingListHistory: bookingListHistory));
     });
   }
 

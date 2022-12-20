@@ -65,4 +65,15 @@ class BookingRepositoryImpl implements BookingListRepository{
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteBooking({required int id}) async {
+    try{
+      final String successString = await remoteDataSource.deleteBooking(id: id);
+      return Right(successString);
+    }
+    on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

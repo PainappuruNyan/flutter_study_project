@@ -37,6 +37,7 @@ abstract class RemoteDataSource {
 
   Future<BookingListModel> getAllActual();
   Future<BookingListModel> getAllSelf();
+  Future<String> deleteBooking({required int id});
 
   Future<String> postNewBooking({required BookingModel booking});
 
@@ -252,6 +253,28 @@ class RemoteImplWithHttp implements RemoteDataSource {
           HttpHeaders.contentTypeHeader: 'application/json'
         },
         body: body
+    );
+    if (response.statusCode == 200) {
+      final String decodeJsonData =
+      utf8.decode(response.bodyBytes);
+      return Future<String>.value(decodeJsonData);
+    } else {
+      print(response.body);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<String> deleteBooking({required int id}) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.delete(
+      Uri.parse('$BASE_URL/booking/$id'),
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+        HttpHeaders.contentTypeHeader: 'application/json'
+      },
     );
     if (response.statusCode == 200) {
       final String decodeJsonData =

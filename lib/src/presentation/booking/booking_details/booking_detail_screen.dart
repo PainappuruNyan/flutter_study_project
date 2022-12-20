@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import '../../../bloc/booking_list/booking_list_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/booking.dart';
+import '../booking_list/booking_list_screen.dart';
 
 class BookingDetailScreen extends StatelessWidget {
-  const BookingDetailScreen({super.key, required this.e});
+  const BookingDetailScreen({super.key, required this.e, required this.bloc});
   final Booking e;
+  final BookingListBloc bloc;
 
   static const String routeName = '/booking_details';
 
@@ -284,7 +287,11 @@ class BookingDetailScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: 54.sp),
                 width: 286.w,
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    bloc.add(BookingDelete(id: e.id));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const BookingListScreen()));
+                  },
                   color: MyColors.kPrimary,
                   child: const Text('Удалить бронь',
                       style: TextStyle(fontSize: 16.0, color: Colors.white)),

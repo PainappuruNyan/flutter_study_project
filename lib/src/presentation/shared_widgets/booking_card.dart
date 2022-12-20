@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import '../../bloc/booking_list/booking_list_bloc.dart';
 import '../../core/constants/colors.dart';
 import '../../domain/entities/booking.dart';
 import '../booking/booking_details/booking_detail_screen.dart';
@@ -75,7 +77,7 @@ class BookingCard extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => BookingDetailScreen(e:booking)));
+                            builder: (_) => BookingDetailScreen(e:booking, bloc: context.read<BookingListBloc>(),)));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
