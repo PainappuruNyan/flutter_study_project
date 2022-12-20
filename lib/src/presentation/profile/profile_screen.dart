@@ -68,6 +68,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
         if (state is ProfileLoaded) {
           prefs.setString('login', state.profile.employee.login);
           prefs.setString('role', state.profile.employee.role);
+          prefs.setInt('id', state.profile.employee.id);
           return SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(top: 14.h, left: 13.w, right: 13.w),

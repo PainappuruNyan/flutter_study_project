@@ -8,4 +8,5 @@ abstract class TeamListRepository{
   Future<Either<Failure, TeamList>> getMyTeam();
   Future<Either<Failure, TeamList>> getAllTeam();
   Future<Either<Failure, String>> postNewTeam({required TeamModel team});
+  Future<Either<Failure, String>> deleteTeam({required int id});
 }

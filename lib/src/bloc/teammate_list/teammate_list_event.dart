@@ -12,7 +12,14 @@ class GetTeammateList extends TeammateListEvent {
 }
 
 class TeammateDelete extends TeammateListEvent{
-  TeammateDelete({required this.teamId});
+  TeammateDelete({required this.teamId, required this.employeeId});
 
   final int teamId;
+  final int employeeId;
+}
+
+class TeammateAdd extends TeammateListEvent{
+  TeammateAdd({required this.teammate});
+
+  final TeammateModel teammate;
 }

@@ -7,10 +7,11 @@ import '../../../bloc/teammate_list/teammate_list_bloc.dart';
 import '../../shared_widgets/teammate_card.dart';
 
 class TeamMateList extends StatelessWidget {
-  const TeamMateList({super.key, required this.teamName, required this.teamId});
+  const TeamMateList({super.key, required this.teamName, required this.teamId, required this.isLead});
 
   final String teamName;
   final int teamId;
+  final bool isLead;
 
   static const String routeName = '/teammate_list';
 
@@ -51,7 +52,7 @@ class TeamMateList extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: state.lengthTeammate,
                           itemBuilder: (BuildContext context, int index) {
-                            return TeammateCard(teammate: state.teammateList.teammates[index]);
+                            return TeammateCard(teammate: state.teammateList.teammates[index], bloc: context.read<TeammateListBloc>(), isLead: isLead,);
                           }
                       )
                     ],

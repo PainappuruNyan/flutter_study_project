@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/team_list/team_list_bloc.dart';
+import '../../../bloc/teammate_list/teammate_list_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
 import '../../shared_widgets/team_card.dart' as teams;
@@ -25,9 +26,15 @@ class TeamListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TeamListBloc>(
-      create: (BuildContext context) =>
-          TeamListBloc(di.sl())..add(GetTeamList()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TeamListBloc>(
+          create: (BuildContext context) =>
+              TeamListBloc(di.sl())..add(const GetTeamList()),
+        ),
+        BlocProvider<TeammateListBloc>(
+            create: (BuildContext context) => TeammateListBloc(di.sl()))
+      ],
       child: const TeamListView(),
     );
   }
@@ -69,9 +76,7 @@ class _TeamListView extends State<TeamListView> {
                   shrinkWrap: true,
                   itemCount: state.lengthMyTeam,
                   itemBuilder: (BuildContext context, int index) {
-                    return teams.TeamCard(
-                      team: state.myTeamList.teams[index]
-                    );
+                    return teams.TeamCard(team: state.myTeamList.teams[index]);
                   });
             } else if (state is TeamListError) {
               return Text(state.message);
@@ -103,8 +108,8 @@ class _TeamListView extends State<TeamListView> {
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => TeamCreateScreen()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => TeamCreateScreen()));
           },
           child: const Icon(Icons.add),
         ),

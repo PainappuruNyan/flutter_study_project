@@ -21,6 +21,7 @@ import '../models/profile_model.dart';
 import '../models/team_list_model.dart';
 import '../models/team_model.dart';
 import '../models/teammate_list_model.dart';
+import '../models/teammate_model.dart';
 import '../models/workplace_list_model.dart';
 
 abstract class RemoteDataSource {
@@ -49,6 +50,8 @@ abstract class RemoteDataSource {
   Future<String> editTeam({required TeamModel team});
 
   Future<TeammateListModel> getTeammate({required int teamId});
+  Future<String> deleteTeammate({required int employeeId, required int teamId});
+  Future<String> addTeammate({required TeammateModel teammate});
 
   Future<FloorListModel> getFloors(int officeId);
   Future<WorkplaceListModel> getWorkplaces(int floorId, int type, DateTime start, DateTime end);
@@ -400,6 +403,53 @@ class RemoteImplWithHttp implements RemoteDataSource {
       final TeammateListModel jsonToTeammateListModel = TeammateListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
       return Future<TeammateListModel>.value(jsonToTeammateListModel);
     } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<String> deleteTeammate({required int employeeId, required int teamId}) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.delete(
+      Uri.parse('$BASE_URL/team_member/$employeeId/$teamId'),
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+        HttpHeaders.contentTypeHeader: 'application/json'
+      },
+    );
+    if (response.statusCode == 200) {
+      final String decodeJsonData =
+      utf8.decode(response.bodyBytes);
+      return Future<String>.value(decodeJsonData);
+    } else {
+      print(response.body);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<String> addTeammate({required TeammateModel teammate}) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final String body = json.encode(teammate.toJson()) ;
+    print(body);
+    final http.Response response = await client.post(
+        Uri.parse('$BASE_URL/team_member/'),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+          HttpHeaders.contentTypeHeader: 'application/json'
+        },
+        body: body
+    );
+    if (response.statusCode == 200) {
+      final String decodeJsonData =
+      utf8.decode(response.bodyBytes);
+      return Future<String>.value(decodeJsonData);
+    } else {
+      print(response.body);
       throw ServerException();
     }
   }
