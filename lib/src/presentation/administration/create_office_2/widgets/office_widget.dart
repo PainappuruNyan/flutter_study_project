@@ -67,7 +67,7 @@ class _OfficeWidgetHeaderState extends State<OfficeWidgetHeader> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(widget.office.workNumber, style: Theme
+              Text(widget.office.workNumber!, style: Theme
                   .of(context)
                   .textTheme
                   .bodySmall,),

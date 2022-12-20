@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/constants/colors.dart';
+import '../../../bloc/office_create_1/office_create_1_bloc.dart';
+import '../../shared_widgets/bottom_app_bar.dart';
+import '../create_office_2/create_office_2.dart';
+import 'widgets/custom_form_field.dart';
 
 class CreateOffice1 extends StatefulWidget {
   const CreateOffice1({super.key});
@@ -16,129 +20,118 @@ class CreateOffice1 extends StatefulWidget {
 class _CreateOffice1 extends State<CreateOffice1> {
   TextEditingController startdateinput = TextEditingController();
   TextEditingController enddateinput = TextEditingController();
+  TextEditingController bookingRangeInput = TextEditingController();
+  TextEditingController floorCountInput = TextEditingController();
+  TextEditingController cityInput = TextEditingController();
+  TextEditingController addressInput = TextEditingController();
 
-  bool periodLimit = false;
-  bool bookingCountLimit = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   //text editing controller for text field
 
-  @override
-  void initState() {
-    startdateinput.text = '';
-    enddateinput.text = '';
-    super.initState();
+  String? validator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
   }
+
 
   @override
   Widget build(BuildContext context) {
-    Future<void> datePicker(TextEditingController dateinput) async {
-      assert(dateinput != null);
-      final DateTime now = DateTime.now();
-
-      final DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: now,
-          firstDate: DateTime(now.year, now.month, now.day),
-          lastDate: DateTime(now.year + 10));
-      if (pickedDate != null) {
-        final String formattedDate =
-            DateFormat('yyyy-MM-dd').format(pickedDate);
-        setState(() {
-          dateinput.text = formattedDate;
-        });
-      }
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-            'Формирование офиса',
-          )),
-      body: SingleChildScrollView(
-          child: Column(children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(top: 36.sp),
-          child: const Text(
-            'Введите данные офиса',
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Roboto'),
-          ),
-        ),
-        Container(
-            padding: EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 35.sp),
-            child: Center(
-                child: TextField(
-              style: Theme.of(context).textTheme.bodyText2,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.pin_drop,
-                  color: MyColors.kPrimary,
-                ),
-                labelText: 'Выберите город офиса',
-              ),
-            ))),
-        Container(
-            padding: EdgeInsets.only(left: 36.5.sp, right: 36.5.sp),
-            child: Center(
-                child: TextField(
-              style: Theme.of(context).textTheme.bodyText2,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.house,
-                  color: MyColors.kPrimary,
-                ),
-                labelText: 'Выберите адрес офиса',
-              ),
-            ))),
-        Container(
-            padding: EdgeInsets.only(left: 36.5.sp, right: 36.5.sp),
-            child: Center(
-                child: TextField(
-              readOnly: true,
-              style: Theme.of(context).textTheme.bodyText2,
-              controller: startdateinput,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.calendar_month,
-                  color: MyColors.kPrimary,
-                ),
-                labelText: 'Начало бронирований',
-              ),
-              onTap: () => datePicker(startdateinput),
-            ))),
-        Container(
-            padding: EdgeInsets.only(left: 36.5.sp, right: 36.5.sp),
-            child: Center(
-                child: TextField(
-              readOnly: true,
-              style: Theme.of(context).textTheme.bodyText2,
-              controller: enddateinput,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.calendar_month,
-                  color: MyColors.kPrimary,
-                ),
-                labelText: 'Конец бронирований',
-              ),
-              onTap: () => datePicker(enddateinput),
-            ))),
-            Container(
-                padding: EdgeInsets.only(left: 36.5.sp, right: 36.5.sp, top: 45.sp),
-                child: Center(
-                    child: TextField(
-                      style: Theme.of(context).textTheme.bodyText2,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.house,
-                          color: MyColors.kPrimary,
-                        ),
-                        labelText: 'Диапазон брони',
+    return BlocProvider<OfficeCreate1Bloc>(
+      create: (BuildContext context) => OfficeCreate1Bloc(),
+      child: BlocBuilder<OfficeCreate1Bloc, OfficeCreate1State>(
+        builder: (BuildContext context, OfficeCreate1State state) {
+          startdateinput.text = DateFormat('HH:mm').format((state as OfficeCreate1Initial).beginningTime);
+          enddateinput.text = DateFormat('HH:mm').format(state.endTime);
+          bookingRangeInput.text = state.bookingRange.toString();
+          floorCountInput.text = state.floorsCount.toString();
+          cityInput.text = state.city;
+          addressInput.text = state.address;
+          return Scaffold(
+            appBar: AppBar(
+                title: const Text(
+                  'Формирование офиса',
+                )),
+            body: Container(
+              padding: EdgeInsets.only(top: 36.sp),
+              child: Column(
+                children: <Widget>[
+                  const Text(
+                    'Введите данные офиса',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Roboto'),
+                  ),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(children: <Widget>[
+                          CustomFormField(
+                            formKey: _formKey,
+                              valid: validator,
+                              icon: Icons.calendar_month,
+                              controller: startdateinput,
+                              labelText: 'Начало бронирований',
+                              isDateTime: true, index: 1,),
+                          CustomFormField(
+                            formKey: _formKey,
+                              valid: validator,
+                              icon: Icons.calendar_month,
+                              controller: enddateinput,
+                              labelText: 'Конец бронирований',
+                              isDateTime: true, index: 2,),
+                          CustomFormField(
+                            formKey: _formKey,
+                            valid: validator,
+                            icon: Icons.house,
+                            controller: bookingRangeInput,
+                            labelText: 'Диапазон брони', index: 3,
+                          ),
+                          CustomFormField(
+                            formKey: _formKey,
+                            valid: validator,
+                            icon: Icons.house,
+                            controller: floorCountInput,
+                            labelText: 'Количество этажей', index: 4,
+                          ),
+                          CustomFormField(
+                            formKey: _formKey,
+                            valid: validator,
+                            icon: Icons.pin_drop,
+                            controller: cityInput,
+                            labelText: 'Выберите город офиса', index: 5,
+                          ),
+                          CustomFormField(
+                            formKey: _formKey,
+                            valid: validator,
+                            labelText: 'Выберите адрес офиса',
+                            icon: Icons.house,
+                            controller: addressInput, index: 6,
+                          ),
+                        ]),
                       ),
-                    ))),
-      ])),
-      // bottomNavigationBar: const CustomBottomAppBar(pageNum: '1', pageCount: '3',nextRoute: Routes.profile,)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            bottomNavigationBar: CustomBottomAppBar(
+              pageNum: '1',
+              pageCount: '3',
+              nextRoute: CreateOffice2(
+                floorCount: int.parse(floorCountInput.text),
+                nOffice: state.nOffice,
+              ),
+              nextPageButton: true,
+              dateValid: _formKey.currentState?.validate(),
+            ), // bottomNavigationBar: const CustomBottomAppBar(pageNum: '1', pageCount: '3',nextRoute: Routes.profile,)
+          );
+        },
+      ),
     );
   }
 }

@@ -366,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  im_stepper:
+    dependency: "direct dev"
+    description:
+      name: im_stepper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1+1"
   internet_connection_checker:
     dependency: "direct main"
     description:

@@ -64,7 +64,7 @@ class OfficeAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int selectedOffice = office.id;
+    int selectedOffice = office.id!;
     return InkWell(
       child: Card(
         color: MyColors.kPrimaryLight,
@@ -133,7 +133,7 @@ class OfficeAddressCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Text(office.workNumber, style: textStyle.copyWith(fontWeight: FontWeight.normal)),
+                      Text(office.workNumber!, style: textStyle.copyWith(fontWeight: FontWeight.normal)),
                     ],
                   )
                 ],
@@ -141,10 +141,10 @@ class OfficeAddressCard extends StatelessWidget {
             ),
             actions: <Widget>[
               MaterialButton(onPressed: (){
-                dialogBloc.add(BookingCreate1FavoriteChanged(id: office.id, isFavorite: !office.isFavorite));
+                dialogBloc.add(BookingCreate1FavoriteChanged(id: office.id!, isFavorite: !office.isFavorite!));
               }, child: Text('Избранное', style: Theme.of(context).textTheme.bodyText2),),
               MaterialButton(onPressed: (){
-                selectedOffice = office.id;
+                selectedOffice = office.id!;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
