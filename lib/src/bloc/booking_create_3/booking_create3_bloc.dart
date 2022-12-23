@@ -16,7 +16,6 @@ import '../../domain/entities/workplace.dart';
 import '../../domain/entities/workplace_list.dart';
 
 part 'booking_create3_event.dart';
-
 part 'booking_create3_state.dart';
 
 int toInt(bool? val) => val! ? 1 : 0;
@@ -34,6 +33,7 @@ class BookingCreate3Bloc
     on<BookingCreate3SendWorkplaces>(_onSendWorkplaces);
     on<BookingCreate3FavoriteChanged>(_onFavoriteChanged);
   }
+
 
   int officeId;
   final WorkplaceRepositoryImpl repository = di.sl();
@@ -69,7 +69,7 @@ class BookingCreate3Bloc
     List<Workplace> meetingroomList = [];
     List<Workplace> favorites = [];
     await repository
-        .getWorkplaces(selectedFloor.id, start, end)
+        .getWorkplaces(selectedFloor.id!, start, end)
         .then((Either<Failure, WorkplaceList> value) => value.fold((Failure l) {
               return null;
             }, (WorkplaceList r) {
@@ -77,13 +77,13 @@ class BookingCreate3Bloc
               print(start.toString());
               print(end.toString());
             }));
-    await repository.getMeetingRooms(selectedFloor.id, start, end).then(
+    await repository.getMeetingRooms(selectedFloor.id!, start, end).then(
         (Either<Failure, WorkplaceList> value) => value.fold((Failure l) async {
               return null;
             }, (WorkplaceList r) async {
               meetingroomList = r.places;
             }));
-    await repository.getRemoteFavorites(selectedFloor.id, start, end).then(
+    await repository.getRemoteFavorites(selectedFloor.id!, start, end).then(
         (Either<Failure, WorkplaceList> value) =>
             value.fold((Failure l) {}, (WorkplaceList r) async {
               favorites = r.places;

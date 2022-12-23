@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../dependency_injection_container.dart' as di;
+import '../../bloc/office_create_2/office_create_2_bloc.dart';
 import '../../core/exeptions/exceptions.dart';
 import '../../core/utils/date_time_parser.dart';
 import '../models/booking_list_model.dart';
@@ -11,11 +14,8 @@ import '../models/booking_model.dart';
 import '../models/city_list_model.dart';
 import '../models/employee_list_model.dart';
 import '../models/employee_model.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
-
 import '../models/floor_list_model.dart';
+import '../models/floor_model.dart';
 import '../models/office_list_model.dart';
 import '../models/office_model.dart';
 import '../models/profile_model.dart';
@@ -25,26 +25,22 @@ import '../models/teammate_list_model.dart';
 import '../models/teammate_model.dart';
 import '../models/time_interval_list_model.dart';
 import '../models/workplace_list_model.dart';
+import '../models/workplase_model.dart';
 
 abstract class RemoteDataSource {
   Future<EmployeeModel> getEmployeeById(int id);
-
   Future<EmployeeModel> getEmployeeByLogin(String login);
-
   Future<EmployeeListModel> getEmployeeByName(String name, int page);
 
   Future<ProfileModel> getProfile();
-
   Future<ProfileModel> getProfileByCredits(String username, String password);
 
   Future<OfficeListModel> getOffices();
-
   Future<OfficeModel> getOfficeById(int id);
+  Future<String> postOffice(OfficeModel office);
 
   Future<BookingListModel> getAllActual();
-
   Future<BookingListModel> getAllSelf();
-
   Future<String> deleteBooking({required int id});
 
   Future<String> postNewBooking({required BookingModel booking});
@@ -52,25 +48,20 @@ abstract class RemoteDataSource {
   Future<CityListModel> getCitesAll();
 
   Future<TeamListModel> getMyTeam();
-
   Future<TeamListModel> getAllTeam();
 
   Future<String> postNewTeam({required TeamModel team});
-
   Future<String> deleteTeam({required int id});
-
   Future<String> editTeam({required TeamModel team});
 
   Future<TeammateListModel> getTeammate({required int teamId});
-
   Future<String> deleteTeammate({required int employeeId, required int teamId});
-
   Future<String> addTeammate({required TeammateModel teammate});
 
   Future<FloorListModel> getFloors(int officeId);
-
-  Future<WorkplaceListModel> getWorkplaces(
-      int floorId, int type, DateTime start, DateTime end);
+  Future<WorkplaceListModel> getWorkplaces(int floorId, int type, DateTime start, DateTime end);
+  Future<String> postFloors(List<MiniFloor> floors);
+  Future<WorkplaceListModel> getWorkplacesByFloor(int floorId, int typeId);
 
   Future<TimeIntervalListModel> getFreeIntervals(int placeId, DateTime date);
 
@@ -684,4 +675,123 @@ class RemoteImplWithHttp implements RemoteDataSource {
       throw ServerException();
     }
   }
+
+  @override
+  Future<String> postOffice(OfficeModel office) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final String body = json.encode(office.toJson()) ;
+    print(body);
+    final http.Response response = await client.post(
+        Uri.parse('$BASE_URL/office/'),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+          HttpHeaders.contentTypeHeader: 'application/json'
+        },
+        body: body
+    );
+    if (response.statusCode == 200) {
+      final String decodeJsonData =
+      utf8.decode(response.bodyBytes);
+      return Future<String>.value(decodeJsonData);
+    } else {
+      print(utf8.decode(response.bodyBytes));
+      throw ServerException();
+    }
+
+  }
+
+  @override
+  Future<String> postFloors(List<MiniFloor> floors) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    print(floors.first.workplaces.length);
+    for(final MiniFloor f in floors){
+      final String body = json.encode(FloorModel.fromMini(f).toJson());
+      print(body);
+      final http.Response response = await client.post(
+          Uri.parse('$BASE_URL/floor/'),
+          headers: <String, String>{
+            HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+            HttpHeaders.contentTypeHeader: 'application/json'
+          },
+          body: body
+      );
+      if (response.statusCode == 200) {
+        f.setWorkplaces();
+        final String decodeJsonData =
+        utf8.decode(response.bodyBytes);
+        print(decodeJsonData);
+        final int nFloorId = int.parse(decodeJsonData);
+        for(MiniWorkplace p in f.meetingRooms){
+          final String body = json.encode(WorkplaceModel.fromMini(p, nFloorId).toJson());
+          final http.Response response = await client.post(
+              Uri.parse('$BASE_URL/workplace/'),
+              headers: <String, String>{
+                HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+                HttpHeaders.contentTypeHeader: 'application/json'
+              },
+              body: body
+          );
+          if(response.statusCode == 200) {
+            final String decodeJsonData =
+            utf8.decode(response.bodyBytes);
+            print(decodeJsonData);
+          }
+          else{
+            print(utf8.decode(response.bodyBytes));
+            throw ServerException();
+          }
+        }
+        for(MiniWorkplace p in f.workplaces){
+          final String body = json.encode(WorkplaceModel.fromMini(p, nFloorId).toJson());
+          final http.Response response = await client.post(
+              Uri.parse('$BASE_URL/workplace/'),
+              headers: <String, String>{
+                HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}',
+                HttpHeaders.contentTypeHeader: 'application/json'
+              },
+              body: body
+          );
+          if(response.statusCode == 200) {
+            final String decodeJsonData =
+            utf8.decode(response.bodyBytes);
+            print(decodeJsonData);
+          }
+          else{
+            print(utf8.decode(response.bodyBytes));
+            throw ServerException();
+          }
+        }
+      } else {
+        print(utf8.decode(response.bodyBytes));
+        throw ServerException();
+      }
+
+    }
+    return Future<String>.value('Вроде успех');
+
+  }
+
+  @override
+  Future<WorkplaceListModel> getWorkplacesByFloor(int floorId, int typeId) async {
+    final SharedPreferences sharedPreference = di.sl();
+    final String? username = sharedPreference.getString('username');
+    final String? password = sharedPreference.getString('password');
+    final http.Response response = await client.get(
+        Uri.parse('$BASE_URL/workplace/allByFloor?floorId=$floorId&typeId=$typeId&page=0&size=20'),
+        headers: <String, String>{HttpHeaders.authorizationHeader: 'Basic ${base64.encode(utf8.encode('$username:$password'))}'});
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> decodeJsonData =
+      jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      final WorkplaceListModel jsonToFloorListModel = WorkplaceListModel.fromJson(decodeJsonData['content'] as List<dynamic>);
+      return Future<WorkplaceListModel>.value(jsonToFloorListModel);
+    } else {
+      throw ServerException();
+    }
+  }
+
+
 }

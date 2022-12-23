@@ -1,9 +1,12 @@
 import 'package:dartz/dartz.dart';
 
+import '../../bloc/office_create_2/office_create_2_bloc.dart';
 import '../../core/error/failures.dart';
 import '../../core/exeptions/exceptions.dart';
 import '../../core/network/network_info.dart';
+import '../../domain/entities/floor.dart';
 import '../../domain/entities/floor_list.dart';
+import '../../domain/entities/workplace.dart';
 import '../../domain/entities/time_interval_list.dart';
 import '../../domain/entities/workplace_list.dart';
 import '../../domain/repository/workplace_repository.dart';
@@ -112,4 +115,28 @@ class WorkplaceRepositoryImpl implements WorkplaceRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, List<MiniFloor>>> getMiniFloors(List<Floor> floors) async {
+    try{
+      List<MiniFloor> miniFloors = [];
+      for(Floor f in floors){
+        final WorkplaceListModel remoteWorkplace = await remoteDataSource.getWorkplacesByFloor(f.id!, 1);
+        final WorkplaceListModel remoteMeetingRooms = await remoteDataSource.getWorkplacesByFloor(f.id!, 2);
+        MiniFloor nMiniFloor = MiniFloor(floorNumber: f.floorNumber, officeId: f.officeId);
+        nMiniFloor.nWorkplaces = remoteWorkplace.places.map((Workplace e) => MiniWorkplace.fromEntity(e, 1)).toList();
+        nMiniFloor.nMeetingRooms = remoteMeetingRooms.places.map((Workplace e) => MiniWorkplace.fromEntity(e, 2)).toList();
+        miniFloors.add(nMiniFloor);
+      }
+      return Right(miniFloors);
+    }
+    on ServerException {
+      print('workplace_repository_impl:getMiniFloors Ошибка при создании MiniFloors');
+      return Left(ServerFailure());
+    }
+  }
+
+
+
+
 }

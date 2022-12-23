@@ -1,3 +1,4 @@
+import '../../bloc/office_create_2/office_create_2_bloc.dart';
 import '../../domain/entities/floor.dart';
 
 class FloorModel extends Floor{
@@ -14,6 +15,14 @@ class FloorModel extends Floor{
     floorNumber: json['floorNumber'] as int,
     mapFloor: json['mapFloor']==null ? '' : json['mapFloor'] as String,
   );
+
+  factory FloorModel.fromMini(MiniFloor miniFloor){
+    return FloorModel(
+        id: null,
+        officeId: miniFloor.officeId,
+        floorNumber: miniFloor.floorNumber,
+        mapFloor: '');
+  }
 
   Map<String, dynamic> toJson() => {
     'id': id,

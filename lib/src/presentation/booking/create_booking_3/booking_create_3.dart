@@ -182,9 +182,10 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemCount: state.favorites.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
-                                      workplace: state.favorites[index],
-                                      dateTimeStart: dateTimeStart,
-                                      dateTimeEnd: dateTimeEnd);
+                                    workplace: state.favorites[index],
+                                    dateTimeStart: dateTimeStart,
+                                    dateTimeEnd: dateTimeEnd,
+                                  );
                                 }),
                           ],
                         )),

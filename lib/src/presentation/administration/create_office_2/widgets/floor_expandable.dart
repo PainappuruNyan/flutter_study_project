@@ -14,7 +14,6 @@ class FloorExpandable extends StatelessWidget {
   TextEditingController workplaceCounterController = TextEditingController();
   TextEditingController meetingCounterController = TextEditingController();
 
-  
   @override
   Widget build(BuildContext context) {
     if (context.read<OfficeCreate2Bloc>().state is FloorEntered) {
@@ -42,7 +41,8 @@ class FloorExpandable extends StatelessWidget {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: meetingCounterController,
-                        decoration: const InputDecoration(label: Text('Переговорок')),
+                        decoration:
+                            const InputDecoration(label: Text('Переговорок')),
                       ),
                     ),
                     SizedBox(width: 20.w),
@@ -50,24 +50,28 @@ class FloorExpandable extends StatelessWidget {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: workplaceCounterController,
-                        decoration: const InputDecoration(label: Text('Рабочих мест')),
+                        decoration:
+                            const InputDecoration(label: Text('Рабочих мест')),
                       ),
                     ),
                   ],
                 ),
-
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: floorNumberController,
                   decoration: const InputDecoration(label: Text('Номер этажа')),
                 ),
                 MaterialButton(
-                  onPressed: (){
-                    final MiniFloor newFloor = MiniFloor(floorNumber: int.parse(floorNumberController.text));
-                    newFloor.meetingRoomCount = int.parse(meetingCounterController.text);
-                    newFloor.workplaceCount = int.parse(workplaceCounterController.text);
-                    context.read<OfficeCreate2Bloc>().add(ChangeOneFloor(floorIndex: floorIndex, floorInstance: newFloor));
-
+                  onPressed: () {
+                    final MiniFloor newFloor = MiniFloor(
+                        floorNumber: int.parse(floorNumberController.text),
+                        officeId: context.read<OfficeCreate2Bloc>().officeId);
+                    newFloor.meetingRoomCount =
+                        int.parse(meetingCounterController.text);
+                    newFloor.workplaceCount =
+                        int.parse(workplaceCounterController.text);
+                    context.read<OfficeCreate2Bloc>().add(ChangeOneFloor(
+                        floorIndex: floorIndex, floorInstance: newFloor));
                   },
                   minWidth: 264.w,
                   height: 37.h,
@@ -84,6 +88,8 @@ class FloorExpandable extends StatelessWidget {
         ],
       );
     }
-    return const Center(child: Text('Что-то не так'),);
+    return const Center(
+      child: Text('Что-то не так'),
+    );
   }
 }

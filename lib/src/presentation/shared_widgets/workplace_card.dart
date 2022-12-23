@@ -32,14 +32,14 @@ class WorkplaceCard extends StatelessWidget {
               '${workplace.typeName}: ${workplace.id}. ${workplace.capacity} мест',
               style: Theme.of(context).textTheme.subtitle2,
             ),
-            tileColor: !workplace.isFree ? Colors.grey.shade400 : null,
+            tileColor: !workplace.isFree! ? Colors.grey.shade400 : null,
             onTap: () {
-              !workplace.isFree
+              !workplace.isFree!
                   ? showDialog(
                       context: context,
                       builder: (BuildContext _) {
                         return FreeTimePicker(
-                          placeId: workplace.id,
+                          placeId: workplace.id!,
                           date: dateTimeStart!,
                           bookingBloc: context.read<BookingCreate3Bloc>(),
                           workplace: workplace,
@@ -83,7 +83,7 @@ class WorkplaceCard extends StatelessWidget {
                                           maker: context
                                               .read<BookingCreate3Bloc>()
                                               .makerId,
-                                          workplace: workplace.id,
+                                          workplace: workplace.id!,
                                           start: DateTime(
                                               dateTimeStart!.year,
                                               dateTimeStart!.month,
@@ -156,7 +156,7 @@ class WorkplaceCard extends StatelessWidget {
                                           maker: context
                                               .read<BookingCreate3Bloc>()
                                               .makerId,
-                                          workplace: workplace.id,
+                                          workplace: workplace.id!,
                                           start: DateTime(
                                               dateTimeStart!.year,
                                               dateTimeStart!.month,
@@ -192,7 +192,7 @@ class WorkplaceCard extends StatelessWidget {
               onPressed: () {
                 context.read<BookingCreate3Bloc>().add(
                     BookingCreate3FavoriteChanged(
-                        workplaceId: workplace.id,
+                        workplaceId: workplace.id!,
                         isFavorite: !(context.read<BookingCreate3Bloc>().state
                                 as BookingCreate3FloorLoaded)
                             .favorites

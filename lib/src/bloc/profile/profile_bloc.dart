@@ -3,12 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
 import '../../data/datasources/remote_data_source.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 import '../../domain/entities/profile.dart';
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -20,6 +22,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   late ProfileRepositoryImpl profileRepositoryImpl;
+  SharedPreferences prefs = di.sl();
 
   Future<void> _onStarted(
       ProfileStarted event, Emitter<ProfileState> emit) async {
@@ -35,6 +38,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                     emit(ProfileError());
                   },
                   (Profile r) async {
+                    prefs.setString('login', r.employee.login);
+                    prefs.setString('role', r.employee.role);
+                    prefs.setInt('id', r.employee.id);
+                    prefs.setString('phoneNumber', r.employee.phoneNumber);
+                    print(prefs.getString('phoneNumber'));
                     emit(ProfileLoaded(r));
                   }
           );

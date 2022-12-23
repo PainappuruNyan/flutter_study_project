@@ -12,12 +12,6 @@ class OfficeCreate2Initial extends OfficeCreate2State {
 }
 
 
-// {
-// floorList = List<MiniFloor>.generate(floorCount, (int index){
-// return MiniFloor(floorNumber: index+1);
-// });
-// }
-
 class FloorEntered extends OfficeCreate2State {
   const FloorEntered({required this.floorCount, required this.floorList});
 
@@ -36,6 +30,10 @@ class FloorEntered extends OfficeCreate2State {
 
   @override
   List<Object?> get props => [floorCount, floorList];
+}
+
+class FloorsLoaded extends FloorEntered{
+  FloorsLoaded({required super.floorCount, required super.floorList});
 }
 
 class Error extends OfficeCreate2State{

@@ -29,3 +29,5 @@ class ChangeOneFloor extends OfficeCreate2Event{
 }
 
 class SaveFloor extends OfficeCreate2Event{}
+
+class ConfirmCreation extends OfficeCreate2Event{}

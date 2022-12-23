@@ -163,7 +163,7 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
                                       id: -1,
                                       holder: widget.bookingBloc.holdersId[0],
                                       maker: widget.bookingBloc.makerId,
-                                      workplace: widget.workplace.id,
+                                      workplace: widget.workplace.id!,
                                       start: nStart,
                                       end: nEnd,
                                       guests: 0,

@@ -16,6 +16,7 @@ class CustomFormField extends StatefulWidget {
     required this.valid,
     required this.index,
     required this.formKey,
+    this.inputType
   });
 
   GlobalKey<FormState> formKey;
@@ -25,6 +26,7 @@ class CustomFormField extends StatefulWidget {
   bool isDateTime;
   String? Function(String?) valid;
   final int index;
+  final TextInputType? inputType;
 
   @override
   State<CustomFormField> createState() => _CustomFormFieldState();
@@ -32,7 +34,8 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _valid(String text) {
-    if (text == '' || text == null) {
+    if (text == '' || text == null || text == '0') {
+      print('пустая строка');
       return false;
     }
     return true;
@@ -108,6 +111,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                 }
                 return null;
               },
+              keyboardType: widget.inputType,
               style: Theme.of(context).textTheme.bodyText2,
               controller: widget.controller,
               decoration: InputDecoration(
