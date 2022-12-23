@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../bloc/booking_create_3/booking_create3_bloc.dart';
 import '../../../core/constants/colors.dart';
+import '../../../domain/entities/floor.dart';
 import '../../shared_widgets/bottom_app_bar.dart';
 import '../../shared_widgets/workplace_card.dart';
 import '../booking_list/booking_list_screen.dart';
@@ -30,7 +31,6 @@ class BookingCreate3Screen extends StatefulWidget {
 }
 
 class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
-
   _BookingCreate3ScreenState(
       this.selectedOffice, this.dateStart, this.timeStart, this.timeEnd);
 
@@ -50,7 +50,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
     final DateTime dateTimeEnd = DateTime.parse('$dateStart $timeEnd');
     return BlocProvider<BookingCreate3Bloc>(
       create: (BuildContext context) =>
-          BookingCreate3Bloc(selectedOffice, dateTimeStart, dateTimeEnd)..add(BookingCreate3Start()),
+          BookingCreate3Bloc(selectedOffice, dateTimeStart, dateTimeEnd)
+            ..add(BookingCreate3Start()),
       child: Scaffold(
         backgroundColor: MyColors.kWhite,
         appBar: AppBar(
@@ -59,7 +60,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
         )),
         body: BlocConsumer<BookingCreate3Bloc, BookingCreate3State>(
           builder: (BuildContext context, BookingCreate3State state) {
-            if (state is BookingCreate3FloorLoading) {
+            if (state is BookingCreate3FloorLoading ||
+                state is BookingCreate3Initial) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -77,11 +79,16 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                             padding: EdgeInsets.only(left: 30.sp),
                             child: CustomDropDown(
                               value: '${state.selectedFloor} Этаж',
-                              itemsList: state.floors.map((e) => e.floorNumber).toList(),
+                              itemsList: state.floors
+                                  .map((Floor e) => e.floorNumber)
+                                  .toList(),
                               onChanged: (dynamic value) {
                                 final String selected = value as String;
-                                final int result = int.parse(selected.substring(0, selected.indexOf(' ')));
-                                context.read<BookingCreate3Bloc>().add(BookingCreate3ChangeFloor(floorNumber: result));
+                                final int result = int.parse(selected.substring(
+                                    0, selected.indexOf(' ')));
+                                context.read<BookingCreate3Bloc>().add(
+                                    BookingCreate3ChangeFloor(
+                                        floorNumber: result));
                               },
                             ),
                           ),
@@ -176,8 +183,6 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
                                       workplace: state.favorites[index],
-                                      onApprove:
-                                          context.read<BookingCreate3Bloc>(),
                                       dateTimeStart: dateTimeStart,
                                       dateTimeEnd: dateTimeEnd);
                                 }),
@@ -200,8 +205,6 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
                                       workplace: state.usualWorkplaces[index],
-                                      onApprove:
-                                          context.read<BookingCreate3Bloc>(),
                                       dateTimeStart: dateTimeStart,
                                       dateTimeEnd: dateTimeEnd);
                                 }),
@@ -224,8 +227,6 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return WorkplaceCard(
                                       workplace: state.meetengRoom[index],
-                                      onApprove:
-                                          context.read<BookingCreate3Bloc>(),
                                       dateTimeStart: dateTimeStart,
                                       dateTimeEnd: dateTimeEnd);
                                 }),
@@ -247,7 +248,9 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
                         padding: EdgeInsets.only(left: 30.sp),
                         child: CustomDropDown(
                           value: '$selectedFloor Этаж',
-                          itemsList: state.floors.map((e) => e.floorNumber).toList(),
+                          itemsList: state.floors
+                              .map((Floor e) => e.floorNumber)
+                              .toList(),
                           onChanged: (dynamic value) {
                             setState(() {
                               selectedFloor = value as int;
@@ -314,11 +317,22 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen> {
             }
           },
         ),
-        bottomNavigationBar: const CustomBottomAppBar(
-          pageCount: '3',
-          pageNum: '3',
-          nextRoute: BookingListScreen(),
-          nextPageButton: true,
+        bottomNavigationBar:
+            BlocBuilder<BookingCreate3Bloc, BookingCreate3State>(
+          builder: (BuildContext context, BookingCreate3State state) {
+            return CustomBottomAppBar(
+              pageCount: '3',
+              pageNum: '3',
+              dateValid: true,
+              nextRoute: () {
+                print('нажали на дальше');
+                context
+                    .read<BookingCreate3Bloc>()
+                    .add(BookingCreate3SendWorkplaces());
+              },
+              nextPageButton: true,
+            );
+          },
         ),
       ),
     );

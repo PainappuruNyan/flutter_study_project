@@ -25,7 +25,7 @@ class AddTeammateCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 30.sp, right: 30.sp, top: 16.sp),
       child: InkWell(
         onLongPress: () {
-          bloc.add(TeammateAdd(teammate: TeammateModel(teamId: teamId, employeeId: employee.id, id: -1)));
+          bloc.add(TeammateAdd(teammate: TeammateModel(teamId: teamId, employeeId: employee.id, id: -1, fullName: '', roleName: '')));
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('${employee.fullName} добавлен в команду')));
         },

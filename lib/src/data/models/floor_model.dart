@@ -12,7 +12,7 @@ class FloorModel extends Floor{
     id: json['id'] as int,
     officeId: json['officeId'] as int,
     floorNumber: json['floorNumber'] as int,
-    mapFloor: json['mapFloor'] as String,
+    mapFloor: json['mapFloor']==null ? '' : json['mapFloor'] as String,
   );
 
   Map<String, dynamic> toJson() => {

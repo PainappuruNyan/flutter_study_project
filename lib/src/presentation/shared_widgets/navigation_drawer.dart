@@ -42,8 +42,7 @@ class NavigationDrawer extends StatelessWidget {
               children: <Widget>[
                 const CircleAvatar(
                   radius: 52,
-                  backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/b1/90/ea/b190eaf16ed403f2e2b426ef59cfcdc1.jpg'),
+                  backgroundImage: AssetImage('assets/images/Group 1740.png'),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -93,11 +92,27 @@ class NavigationDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text('Настройки',
+              leading: const Icon(Icons.info),
+              title: Text('Инфоугол',
                   style: Theme.of(context).textTheme.bodyText2),
               onTap: () {
-                Navigator.pushReplacementNamed(context, Routes.user_list);
+                // Navigator.pushReplacementNamed(context, Routes.user_list);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.admin_panel_settings),
+              title: Text('Администрирование',
+                  style: Theme.of(context).textTheme.bodyText2),
+              onTap: () {
+                // Navigator.pushReplacementNamed(context, Routes.user_list);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red,),
+              title: Text('Выход',
+                  style: Theme.of(context).textTheme.bodyText2),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.login);
               },
             )
           ],

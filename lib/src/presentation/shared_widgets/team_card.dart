@@ -22,75 +22,84 @@ class TeamCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 14.5.sp, right: 14.5.sp, top: 16.sp),
       child: Column(
         children: <Widget>[
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: MyColors.kPrimary)),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(top: 9.sp, bottom: 6.sp),
-                        child: Text(
-                          team.name,
-                          style: Theme.of(context).textTheme.subtitle1,
+          InkWell(
+          onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => TeamDetailsScreen(
+                        e: team,
+                        bloc: context.read<TeamListBloc>(),
+                        mateBloc: context.read<TeammateListBloc>())));
+              },
+            child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: MyColors.kPrimary)),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 9.sp, bottom: 6.sp),
+                          child: Text(
+                            team.name,
+                            style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18.sp),
+                          ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(bottom: 11.sp),
-                        child: Text(
-                          'Лидер: ${team.leaderId}',
-                          style: Theme.of(context).textTheme.subtitle2,
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(bottom: 11.sp),
+                          child: Text(
+                            'Лидер: ${team.leaderId}',
+                            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 18.sp),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp),
-                      height: 59.h,
-                      width: 800.w,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(4),
-                            bottomRight: Radius.circular(4)),
-                        color: MyColors.kSecondary,
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => TeamDetailsScreen(
-                                  e: team,
-                                  bloc: context.read<TeamListBloc>(),
-                                  mateBloc: context.read<TeammateListBloc>())));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 10.sp),
-                              height: 39.h,
-                              width: 130.w,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: MyColors.kWhite, width: 1.w),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                color: MyColors.kSecondary,
-                              ),
-                              child: Text(
-                                'Роль',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              ))
+                      ],
+                    ),
+                    // Container(
+                    //     padding: EdgeInsets.symmetric(vertical: 10.sp),
+                    //     height: 59.h,
+                    //     width: 800.w,
+                    //     decoration: const BoxDecoration(
+                    //       borderRadius: BorderRadius.only(
+                    //           bottomLeft: Radius.circular(4),
+                    //           bottomRight: Radius.circular(4)),
+                    //       color: MyColors.kSecondary,
+                    //     ),
+                    //     child: InkWell(
+                    //       onTap: () {
+                    //         Navigator.of(context).push(MaterialPageRoute(
+                    //             builder: (_) => TeamDetailsScreen(
+                    //                 e: team,
+                    //                 bloc: context.read<TeamListBloc>(),
+                    //                 mateBloc: context.read<TeammateListBloc>())));
+                    //       },
+                    //       child: Column(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: <Widget>[
+                    //           Container(
+                    //             padding: EdgeInsets.symmetric(vertical: 10.sp),
+                    //             height: 39.h,
+                    //             width: 130.w,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(
+                    //                   color: MyColors.kWhite, width: 1.w),
+                    //               borderRadius:
+                    //                   const BorderRadius.all(Radius.circular(8)),
+                    //               color: MyColors.kSecondary,
+                    //             ),
+                    //             child: Text(
+                    //               'Роль',
+                    //               textAlign: TextAlign.center,
+                    //               style: Theme.of(context).textTheme.bodyText1,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     )),
+                  ],
+                )),
+          )
         ],
       ),
     );

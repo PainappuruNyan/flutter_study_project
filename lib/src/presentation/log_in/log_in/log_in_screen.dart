@@ -173,25 +173,6 @@ class LoginScreenView extends StatelessWidget {
                           ),
                         ),
                       )),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: MaterialButton(
-                      onPressed: () {},
-                      minWidth: 250.w,
-                      height: 40.h,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            color: MyColors.kPrimary, width: 2.0),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      textColor: MyColors.kPrimary,
-                      child: const Text(
-                        'Регистрация',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

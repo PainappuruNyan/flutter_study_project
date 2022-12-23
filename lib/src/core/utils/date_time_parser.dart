@@ -2,7 +2,9 @@ import 'package:intl/intl.dart';
 
 class DateParser{
   static String parseForGetRequest(DateTime original){
-    return '${original.year}-${DateFormat('MM').format(original)}-${DateFormat('dd').format(original)}%20${DateFormat('hh').format(original)}%3A${DateFormat('mm').format(original)}';
+    String answer = '${original.year}-${DateFormat('MM').format(original)}-${DateFormat('dd').format(original)}%20${DateFormat('HH').format(original)}%3A${DateFormat('mm').format(original)}';
+    print(answer);
+    return '${original.year}-${DateFormat('MM').format(original)}-${DateFormat('dd').format(original)}%20${DateFormat('HH').format(original)}%3A${DateFormat('mm').format(original)}';
   }
 }
 

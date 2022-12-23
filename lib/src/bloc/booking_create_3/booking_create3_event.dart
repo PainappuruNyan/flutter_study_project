@@ -37,3 +37,15 @@ class BookingCreate3WorkplaceSelected extends BookingCreate3Event{
 
   final BookingModel booking;
 }
+
+class BookingCreate3SendWorkplaces extends BookingCreate3Event{
+}
+
+class BookingCreate3RemoveWorkplace extends BookingCreate3Event{
+  const BookingCreate3RemoveWorkplace({required this.bookingForRemove});
+
+  final Booking bookingForRemove;
+
+  @override
+  List<Object> get props => [bookingForRemove];
+}

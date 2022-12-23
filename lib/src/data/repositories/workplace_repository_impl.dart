@@ -4,6 +4,7 @@ import '../../core/error/failures.dart';
 import '../../core/exeptions/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/entities/floor_list.dart';
+import '../../domain/entities/time_interval_list.dart';
 import '../../domain/entities/workplace_list.dart';
 import '../../domain/repository/workplace_repository.dart';
 import '../datasources/local/DAO/favorite_places_id.dart';
@@ -14,13 +15,12 @@ import '../models/workplace_list_model.dart';
 
 // typedef Future<Employee> GetEmployeeByIdOrLogin();
 
-class WorkplaceRepositoryImpl implements WorkplaceRepository{
+class WorkplaceRepositoryImpl implements WorkplaceRepository {
+  WorkplaceRepositoryImpl(
+      {required this.networkInfo,
+      required this.remoteDataSource,
+      required this.localDataSource});
 
-  WorkplaceRepositoryImpl( {
-    required this.networkInfo,
-    required this.remoteDataSource,
-    required this.localDataSource
-  });
   final LocalDataSourceImpl localDataSource;
   final RemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
@@ -39,38 +39,77 @@ class WorkplaceRepositoryImpl implements WorkplaceRepository{
 
   @override
   Future<Either<Failure, FloorList>> getFloors(int officeId) async {
-    try{
-      final FloorListModel remoteFloors = await remoteDataSource.getFloors(officeId);
+    try {
+      final FloorListModel remoteFloors =
+          await remoteDataSource.getFloors(officeId);
       return Right(remoteFloors);
-    }
-    on ServerException {
+    } on ServerException {
       return Left(ServerFailure());
     }
   }
 
   @override
-  Future<Either<Failure, WorkplaceList>> getWorkplaces(int floorId, DateTime start, DateTime end) async {
-    try{
-      final WorkplaceListModel remotePlaces = await remoteDataSource.getWorkplaces(floorId, 1, start, end);
+  Future<Either<Failure, WorkplaceList>> getWorkplaces(
+      int floorId, DateTime start, DateTime end) async {
+    try {
+      final WorkplaceListModel remotePlaces =
+          await remoteDataSource.getWorkplaces(floorId, 1, start, end);
       return Right(remotePlaces);
-    }
-    on ServerException {
+    } on ServerException {
       return Left(ServerFailure());
     }
   }
 
   @override
-  Future<Either<Failure, WorkplaceList>> getMeetingRooms(int floorId, DateTime start, DateTime end) async {
-    try{
-      final WorkplaceListModel remoteFloors = await remoteDataSource.getWorkplaces(floorId, 2, start, end);
+  Future<Either<Failure, WorkplaceList>> getMeetingRooms(
+      int floorId, DateTime start, DateTime end) async {
+    try {
+      final WorkplaceListModel remoteFloors =
+          await remoteDataSource.getWorkplaces(floorId, 2, start, end);
       return Right(remoteFloors);
-    }
-    on ServerException {
+    } on ServerException {
       return Left(ServerFailure());
     }
   }
 
+  @override
+  Future<Either<Failure, TimeIntervalList>> getFreeIntervals(
+      int placeId, DateTime dateTime) async {
+    try {
+      final TimeIntervalList intervalList =
+          await remoteDataSource.getFreeIntervals(placeId, dateTime);
+      return Right(intervalList);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
+  @override
+  Future<Either<Failure, WorkplaceList>> getRemoteFavorites(
+      int floorId, DateTime start, DateTime end) async {
+    try {
+      final WorkplaceListModel remoteFavorites =
+          await remoteDataSource.getRemoteFavorites(floorId, start, end);
+      return Right(remoteFavorites);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
-
+  @override
+  Future<Either<Failure, String>> changeRemoteFavorites(
+      int id, bool isFavorite) async {
+    try {
+      String answer = '';
+      if (isFavorite) {
+        answer = await remoteDataSource.postFavorite(id);
+      } else {
+        answer = await remoteDataSource.deleteFavorite(id);
+      }
+      print(answer);
+      return Right(answer);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

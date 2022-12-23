@@ -91,10 +91,13 @@ class CustomBottomAppBar extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25, right: 5),
                   child: TextButton(
                     onPressed: () {
-                      nextRoute();
+
                     },
                     child: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('нажали в виджите');
+                        nextRoute();
+                      },
                       label: Text(
                         'Подтвердить',
                         style: Theme.of(context).textTheme.headline6,

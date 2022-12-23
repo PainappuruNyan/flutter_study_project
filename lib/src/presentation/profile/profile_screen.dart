@@ -11,6 +11,8 @@ import '../../data/repositories/employee_repository_impl.dart';
 import '../routes/routes.dart';
 import '../shared_widgets/booking_card.dart';
 import '../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../shared_widgets/team_card.dart';
+import '../teams/team_create/team_create_screen.dart';
 import 'widgets/id_card.dart';
 import 'widgets/user_card.dart';
 
@@ -27,7 +29,6 @@ class ProfileScreen extends StatelessWidget {
           backgroundColor: MyColors.kFrameBackground,
           drawer: const NavigationDrawer.NavigationDrawer(),
           appBar: AppBar(
-            backgroundColor: MyColors.kPrimary,
             elevation: 0,
             title: const Text('Профиль сотрудника'),
           ),
@@ -88,7 +89,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                         Flexible(
                           flex: 43,
                           child: IdCard(state.profile.employee.id,
-                              'Работник'),
+                              'Админ', login: state.profile.employee.login,),
                         )
                       ],
                     ),
@@ -120,9 +121,14 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                         .textTheme
                                         .subtitle2,
                                   ),
-                                  const Image(
-                                      image: AssetImage(
-                                          'assets/images/Union.png'))
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.pushNamed(context, Routes.booking_create_1);
+                                    },
+                                    child: const Image(
+                                        image: AssetImage(
+                                            'assets/images/Union.png')),
+                                  )
                                 ],
                               ),
                             ),
@@ -181,19 +187,30 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                         .textTheme
                                         .subtitle2,
                                   ),
-                                  const Image(
-                                      image: AssetImage(
-                                          'assets/images/Union.png'))
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => TeamCreateScreen()));
+                                    },
+                                    child: const Image(
+                                        image: AssetImage(
+                                            'assets/images/Union.png')),
+                                  )
                                 ],
                               ),
                             ),
-                            Text(
-                              'Здесь пока пусто',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
+                            if(state.profile.teams!.isNotEmpty)...[
+                              TeamCard(team: state.profile.teams![0],),
+                            ]
+                            else...[
+                              Text(
+                                'Здесь пока пусто',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .caption,
+                              ),
+                            ],
                             Container(
                               margin: const EdgeInsets.only(top: 11),
                               decoration: const BoxDecoration(

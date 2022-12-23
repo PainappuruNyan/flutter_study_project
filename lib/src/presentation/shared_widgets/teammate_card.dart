@@ -66,7 +66,7 @@ class TeammateCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Милое имя',
+                                '${teammate.fullName}',
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Padding(
@@ -77,7 +77,7 @@ class TeammateCard extends StatelessWidget {
                                       style: Theme.of(context).textTheme.headline6,
                                       children: <TextSpan>[
                                         TextSpan(
-                                            text: 'Роль',
+                                            text: '${teammate.roleName}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2)
