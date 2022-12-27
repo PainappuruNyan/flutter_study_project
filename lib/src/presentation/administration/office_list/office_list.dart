@@ -1,64 +1,77 @@
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../bloc/booking_create_1/booking_create1_bloc.dart';
-import '../../../domain/entities/office.dart';
-import '../../booking/create_booking_1/widgets/office_expandable.dart';
+import '../../../bloc/admin_office_list/admin_office_list_bloc.dart';
+import '../../routes/routes.dart';
+import '../../shared_widgets/navigation_drawer.dart';
+import '../office_details/office_details.dart';
+import 'widget/simple_office_widget.dart';
 
-class OfficeList extends StatefulWidget {
-  const OfficeList({Key? key}) : super(key: key);
+class OfficeListScreen extends StatefulWidget {
+  const OfficeListScreen({Key? key}) : super(key: key);
+
+  static const String routeName = 'admin_office_list';
 
   @override
-  State<OfficeList> createState() => _OfficeListState();
+  State<OfficeListScreen> createState() => _OfficeListScreenState();
 }
 
-class _OfficeListState extends State<OfficeList> {
+class _OfficeListScreenState extends State<OfficeListScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BookingCreate1Bloc>(
-      create: (BuildContext context) => BookingCreate1Bloc(),
+    SharedPreferences prefs = di.sl();
+    int id = prefs.getInt('id')!;
+    return BlocProvider<AdminOfficeListBloc>(
+      create: (BuildContext context) => AdminOfficeListBloc(id)..add(AdminOfficeListStart()),
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {Navigator.pushNamed(context, Routes.create_office_1).then((value) => context.read<AdminOfficeListBloc>().add(AdminOfficeListStart()));},
+            child: const Icon(Icons.add),
+          ),
+        drawer: const NavigationDrawer(),
         appBar: AppBar(
             title: const Text(
-          'Новый офис',
+          'Ваши офисы',
         )),
-        body: BlocBuilder<BookingCreate1Bloc, BookingCreate1State>(
-          builder: (BuildContext context, BookingCreate1State state) {
-            if (state is BookingCreate1Loading) {
+        body: BlocBuilder<AdminOfficeListBloc, AdminOfficeListState>(
+          builder: (BuildContext context, AdminOfficeListState state) {
+            if (state is OfficeListLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            if (state is BookingCreate1Loaded) {
+            if (state is OfficeListLoaded) {
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.w),
                 child: Column(
-                  children: [
-                    const Text('Выбирете офис'),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: state.cites.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          late List<Office> cityOffices;
-                          if (state.cites[index] == 'Избранное') {
-                            cityOffices = state.offices
-                                .where((Office element) =>
-                                    element.isFavorite == true)
-                                .toList();
-                          } else {
-                            cityOffices = state.offices
-                                .where((Office element) =>
-                                    element.cityName == state.cites[index])
-                                .toList();
-                          }
-                          return OfficeExpandable(
-                            offices: cityOffices,
-                            city: state.cites[index],
-                          );
-                        }),
+                  children: <Widget>[
+                    Text('Выбирете офис', style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500),),
+                    if(state.offices.isNotEmpty)...<Widget>[
+                      Expanded(
+                        child: ListView.builder(
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: state.offices.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          OfficeDetailsScreen(
+                                            office: state.offices[index],)));
+                                },
+                                  child: SimpleOffice(office: state.offices[index]));
+                            }),
+                      ),
+                    ]
+                    else ...<Widget>[
+                      const Center(child: Text('У вас нет администрируемых офисов'),)
+                    ],
+
                   ],
                 ),
               );

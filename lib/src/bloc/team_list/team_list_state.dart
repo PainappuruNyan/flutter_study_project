@@ -20,15 +20,13 @@ class TeamListLoading extends TeamListState {
 }
 
 class TeamListLoaded extends TeamListState {
-  const TeamListLoaded({required this.myTeamList, required this.allTeamList});
+  const TeamListLoaded({required this.myTeamList});
   final TeamList myTeamList;
-  final TeamList allTeamList;
 
   @override
-  List<Object?> get props => [myTeamList, allTeamList];
+  List<Object?> get props => [myTeamList];
 
   int get lengthMyTeam => myTeamList.teams.length;
-  int get lengthAllTeam => allTeamList.teams.length;
 }
 
 class TeamListError extends TeamListState {

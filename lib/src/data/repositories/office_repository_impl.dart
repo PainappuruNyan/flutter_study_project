@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 
-import '../../bloc/office_create_2/office_create_2_bloc.dart';
 import '../../core/error/failures.dart';
 import '../../core/exeptions/exceptions.dart';
 import '../../core/network/network_info.dart';
@@ -72,26 +71,6 @@ class OfficeRepositoryImpl implements OfficeRepository {
     try {
       final CityListModel remoteCites = await remoteDataSource.getCitesAll();
       return Right(remoteCites);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> postOffice(OfficeModel office) async {
-    try {
-      final String answer = await remoteDataSource.postOffice(office);
-      return Right(answer);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> postFloors(List<MiniFloor> floors) async {
-    try {
-      final String answer = await remoteDataSource.postFloors(floors);
-      return Right(answer);
     } on ServerException {
       return Left(ServerFailure());
     }

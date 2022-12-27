@@ -33,8 +33,9 @@ class BookingCreate3ChangeFloor extends BookingCreate3Event{
 }
 
 class BookingCreate3WorkplaceSelected extends BookingCreate3Event{
-  const BookingCreate3WorkplaceSelected({required this.booking});
+  const BookingCreate3WorkplaceSelected( {required this.booking, required this.employeeId,});
 
+  final int employeeId;
   final BookingModel booking;
 }
 
@@ -48,4 +49,13 @@ class BookingCreate3RemoveWorkplace extends BookingCreate3Event{
 
   @override
   List<Object> get props => [bookingForRemove];
+}
+
+class ChangeSelectedEmployee extends BookingCreate3Event{
+  const ChangeSelectedEmployee({required this.nSelectedId});
+
+  final int nSelectedId;
+
+  @override
+  List<Object> get props => [nSelectedId];
 }

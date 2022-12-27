@@ -15,6 +15,7 @@ class TeammateListBloc extends Bloc<TeammateListEvent, TeammateListState> {
   TeammateListBloc(this._teammateRepository) : super(const TeammateListInitial()) {
     on<GetTeammateList>((GetTeammateList event,
         Emitter<TeammateListState> emit) async {
+      holdersId.clear();
       emit(const TeammateListLoading());
       TeammateList teammateList = const TeammateList(teammates: []);
       await _teammateRepository.getTeammate(teamId: event.teamId).then((value) {
@@ -22,17 +23,20 @@ class TeammateListBloc extends Bloc<TeammateListEvent, TeammateListState> {
           emit(TeammateListError(l.toString()));
         }, (TeammateList r) async {
           teammateList = r;
+          for (int i = 0; i < r.teammates.length; i++) {
+            holdersId.add(r.teammates[i].employeeId);
+          }
         });
       });
       emit(TeammateListLoaded(teammateList: teammateList));
     });
 
     on<TeammateDelete>((TeammateDelete event, Emitter<TeammateListState> emit) async {
+      emit(const TeammateListLoading());
       await _teammateRepository
           .deleteTeammate(employeeId: event.employeeId, teamId: event.teamId)
           .then((Either<Failure, String> value) => GetTeammateList(teamId: event.teamId))
           .catchError(onError);
-      emit(const TeammateListLoading());
       TeammateList teammateList = TeammateList(teammates: []);
       await _teammateRepository.getTeammate(teamId: event.teamId).then((Either<Failure, TeammateList> value) {
         value.fold((Failure l) async {
@@ -50,6 +54,8 @@ class TeammateListBloc extends Bloc<TeammateListEvent, TeammateListState> {
           .catchError(onError);
     });
   }
+  List<int> holdersId = <int>[];
+  List<int> get ids => holdersId;
 
-    final TeammateRepositoryImpl _teammateRepository;
+  final TeammateRepositoryImpl _teammateRepository;
 }

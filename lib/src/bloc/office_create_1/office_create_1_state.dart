@@ -64,6 +64,9 @@ class OfficeCreate1Initial extends OfficeCreate1State {
 }
 
 class OfficeCreated extends OfficeCreate1Initial{
+  OfficeCreated({required this.nOfficeId});
+
+  final int nOfficeId;
 }
 
 class StartingState extends OfficeCreate1State{

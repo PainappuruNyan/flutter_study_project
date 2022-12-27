@@ -40,15 +40,14 @@ class LoginScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: Colors.white,
+    //   statusBarBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
+    // ));
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (BuildContext context, LoginState state) {
         return Scaffold(
-          backgroundColor: MyColors.kWhite,
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Padding(
@@ -60,8 +59,8 @@ class LoginScreenView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Image(
-                            image: AssetImage('assets/images/image 8.png')),
+                        Image(
+                            image: AssetImage('assets/images/coolLogo.png'), height: 90.h, width: 90.w,),
                         Container(
                             margin: EdgeInsets.only(left: 14.0.sp),
                             child: Column(

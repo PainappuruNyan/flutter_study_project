@@ -19,24 +19,15 @@ class TeamRepositoryImpl implements TeamListRepository {
   final NetworkInfo networkInfo;
 
   @override
-  Future<Either<Failure, TeamList>> getMyTeam() async {
+  Future<Either<Failure, TeamList>> getMyTeam({required int id}) async {
     try {
-      final TeamListModel remoteMyTeams = await remoteDataSource.getMyTeam();
+      final TeamListModel remoteMyTeams = await remoteDataSource.getMyTeam(id: id);
       return Right(remoteMyTeams);
     } on ServerException {
       return Left(ServerFailure());
     }
   }
 
-  @override
-  Future<Either<Failure, TeamList>> getAllTeam() async {
-    try {
-      final TeamListModel remoteAllTeam = await remoteDataSource.getAllTeam();
-      return Right(remoteAllTeam);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
-  }
 
   @override
   Future<Either<Failure, String>> postNewTeam({required TeamModel team}) async {
@@ -53,6 +44,16 @@ class TeamRepositoryImpl implements TeamListRepository {
   Future<Either<Failure, String>> deleteTeam({required int id}) async {
     try {
       final String successString = await remoteDataSource.deleteTeam(id: id);
+      return Right(successString);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> editTeam({required TeamModel team}) async {
+    try {
+      final String successString = await remoteDataSource.editTeam(team: team);
       return Right(successString);
     } on ServerException {
       return Left(ServerFailure());

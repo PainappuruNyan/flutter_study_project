@@ -16,11 +16,11 @@ class Teammate extends Equatable{
   final String? roleName;
   @override
   List<Object?> get props => [id, teamId, employeeId, fullName, roleName];
+
+  String get roleString{
+    if(roleName == 'ROLE_ADMIN'){
+      return 'Админ';
+    }
+    return 'Сотрудник';
+  }
 }
-
-
-// "id": 1,
-// "teamId": 1,
-// "employeeId": 1,
-// "fullName": "Ольга Ивановна Ли",
-// "roleName": "ROLE_ADMIN"

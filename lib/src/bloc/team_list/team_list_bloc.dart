@@ -1,7 +1,9 @@
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/error/failures.dart';
 import '../../data/models/team_model.dart';
@@ -9,7 +11,6 @@ import '../../data/repositories/team_repository_impl.dart';
 import '../../domain/entities/team_list.dart';
 
 part 'team_list_event.dart';
-
 part 'team_list_state.dart';
 
 class TeamListBloc extends Bloc<TeamListEvent, TeamListState> {
@@ -17,25 +18,14 @@ class TeamListBloc extends Bloc<TeamListEvent, TeamListState> {
     on<GetTeamList>((GetTeamList event, Emitter<TeamListState> emit) async {
       emit(const TeamListLoading());
       TeamList myTeamList = TeamList(teams: []);
-      await _teamRepository.getMyTeam().then((Either<Failure, TeamList> value) {
+      await _teamRepository.getMyTeam(id: prefs.getInt('id')!).then((Either<Failure, TeamList> value) {
         value.fold((Failure l) async {
           emit(TeamListError(l.toString()));
         }, (TeamList r) async {
           myTeamList = r;
         });
       });
-
-      TeamList allTeamList = TeamList(teams: []);
-      await _teamRepository
-          .getAllTeam()
-          .then((Either<Failure, TeamList> value) {
-        value.fold((Failure l) async {
-          emit(TeamListError(l.toString()));
-        }, (TeamList r) async {
-          allTeamList = r;
-        });
-      });
-      emit(TeamListLoaded(myTeamList: myTeamList, allTeamList: allTeamList));
+      emit(TeamListLoaded(myTeamList: myTeamList));
     });
     on<TeamDelete>((TeamDelete event, Emitter<TeamListState> emit) async {
       await _teamRepository
@@ -44,28 +34,31 @@ class TeamListBloc extends Bloc<TeamListEvent, TeamListState> {
           .catchError(onError);
       emit(const TeamListLoading());
       TeamList myTeamList = TeamList(teams: []);
-      await _teamRepository.getMyTeam().then((Either<Failure, TeamList> value) {
+      await _teamRepository.getMyTeam(id: prefs.getInt('id')!).then((Either<Failure, TeamList> value) {
         value.fold((Failure l) async {
           emit(TeamListError(l.toString()));
         }, (TeamList r) async {
           myTeamList = r;
         });
       });
+      emit(TeamListLoaded(myTeamList: myTeamList));
+    });
 
-      TeamList allTeamList = TeamList(teams: []);
-      await _teamRepository
-          .getAllTeam()
-          .then((Either<Failure, TeamList> value) {
+    on<TeamEdit>((TeamEdit event, Emitter<TeamListState> emit) async {
+      await _teamRepository.
+      editTeam(team: event.team).
+      then((Either<Failure, String> value) {
         value.fold((Failure l) async {
           emit(TeamListError(l.toString()));
-        }, (TeamList r) async {
-          allTeamList = r;
+        }, (String r) async {
+          print(r);
         });
       });
-      emit(TeamListLoaded(myTeamList: myTeamList, allTeamList: allTeamList));
     });
 
   }
+
+  final SharedPreferences prefs = di.sl();
 
   final TeamRepositoryImpl _teamRepository;
 }

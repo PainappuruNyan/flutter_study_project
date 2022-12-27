@@ -3,13 +3,14 @@ import '../../bloc/office_create_2/office_create_2_bloc.dart';
 import '../../domain/entities/workplace.dart';
 
 class WorkplaceModel extends Workplace{
-  const WorkplaceModel({
+  WorkplaceModel({
     required super.isFree,
     required super.id,
     required super.capacity,
     required super.floorId,
     required super.typeName,
     required super.typeId,
+    required super.placeName
   });
 
   factory WorkplaceModel.fromJson(Map<String, dynamic> json){
@@ -19,7 +20,8 @@ class WorkplaceModel extends Workplace{
         floorId: json['floorId'] as int,
         typeName: json['typeName'] as String,
         isFree: json['isFree'] == null ? null : json['isFree']  as bool,
-        typeId: null
+        typeId: null,
+        placeName: json['placeName'] as String,
     );
   }
 
@@ -30,11 +32,14 @@ class WorkplaceModel extends Workplace{
         capacity: miniWorkplace.capacity,
         floorId: floorId,
         typeName: null,
-        typeId: miniWorkplace.typeId
+        typeId: miniWorkplace.typeId,
+        placeName: null
     );
   }
 
   Map<String, dynamic> toJson(){
+    String temp;
+    placeName == null ? temp = '0': temp = placeName!;
     return <String, dynamic>{
       'id':id,
       'capacity':capacity,
@@ -42,6 +47,7 @@ class WorkplaceModel extends Workplace{
       'typeName':typeName,
       'isFree':isFree,
       'typeId': typeId,
+      'placeName': temp
     };
   }
 }

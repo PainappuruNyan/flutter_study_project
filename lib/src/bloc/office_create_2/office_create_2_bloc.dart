@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../core/error/failures.dart';
-import '../../data/repositories/office_repository_impl.dart';
+import '../../data/repositories/administration_repository_impl.dart';
 import '../../domain/entities/workplace.dart';
 
 part 'office_create_2_event.dart';
@@ -24,8 +24,9 @@ class MiniWorkplace {
 }
 
 class MiniFloor {
-  MiniFloor({required this.floorNumber, required this.officeId});
+  MiniFloor({required this.floorNumber, required this.officeId, this.floorId});
 
+  int? floorId;
   int floorNumber;
   int officeId;
   List<MiniWorkplace> meetingRooms = [];
@@ -67,7 +68,7 @@ class OfficeCreate2Bloc extends Bloc<OfficeCreate2Event, OfficeCreate2State> {
   }
 
   int officeId;
-  OfficeRepositoryImpl repositoryImpl = di.sl();
+  AdministrationRepositoryImpl repositoryImpl = di.sl();
 
   FutureOr<void> _onStart(
       OfficeCreate2Start event, Emitter<OfficeCreate2State> emit) {}

@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
 import '../../core/error/failures.dart';
 import '../../data/models/team_model.dart';
@@ -37,4 +37,5 @@ class TeamCreateBloc extends Bloc<TeamCreateEvent, TeamCreateState> {
       });
     });
   }
+
 }

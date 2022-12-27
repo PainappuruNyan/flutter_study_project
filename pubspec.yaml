@@ -41,6 +41,10 @@ dependencies:
   stream_transform:
   dio:
   modal_bottom_sheet:
+  syncfusion_flutter_pdfviewer:
+  lottie:
+  provider:
+
 
   flutter:
     sdk: flutter
@@ -70,6 +74,10 @@ dependencies:
   sqflite: ^2.2.1
   another_xlider: ^1.1.2
   dropdown_search: ^5.0.5
+  sliding_up_panel: ^2.0.0+1
+  image_picker: ^0.8.6
+  photo_view: ^0.14.0
+  timezone: ^0.9.0
 
 dev_dependencies:
   flutter_test:
@@ -102,10 +110,14 @@ flutter:
   assets:
     - assets/images/image 8.svg
     - assets/images/image 8.png
-    - assets/files/posts.json
+    - assets/files/faq.pdf
+    - assets/files/macRemote.pdf
+    - assets/files/winRemote.pdf
     - assets/images/Group 1740.png
     - assets/images/Union.png
     - assets/images/coolLogo.png
+    - assets/animation/success.json
+    - assets/images/Default_image.png
 #     - For Honor2021-3-20-23-48-43.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

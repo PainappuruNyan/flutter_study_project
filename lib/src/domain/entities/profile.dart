@@ -13,9 +13,9 @@ class Profile extends Equatable{
   });
 
   final EmployeeModel employee;
-  final List<BookingModel>? bookings;
-  final List<TeamModel>? teams;
+  final BookingModel? bookings;
+  final TeamModel? teams;
 
   @override
-  List<Object> get props => [employee];
+  List<Object?> get props => [employee, bookings, teams];
 }

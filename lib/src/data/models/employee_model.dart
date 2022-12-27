@@ -8,8 +8,15 @@ class EmployeeModel extends Employee {
     required super.login,
     required super.email,
     required super.phoneNumber,
-    required super.photo,
+    required super.imageId,
   });
+
+  String get roleString{
+    if(role == 'ROLE_ADMIN'){
+      return 'Админ';
+    }
+    return 'Сотрудник';
+  }
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) => EmployeeModel(
     id: json['id'] as int,
@@ -18,7 +25,7 @@ class EmployeeModel extends Employee {
     login: json['login'] as String,
     email: json['email'] as String,
     phoneNumber: json['phoneNumber'] as String,
-    photo: json['photo'] as String?,
+    imageId: json['imageId'] as int?,
   );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -28,6 +35,6 @@ class EmployeeModel extends Employee {
     'login': login,
     'email': email,
     'phoneNumber': phoneNumber,
-    'photo': photo,
+    'imageId': imageId,
   };
 }

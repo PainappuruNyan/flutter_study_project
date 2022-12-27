@@ -13,7 +13,7 @@ class FloorModel extends Floor{
     id: json['id'] as int,
     officeId: json['officeId'] as int,
     floorNumber: json['floorNumber'] as int,
-    mapFloor: json['mapFloor']==null ? '' : json['mapFloor'] as String,
+    mapFloor: json['imageId']==null ? null : json['imageId'] as int,
   );
 
   factory FloorModel.fromMini(MiniFloor miniFloor){
@@ -21,7 +21,7 @@ class FloorModel extends Floor{
         id: null,
         officeId: miniFloor.officeId,
         floorNumber: miniFloor.floorNumber,
-        mapFloor: '');
+        mapFloor: null);
   }
 
   Map<String, dynamic> toJson() => {

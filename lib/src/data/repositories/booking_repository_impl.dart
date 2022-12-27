@@ -12,19 +12,19 @@ import '../models/booking_model.dart';
 import '../models/office_list_model.dart';
 
 
-class BookingRepositoryImpl implements BookingListRepository{
-  BookingRepositoryImpl( {
+class BookingRepositoryImpl implements BookingListRepository {
+  BookingRepositoryImpl({
     required this.networkInfo,
     required this.remoteDataSource,
   });
+
   final RemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
 
 
-
   @override
   Future<Either<Failure, OfficeList>> getOffices() async {
-    try{
+    try {
       final OfficeListModel remoteOffices = await remoteDataSource.getOffices();
       return Right(remoteOffices);
     }
@@ -35,8 +35,9 @@ class BookingRepositoryImpl implements BookingListRepository{
 
   @override
   Future<Either<Failure, BookingList>> getAllActual() async {
-    try{
-      final BookingListModel remoteActualBookings = await remoteDataSource.getAllActual();
+    try {
+      final BookingListModel remoteActualBookings = await remoteDataSource
+          .getAllActual();
       return Right(remoteActualBookings);
     }
     on ServerException {
@@ -46,8 +47,9 @@ class BookingRepositoryImpl implements BookingListRepository{
 
   @override
   Future<Either<Failure, BookingList>> getAllSelf() async {
-    try{
-      final BookingListModel remoteSelfBookings = await remoteDataSource.getAllSelf();
+    try {
+      final BookingListModel remoteSelfBookings = await remoteDataSource
+          .getAllSelf();
       return Right(remoteSelfBookings);
     }
     on ServerException {
@@ -56,9 +58,22 @@ class BookingRepositoryImpl implements BookingListRepository{
   }
 
   @override
-  Future<Either<Failure, String>> postBooking({required BookingModel booking}) async {
+  Future<Either<Failure, String>> postBooking(
+      {required BookingModel booking}) async {
+    try {
+      final String successString = await remoteDataSource.postNewBooking(
+          booking: booking);
+      return Right(successString);
+    }
+    on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> editBooking({required BookingModel booking}) async {
     try{
-      final String successString = await remoteDataSource.postNewBooking(booking: booking);
+      final String successString = await remoteDataSource.editBooking(booking: booking);
       return Right(successString);
     }
     on ServerException {
@@ -68,8 +83,21 @@ class BookingRepositoryImpl implements BookingListRepository{
 
   @override
   Future<Either<Failure, String>> deleteBooking({required int id}) async {
-    try{
+    try {
       final String successString = await remoteDataSource.deleteBooking(id: id);
+      return Right(successString);
+    }
+    on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BookingList>> getOfficeBooking(int officeId, int type,
+      bool isActual, int page) async {
+    try {
+      final BookingListModel successString = await remoteDataSource
+          .getOfficeBooking(officeId, type, isActual, page);
       return Right(successString);
     }
     on ServerException {

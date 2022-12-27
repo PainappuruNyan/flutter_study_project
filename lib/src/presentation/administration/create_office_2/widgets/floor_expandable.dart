@@ -26,7 +26,7 @@ class FloorExpandable extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(color: MyColors.kPrimaryText, fontSize: 22.sp),
+              .copyWith(fontSize: 22.sp),
         ),
         children: <Widget>[
           Container(

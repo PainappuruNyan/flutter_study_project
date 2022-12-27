@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../core/error/failures.dart';
+import '../../data/repositories/administration_repository_impl.dart';
 import '../../data/repositories/office_repository_impl.dart';
 import '../../domain/entities/office.dart';
 
@@ -16,24 +17,26 @@ part 'admin_office_list_event.dart';
 part 'admin_office_list_state.dart';
 
 class AdminOfficeListBloc extends Bloc<AdminOfficeListEvent, AdminOfficeListState> {
-  AdminOfficeListBloc() : super(OfficeListLoading()) {
+  AdminOfficeListBloc(this.adminId) : super(OfficeListLoading()) {
     on<AdminOfficeListStart>(_onStart);
     on<AdminOfficeListFavoriteChanged>(_onFavoriteChanged);
     on<AdminOfficeListOfficeSelected>(_onOfficeSelected);
   }
 
+  final int adminId;
   final OfficeRepositoryImpl officeRepositoryImpl = di.sl();
+  final AdministrationRepositoryImpl repository = di.sl();
 
   FutureOr<void> _onStart(AdminOfficeListStart event, Emitter<AdminOfficeListState> emit) async {
     List<String> cites = [];
-    await officeRepositoryImpl.getCites().then((value) => value.fold((l) => null, (r) => cites = r.cites.map((e) => e.name).toList()));
-    await officeRepositoryImpl.getOffices().then((Either<Failure, OfficeList> value) {
+    await repository.getAdministratorOffices(adminId).then((Either<Failure, OfficeList> value) {
       value.fold((Failure l) async {
+        print(l.toString());
         emit(OfficeListError());
       }, (OfficeList r) async {
-        if (r.offices.any((element) => element.isFavorite == true)){
-          cites.insert(0, 'Избранное');
-        }
+        // if (r.offices.any((element) => element.isFavorite == true)){
+        //   cites.insert(0, 'Избранное');
+        // }
         emit(OfficeListLoaded(offices: r.offices, cites: cites));
       });
     });

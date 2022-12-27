@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../bloc/booking_list/booking_list_bloc.dart';
+import '../../bloc/profile/profile_bloc.dart';
 import '../../core/constants/colors.dart';
 import '../../domain/entities/booking.dart';
 import '../booking/booking_details/booking_detail_screen.dart';
+import '../booking/create_booking_2/booking_create_2.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard({super.key, required this.booking});
@@ -31,78 +32,79 @@ class BookingCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: MyColors.kPrimary)),
-              child: Column(
+            padding: EdgeInsets.only(top: 7.sp, right: 15.sp),
+            alignment: Alignment.topRight,
+            child: Text('id ${booking.id}',
+                style: Theme.of(context).textTheme.caption),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(top: 7.sp, bottom: 10.sp, left: 15.sp),
+            child: Text('Офис: ${booking.address}',
+                style: Theme.of(context).textTheme.bodyText2),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(bottom: 10.sp, left: 15.sp),
+            child: Text.rich(TextSpan(
+                text: 'Место: ${booking.placeId} ',
+                style: Theme.of(context).textTheme.bodyText2,
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'id ${booking.placeId}',
+                      style: const TextStyle(color: Colors.deepOrange))
+                ])),
+          ),
+          Container(
+            height: 44,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16)),
+              color: MyColors.kSecondary,
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (_) => BookingDetailScreen(e: booking)))
+                    .then((_) {
+                  context.read<ProfileBloc>().add(ProfileStarted());
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(top: 7.sp, right: 15.sp),
-                        alignment: Alignment.topRight,
-                        child: Text('id ${booking.id}',
-                            style: Theme.of(context).textTheme.caption),
-                      ),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        padding: EdgeInsets.only(
-                            top: 7.sp, bottom: 10.sp, left: 15.sp),
-                        child: Text('Офис: ДЕМО',
-                            style: Theme.of(context).textTheme.bodyText2),
-                      ),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        padding: EdgeInsets.only(bottom: 10.sp, left: 15.sp),
-                        child: Text.rich(TextSpan(
-                            text: 'Место: ${booking.workplace} ',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: 'id ${booking.workplace}',
-                                  style:
-                                      const TextStyle(color: Colors.deepOrange))
-                            ])),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 44,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(4),
-                          bottomRight: Radius.circular(4)),
-                      color: MyColors.kSecondary,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => BookingDetailScreen(e:booking, bloc: context.read<BookingListBloc>(),)));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.only(left: 10.sp),
-                                  child: Text(
-                                      '$startDate - $endDate\n$startTime - $endTime',
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1))),
-                          const Padding(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: Colors.white,
-                              )),
-                        ],
-                      ),
-                    ),
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 20.sp),
+                          child: Text(
+                              '$startDate - $endDate\n$startTime - $endTime',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1))),
+                  IconButton(
+                    icon: const Icon(Icons.edit_outlined),
+                    color: Colors.white,
+                    onPressed: () {
+                      final List<int> holdersId = <int>[];
+                      holdersId.add(booking.holder);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  BookingCreate2Screen(
+                                    selectedOffice: booking.officeId!,
+                                    holdersId: holdersId,
+                                    isEdit: true,
+                                    editedBookingId: booking.id,
+                                    bookingRange: 360,
+                                  )));
+                    },
                   ),
                 ],
-              ))
+              ),
+            ),
+          )
         ],
       ),
     );

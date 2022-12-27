@@ -19,6 +19,13 @@ class TeammateModel extends Teammate {
     );
   }
 
+  String get roleString{
+    if(roleName == 'ROLE_ADMIN'){
+      return 'Админ';
+    }
+    return 'Сотрудник';
+  }
+
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,

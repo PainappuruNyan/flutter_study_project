@@ -19,5 +19,11 @@ class FloorSelected extends OfficeCreate3Event {
 
 //Загрузить карту
 class LoadMap extends OfficeCreate3Event {
+  LoadMap({required this.filePath, required this.floorId});
 
+  final String filePath;
+  final int floorId;
+
+  @override
+  List<Object> get props => [filePath, floorId];
 }

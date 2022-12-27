@@ -28,11 +28,6 @@ class UserListLoaded extends UserListState {
   const UserListLoaded({this.users = const <Employee>[]});
   final List<Employee> users;
 
-  // @override
-  // int get length => users.employees.length;
-  // @override
-  // bool get isNotEmpty => users.employees.isNotEmpty;
-
   @override
   List<Object?> get props => [users];
 }
@@ -40,11 +35,6 @@ class UserListLoaded extends UserListState {
 class UserListSearched extends UserListState {
   const UserListSearched({this.users = const <Employee>[]});
   final List<Employee> users;
-
-  // @override
-  // int get length => users.employees.length;
-  // @override
-  // bool get isNotEmpty => users.employees.isNotEmpty;
 
   @override
   List<Object?> get props => [users];

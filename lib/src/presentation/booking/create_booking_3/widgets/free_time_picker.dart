@@ -16,12 +16,14 @@ class FreeTimePicker extends StatefulWidget {
       required this.placeId,
       required this.date,
       required this.bookingBloc,
-      required this.workplace});
+      required this.workplace,
+      required this.selectedEmployeeId});
 
   final int placeId;
   final DateTime date;
   final BookingCreate3Bloc bookingBloc;
   final Workplace workplace;
+  final int selectedEmployeeId;
 
   @override
   _FreeTimePickerState createState() => _FreeTimePickerState();
@@ -157,17 +159,24 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
                                         widget.date.day,
                                         state.intervals[index].end.hour,
                                         state.intervals[index].end.minute);
-                                    widget.bookingBloc
-                                        .add(BookingCreate3WorkplaceSelected(
+                                    widget.bookingBloc.add(
+                                        BookingCreate3WorkplaceSelected(
                                             booking: BookingModel(
-                                      id: -1,
-                                      holder: widget.bookingBloc.holdersId[0],
-                                      maker: widget.bookingBloc.makerId,
-                                      workplace: widget.workplace.id!,
-                                      start: nStart,
-                                      end: nEnd,
-                                      guests: 0,
-                                    )));
+                                              id: -1,
+                                              holder: widget
+                                                  .bookingBloc.holdersId[0],
+                                              maker: widget.bookingBloc.makerId,
+                                              placeId: widget.workplace.id!,
+                                              start: nStart,
+                                              end: nEnd,
+                                              guests: 0,
+                                              officeId: null,
+                                              floorNumber: null,
+                                              address: '',
+                                              city: '',
+                                              type: '',
+                                            ),
+                                            employeeId: widget.selectedEmployeeId,));
                                   },
                                   child: const Text(
                                     'Выбрать',

@@ -9,23 +9,39 @@ import '../../shared_widgets/bottom_app_bar.dart';
 import '../create_booking_3/booking_create_3.dart';
 
 class BookingCreate2Screen extends StatefulWidget {
-  const BookingCreate2Screen({super.key, required this.selectedOffice});
+  BookingCreate2Screen(
+      {super.key,
+      required this.selectedOffice,
+      required this.holdersId,
+      required this.isEdit,
+        required this.bookingRange,
+      this.editedBookingId});
 
   final int selectedOffice;
+  final List<int> holdersId;
+  final int bookingRange;
+  final bool isEdit;
+  int? editedBookingId;
+
 
   static const String routeName = '/booking_create/2';
 
   @override
   State<StatefulWidget> createState() {
-    return _BookingCreate2Screen(this.selectedOffice);
+    return _BookingCreate2Screen(selectedOffice, isEdit, editedBookingId, bookingRange);
   }
 }
 
 class _BookingCreate2Screen extends State<BookingCreate2Screen> {
-  _BookingCreate2Screen(this.selectedOffice);
+  _BookingCreate2Screen(this.selectedOffice, this.isEdit, this.editedBookingId,
+      this.bookingRange);
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   int selectedOffice;
+  final int bookingRange;
+  final bool isEdit;
+  int? editedBookingId;
   TextEditingController dateinput = TextEditingController();
   TextEditingController begintimeinput = TextEditingController();
   TextEditingController endtimeinput = TextEditingController();
@@ -45,11 +61,14 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
     void nextRoute() {
       Navigator.of(context).push(MaterialPageRoute<BookingCreate3Screen>(
           builder: (_) => BookingCreate3Screen(
-        selectedOffice: selectedOffice,
-        dateStart: dateinput.text,
-        timeStart: begintimeinput.text,
-        timeEnd: endtimeinput.text,
-      )));
+                selectedOffice: selectedOffice,
+                dateStart: dateinput.text,
+                timeStart: begintimeinput.text,
+                timeEnd: endtimeinput.text,
+                holdersId: widget.holdersId,
+                isEdit: isEdit,
+                editedBookingId: editedBookingId,
+              )));
     }
 
     Future<void> datePicker(TextEditingController dateinput) async {
@@ -60,7 +79,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
           context: context,
           initialDate: now,
           firstDate: DateTime(now.year, now.month, now.day),
-          lastDate: DateTime(now.year + 10));
+          lastDate: DateTime(now.year, now.month, now.day + bookingRange));
       if (pickedDate != null) {
         final String formattedDate =
             DateFormat('yyyy-MM-dd').format(pickedDate);
@@ -93,18 +112,21 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
     }
 
     return BlocProvider<BookingCreate2Bloc>(
-      create: (BuildContext context) => BookingCreate2Bloc()..add(BookingCreate2Start(selectedOffice: selectedOffice)),
+      create: (BuildContext context) => BookingCreate2Bloc()
+        ..add(BookingCreate2Start(selectedOffice: selectedOffice)),
       child: Scaffold(
         appBar: AppBar(
             title: const Text(
           'Формирование брони',
         )),
         body: BlocBuilder<BookingCreate2Bloc, BookingCreate2State>(
-  builder: (BuildContext context, BookingCreate2State state) {
-    if (state is BookingCreate2Loading) {
-      return const Center(child: CircularProgressIndicator(),);
-    }
-    if (state is BookingCreate2Loaded) {
+          builder: (BuildContext context, BookingCreate2State state) {
+            if (state is BookingCreate2Loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is BookingCreate2Loaded) {
               return Form(
                 key: _formKey,
                 child: SingleChildScrollView(
@@ -195,9 +217,9 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                 ),
               );
             }
-    return Text('Error');
+            return Text('Error');
           },
-),
+        ),
         bottomNavigationBar: CustomBottomAppBar(
           pageCount: '3',
           pageNum: '2',

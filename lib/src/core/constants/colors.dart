@@ -8,4 +8,5 @@ class MyColors{
   static const Color kWhite = Color(0xffffffff);
   static const Color kFrameBackground = Color(0xfff5f5f5);
   static const Color kPrimaryLight = Color(0xFFFFDDCE);
+  static const Color kDarkOrange = Color(0xFFBE663F);
 }

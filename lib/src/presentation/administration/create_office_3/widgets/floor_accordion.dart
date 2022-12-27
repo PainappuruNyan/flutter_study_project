@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../bloc/office_create_2/office_create_2_bloc.dart';
+import '../../../../bloc/office_create_3/office_create_3_bloc.dart';
 import '../../../../core/constants/colors.dart';
+import '../../edit_floor/edit_floor.dart';
 
 class FloorAccordion extends StatefulWidget {
   const FloorAccordion({super.key, required this.floor});
@@ -15,9 +21,22 @@ class FloorAccordion extends StatefulWidget {
 }
 
 class _FloorAccordionState extends State<FloorAccordion> {
+
+
+  Future<File?> _getFromGallery() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      File imageFile = File(image.path);
+      return imageFile;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Accordion(
+      contentBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
         disableScrolling: true,
         headerBorderRadius: 4,
         paddingListTop: 0,
@@ -42,13 +61,21 @@ class _FloorAccordionState extends State<FloorAccordion> {
                 WorkplacesCard(
                   workplaceCount: widget.floor.workplaceCount,
                   type: true,
+                  floorId: widget.floor.floorId!,
                 ),
                 WorkplacesCard(
-                    workplaceCount: widget.floor.meetingRoomCount, type: false),
+                    workplaceCount: widget.floor.meetingRoomCount, type: false, floorId: widget.floor.floorId!,),
                 Container(
                   alignment: Alignment.bottomRight,
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _getFromGallery().then((value) {
+                        if (value != null){
+                          print(value.path);
+                          context.read<OfficeCreate3Bloc>().add(LoadMap(filePath: value.path, floorId: widget.floor.floorId!));
+                        }
+                      });
+                    },
                     minWidth: 112.w,
                     height: 30.h,
                     color: MyColors.kPrimary,
@@ -68,16 +95,16 @@ class _FloorAccordionState extends State<FloorAccordion> {
 
 class WorkplacesCard extends StatelessWidget {
   const WorkplacesCard(
-      {super.key, required this.workplaceCount, required this.type});
+      {super.key, required this.workplaceCount, required this.type, required this.floorId});
 
   final bool type;
   final int workplaceCount;
+  final int floorId;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Card(
-        color: MyColors.kPrimaryLight,
         child: Container(
             padding:
                 EdgeInsets.only(top: 4.h, bottom: 4.h, right: 4.w, left: 16.w),
@@ -103,15 +130,13 @@ class WorkplacesCard extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (BuildContext context) =>
-                    //         BookingCreate2Screen(
-                    //       selectedOffice: selectedOffice,
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            EditFloor(floorId: floorId, workplaceType: type ? 1: 2, ),
+                      ),
+                    ).then((value) {context.read<OfficeCreate3Bloc>().add(LoadScreen());});
                   },
                 )
               ],

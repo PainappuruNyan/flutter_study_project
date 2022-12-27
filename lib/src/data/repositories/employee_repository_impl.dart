@@ -18,7 +18,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository{
     required this.localDataSource
   });
   final RemoteDataSource remoteDataSource;
-  final LocalDataSource localDataSource;
+  final LocalDataSourceImpl localDataSource;
   final NetworkInfo networkInfo;
 
   @override
@@ -27,7 +27,6 @@ class EmployeeRepositoryImpl implements EmployeeRepository{
     if(await networkInfo.isConnected){
       try{
         final EmployeeModel remoteEmployee = await remoteDataSource.getEmployeeById(id);
-        localDataSource.cacheEmployee(remoteEmployee);
         return Right(remoteEmployee);
       }
       on ServerException{

@@ -7,7 +7,7 @@ class Employee extends Equatable{
     required this.login,
     required this.email,
     required this.phoneNumber,
-    required this.photo,
+    required this.imageId,
   });
 
   final int id;
@@ -16,7 +16,7 @@ class Employee extends Equatable{
   final String login;
   final String email;
   final String phoneNumber;
-  final String? photo;
+  final int? imageId;
 
   @override
   List<Object> get props => [id, role, fullName,  login, email, phoneNumber];

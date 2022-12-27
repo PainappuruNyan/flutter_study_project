@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+
 import '../../../bloc/booking_list/booking_list_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/booking.dart';
 import '../booking_list/booking_list_screen.dart';
+import '../create_booking_2/booking_create_2.dart';
 
 class BookingDetailScreen extends StatelessWidget {
-  const BookingDetailScreen({super.key, required this.e, required this.bloc});
+  const BookingDetailScreen({super.key, required this.e});
   final Booking e;
-  final BookingListBloc bloc;
 
   static const String routeName = '/booking_details';
 
@@ -34,7 +36,7 @@ class BookingDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(left: 40.sp, right: 40.sp),
+          padding: EdgeInsets.only(left: 25.sp, right: 25.sp),
           child: Column(
             children: <Widget>[
               Container(
@@ -97,7 +99,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Место: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: e.workplace.toString(),
+                                  text: e.placeId.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 )
                               ]),
@@ -117,7 +119,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Офис: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Океанская 12д',
+                                  text: e.address,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -137,7 +139,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Город: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Владивосток',
+                                  text: e.city,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -157,7 +159,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Тип: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: e.workplace.toString(),
+                                  text: e.type.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -177,7 +179,7 @@ class BookingDetailScreen extends StatelessWidget {
                               text: 'Забронировал: ',
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: e.holder.toString(),
+                                  text: e.makerName.toString(),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ]),
@@ -287,10 +289,11 @@ class BookingDetailScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: 54.sp),
                 width: 286.w,
                 child: MaterialButton(
-                  onPressed: () {
-                    bloc.add(BookingDelete(id: e.id));
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const BookingListScreen()));
+                  onPressed: () async {
+                    context.read<BookingListBloc>().add(BookingDelete(id: e.id));
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        builder: (_) =>
+                            BookingListScreen(isOfficeBooking: false,)), (Route route) => route.isFirst);
                   },
                   color: MyColors.kPrimary,
                   child: const Text('Удалить бронь',
@@ -313,7 +316,21 @@ class BookingDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
-        onPressed: () {},
+        onPressed: () {
+          final List<int> holdersId = <int>[];
+          holdersId.add(e.holder);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      BookingCreate2Screen(
+                        selectedOffice: e.officeId!,
+                        holdersId: holdersId,
+                        isEdit: true,
+                        editedBookingId: e.id,
+                        bookingRange: 360,
+                      )));
+        },
         child: const Icon(
           Icons.edit,
         ),

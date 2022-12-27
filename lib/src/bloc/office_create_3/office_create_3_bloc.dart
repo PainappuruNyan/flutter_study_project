@@ -52,5 +52,7 @@ class OfficeCreate3Bloc extends Bloc<OfficeCreate3Event, OfficeCreate3State> {
       Emitter<OfficeCreate3State> emit) {}
 
   Future<void> _loadMap(LoadMap event,
-      Emitter<OfficeCreate3State> emit) async {}
+      Emitter<OfficeCreate3State> emit) async {
+    repositoryImpl.postFloorImage(event.filePath, event.floorId);
+  }
 }

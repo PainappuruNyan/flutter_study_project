@@ -23,6 +23,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   late ProfileRepositoryImpl profileRepositoryImpl;
   SharedPreferences prefs = di.sl();
+  int get userId {
+   return prefs.getInt('id')!;
+  }
 
   Future<void> _onStarted(
       ProfileStarted event, Emitter<ProfileState> emit) async {
@@ -39,9 +42,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                   },
                   (Profile r) async {
                     prefs.setString('login', r.employee.login);
-                    prefs.setString('role', r.employee.role);
+                    prefs.setString('role', r.employee.roleString);
                     prefs.setInt('id', r.employee.id);
                     prefs.setString('phoneNumber', r.employee.phoneNumber);
+                    prefs.setString('fullName', r.employee.fullName);
+                    r.employee.imageId!=null ? prefs.setInt('imageId', r.employee.imageId!) : prefs.containsKey('imageId') ? prefs.remove('imageId') : null;
                     print(prefs.getString('phoneNumber'));
                     emit(ProfileLoaded(r));
                   }

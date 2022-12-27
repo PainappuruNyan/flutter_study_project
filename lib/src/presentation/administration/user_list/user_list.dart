@@ -3,27 +3,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../dependency_injection_container.dart' as di;
+import '../../../bloc/office_details/office_details_bloc.dart';
 import '../../../bloc/user_list/user_list_bloc.dart';
 import '../../../domain/entities/employee.dart';
 import 'widgets/user_card.dart';
 
 class UserList extends StatelessWidget {
-  const UserList({super.key});
+  const UserList({super.key, this.officeId, this.onTapFunc});
 
   static const String routeName = '/user_list';
+  final int? officeId;
+  final dynamic onTapFunc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserListBloc>(
-      create: (BuildContext context) =>
-          UserListBloc(di.sl())..add(SearchUserEvent('')),
-      child: UserListView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserListBloc>(
+          create: (BuildContext context) =>
+              UserListBloc(di.sl())..add(SearchUserEvent('')),
+        ),
+        BlocProvider<OfficeDetailsBloc>(
+          create: (BuildContext context) => OfficeDetailsBloc(di.sl()),
+        ),
+      ],
+      child: UserListView(
+        officeId: officeId,
+        onTapFunc: onTapFunc,
+      ),
     );
   }
 }
 
 class UserListView extends StatelessWidget {
-  UserListView({super.key});
+  UserListView({super.key, this.officeId, this.onTapFunc});
+
+  final int? officeId;
+  final dynamic onTapFunc;
 
   final TextEditingController inputController = TextEditingController();
   final ScrollController scrollController = ScrollController();
@@ -66,16 +82,24 @@ class UserListView extends StatelessWidget {
                 _searchField(context),
                 Expanded(
                   child: ListView.builder(
-                    controller: scrollController,
+                      controller: scrollController,
                       shrinkWrap: true,
                       itemCount: users.length + (isLoading ? 1 : 0),
                       itemBuilder: (BuildContext context, int index) {
-                      if (index < users.length) {
-                        return UserCard(employee: users[index]);
-                      }
-                      else {
-                        return _loadingIndicator();
-                      }
+                        if (index < users.length) {
+                          return InkWell(
+                            onLongPress: () {
+                              onTapFunc(users[index].id);
+                              },
+                              // onLongPress: () {
+                              //   bloc.add(PostAdmin(NewAdminModel(
+                              //       officeId: officeId!,
+                              //       employeeId: users[index].id)));
+                              // },
+                              child: UserCard(employee: users[index]));
+                        } else {
+                          return _loadingIndicator();
+                        }
                       }),
                 )
               ],
@@ -101,11 +125,13 @@ class UserListView extends StatelessWidget {
         controller: inputController,
         style: Theme.of(context).textTheme.bodyText2,
         onChanged: (String value) {
-          context.read<UserListBloc>().add(SearchUserEvent(value, startPage: 0, currentPage: 0));
+          context
+              .read<UserListBloc>()
+              .add(SearchUserEvent(value, startPage: 0, currentPage: 0));
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 32.w),
-            suffixIcon: const Icon(
+            suffixIcon: Icon(
               Icons.search_rounded,
               color: Colors.black,
             ),
@@ -124,42 +150,3 @@ class UserListView extends StatelessWidget {
     );
   }
 }
-
-// return Padding(
-// padding: EdgeInsets.symmetric(vertical: 32.sp),
-// child: Column(
-// children: [
-// Container(
-// height: 40.h,
-// padding: EdgeInsets.symmetric(horizontal: 20.sp),
-// child: TextFormField(
-// controller: inputController,
-// style: Theme
-//     .of(context)
-// .textTheme
-//     .bodyText2,
-// onChanged: (String value) {
-// context.read<UserListBloc>().add(
-// SearchUserEvent(value));
-// },
-// decoration: InputDecoration(
-// contentPadding:
-// EdgeInsets.symmetric(horizontal: 32.w),
-// suffixIcon: const Icon(
-// Icons.search_rounded,
-// color: Colors.black,
-// ),
-// hintText: 'Поиск',
-// filled: true,
-// fillColor: const Color.fromARGB(255, 230, 230, 231),
-// focusedBorder: OutlineInputBorder(
-// borderRadius: BorderRadius.circular(100),
-// borderSide: const BorderSide(
-// color: Color.fromARGB(255, 230, 230, 231))),
-// enabledBorder: OutlineInputBorder(
-// borderRadius: BorderRadius.circular(100),
-// borderSide: const BorderSide(
-// color:
-// Color.fromARGB(255, 230, 230, 231)))),
-// ),
-// ),

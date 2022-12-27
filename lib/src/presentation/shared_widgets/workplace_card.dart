@@ -29,7 +29,7 @@ class WorkplaceCard extends StatelessWidget {
           elevation: 4,
           child: ListTile(
             title: Text(
-              '${workplace.typeName}: ${workplace.id}. ${workplace.capacity} мест',
+              '${workplace.typeName}: ${workplace.placeName}.\n Вместимость: ${workplace.capacity}',
               style: Theme.of(context).textTheme.subtitle2,
             ),
             tileColor: !workplace.isFree! ? Colors.grey.shade400 : null,
@@ -43,6 +43,9 @@ class WorkplaceCard extends StatelessWidget {
                           date: dateTimeStart!,
                           bookingBloc: context.read<BookingCreate3Bloc>(),
                           workplace: workplace,
+                          selectedEmployeeId: (state
+                          as BookingCreate3FloorLoaded)
+                              .selectedId,
                         );
                       })
                   : workplace.typeName == 'Одиночное место'
@@ -72,32 +75,38 @@ class WorkplaceCard extends StatelessWidget {
                               actions: <Widget>[
                                 MaterialButton(
                                   onPressed: () {
-                                    context
-                                        .read<BookingCreate3Bloc>()
-                                        .add(BookingCreate3WorkplaceSelected(
+                                    context.read<BookingCreate3Bloc>().add(
+                                        BookingCreate3WorkplaceSelected(
                                             booking: BookingModel(
-                                          id: -1,
-                                          holder: context
-                                              .read<BookingCreate3Bloc>()
-                                              .holdersId[0],
-                                          maker: context
-                                              .read<BookingCreate3Bloc>()
-                                              .makerId,
-                                          workplace: workplace.id!,
-                                          start: DateTime(
-                                              dateTimeStart!.year,
-                                              dateTimeStart!.month,
-                                              dateTimeStart!.day,
-                                              dateTimeStart!.hour,
-                                              dateTimeEnd!.minute),
-                                          end: DateTime(
-                                              dateTimeEnd!.year,
-                                              dateTimeEnd!.month,
-                                              dateTimeEnd!.day,
-                                              dateTimeEnd!.hour,
-                                              dateTimeEnd!.minute),
-                                          guests: 0,
-                                        )));
+                                              id: -1,
+                                              holder: (state
+                                                      as BookingCreate3FloorLoaded)
+                                                  .selectedId,
+                                              maker: state.makerId,
+                                              placeId: workplace.id!,
+                                              start: DateTime(
+                                                  dateTimeStart!.year,
+                                                  dateTimeStart!.month,
+                                                  dateTimeStart!.day,
+                                                  dateTimeStart!.hour,
+                                                  dateTimeEnd!.minute),
+                                              end: DateTime(
+                                                  dateTimeEnd!.year,
+                                                  dateTimeEnd!.month,
+                                                  dateTimeEnd!.day,
+                                                  dateTimeEnd!.hour,
+                                                  dateTimeEnd!.minute),
+                                              guests: 0,
+                                              officeId: null,
+                                              floorNumber: null,
+                                              address: '',
+                                              city: '',
+                                              type: '',
+                                            ),
+                                            employeeId: (state
+                                                    as BookingCreate3FloorLoaded)
+                                                .selectedId));
+                                    Navigator.of(context).pop();
                                   },
                                   child: Text('Да',
                                       style: Theme.of(context)
@@ -105,7 +114,9 @@ class WorkplaceCard extends StatelessWidget {
                                           .bodyText2),
                                 ),
                                 MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                   child: Text('Нет',
                                       style: Theme.of(context)
                                           .textTheme
@@ -145,32 +156,39 @@ class WorkplaceCard extends StatelessWidget {
                               actions: <Widget>[
                                 MaterialButton(
                                   onPressed: () {
-                                    context
-                                        .read<BookingCreate3Bloc>()
-                                        .add(BookingCreate3WorkplaceSelected(
+                                    context.read<BookingCreate3Bloc>().add(
+                                        BookingCreate3WorkplaceSelected(
                                             booking: BookingModel(
-                                          id: -1,
-                                          holder: context
-                                              .read<BookingCreate3Bloc>()
-                                              .holdersId[0],
-                                          maker: context
-                                              .read<BookingCreate3Bloc>()
-                                              .makerId,
-                                          workplace: workplace.id!,
-                                          start: DateTime(
-                                              dateTimeStart!.year,
-                                              dateTimeStart!.month,
-                                              dateTimeStart!.day,
-                                              dateTimeStart!.hour,
-                                              dateTimeEnd!.minute),
-                                          end: DateTime(
-                                              dateTimeEnd!.year,
-                                              dateTimeEnd!.month,
-                                              dateTimeEnd!.day,
-                                              dateTimeEnd!.hour,
-                                              dateTimeEnd!.minute),
-                                          guests: int.parse(guests.text),
-                                        )));
+                                              id: -1,
+                                              holder: context
+                                                  .read<BookingCreate3Bloc>()
+                                                  .holdersId[0],
+                                              maker: context
+                                                  .read<BookingCreate3Bloc>()
+                                                  .makerId,
+                                              placeId: workplace.id!,
+                                              start: DateTime(
+                                                  dateTimeStart!.year,
+                                                  dateTimeStart!.month,
+                                                  dateTimeStart!.day,
+                                                  dateTimeStart!.hour,
+                                                  dateTimeEnd!.minute),
+                                              end: DateTime(
+                                                  dateTimeEnd!.year,
+                                                  dateTimeEnd!.month,
+                                                  dateTimeEnd!.day,
+                                                  dateTimeEnd!.hour,
+                                                  dateTimeEnd!.minute),
+                                              guests: int.parse(guests.text),
+                                              officeId: null,
+                                              floorNumber: null,
+                                              address: '',
+                                              city: '',
+                                              type: '',
+                                            ),
+                                            employeeId: (state
+                                                    as BookingCreate3FloorLoaded)
+                                                .selectedId));
                                   },
                                   child: Text('Подтвердить',
                                       style: Theme.of(context)
@@ -208,7 +226,6 @@ class WorkplaceCard extends StatelessWidget {
                     )
                   : const Icon(Icons.star_border),
             ),
-
           ),
         );
       },

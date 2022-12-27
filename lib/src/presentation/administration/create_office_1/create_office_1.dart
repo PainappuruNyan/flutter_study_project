@@ -15,7 +15,7 @@ import 'widgets/custom_form_field.dart';
 class CreateOffice1 extends StatefulWidget {
   const CreateOffice1({super.key});
 
-  static const String routeName = '/create_office/1';
+  static const String routeName = '/create_office1';
 
   @override
   State<CreateOffice1> createState() => _CreateOffice1State();
@@ -51,13 +51,13 @@ class _CreateOffice1State extends State<CreateOffice1> {
     return null;
   }
 
-  void nextRoute(Office office) {
+  void nextRoute(Office office, int nOfficeId) {
     Navigator.of(context).push(MaterialPageRoute<CreateOffice2>(
         builder: (_) =>
             CreateOffice2(
               floorCount: int.parse(floorCountInput.text),
               nOffice: office,
-              officeId: 8,
+              officeId: nOfficeId,
             )
 
     ));
@@ -222,7 +222,7 @@ class _CreateOffice1State extends State<CreateOffice1> {
               bottomNavigationBar: BlocListener<OfficeCreate1Bloc, OfficeCreate1State>(
                 listener: (BuildContext context, OfficeCreate1State state) {
                   if(state is OfficeCreated){
-                    nextRoute(state.nOffice);
+                    nextRoute(state.nOffice, state.nOfficeId);
                   }
                 },
                 child: CustomBottomAppBar(

@@ -6,8 +6,8 @@ abstract class TeamListEvent extends Equatable {
 }
 
 class GetTeamList extends TeamListEvent {
-
   const GetTeamList();
+
 
   @override
   List<Object?> get props => [];

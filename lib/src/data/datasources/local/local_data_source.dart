@@ -12,7 +12,6 @@ import 'DAO/favorites_dao.dart';
 abstract class LocalDataSource{
   Future<EmployeeModel> getCachedEmployee();
   Future<Unit> cacheEmployee(EmployeeModel employeeModel);
-  Future<Unit> cacheProfile(ProfileModel profileModel);
   Future<ProfileModel> getCachedProfile();
   Future<List<OfficeId>> getFavoritesOffices();
   Future<void> changeFavorite(int id, bool isFavorite);
@@ -50,12 +49,12 @@ class LocalDataSourceImpl implements LocalDataSource{
     }
   }
 
-  @override
-  Future<Unit> cacheProfile(ProfileModel profileModel) {
-    Map<String, dynamic> profileModelToJson = profileModel.toJson();
-    sharedPreferences.setString(CASHED_PROFILE, json.encode(profileModelToJson));
-    return Future.value(unit);
-  }
+  // @override
+  // Future<Unit> cacheProfile(ProfileModel profileModel) {
+  //   Map<String, dynamic> profileModelToJson = profileModel.toJson();
+  //   sharedPreferences.setString(CASHED_PROFILE, json.encode(profileModelToJson));
+  //   return Future.value(unit);
+  // }
 
   @override
   Future<ProfileModel> getCachedProfile() {

@@ -8,7 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/error/failures.dart';
+import '../../data/models/new_admin_model.dart';
 import '../../data/models/office_model.dart';
+import '../../data/repositories/administration_repository_impl.dart';
 import '../../data/repositories/office_repository_impl.dart';
 import '../../domain/entities/city.dart';
 import '../../domain/entities/city_list.dart';
@@ -38,6 +40,7 @@ class OfficeCreate1Bloc extends Bloc<OfficeCreate1Event, OfficeCreate1State> {
   }
 
   OfficeRepositoryImpl repository = di.sl();
+  AdministrationRepositoryImpl adminRepository = di.sl();
   SharedPreferences prefs = di.sl();
   List<City> cityList = [];
 
@@ -104,11 +107,12 @@ class OfficeCreate1Bloc extends Bloc<OfficeCreate1Event, OfficeCreate1State> {
 
   FutureOr<void> _onConfirmCreation(
       ConfirmCreation event, Emitter<OfficeCreate1State> emit) async {
-    await repository.postOffice(OfficeModel.fromOffice(event.office)).then(
+    await adminRepository.postOffice(OfficeModel.fromOffice(event.office)).then(
         (Either<Failure, String> value) =>
-            value.fold((Failure l) => print(l.toString()), (String r) {
+            value.fold((Failure l) => print(l.toString()), (String r)async {
               print(r);
-              emit(OfficeCreated());
+              await adminRepository.postAdmin(NewAdminModel(employeeId: prefs.getInt('id')!, officeId: int.parse(r)));
+              emit(OfficeCreated(nOfficeId: int.parse(r)));
             }));
   }
 }

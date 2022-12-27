@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/colors.dart';
-import '../routes/routes.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
   const CustomBottomAppBar({
@@ -38,7 +37,7 @@ class CustomBottomAppBar extends StatelessWidget {
                   onPressed: () {},
                   child: TextButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.booking_list);
+                      Navigator.popUntil(context, (route)=> route.isFirst);
                     },
                     icon: const Icon(
                       Icons.close,

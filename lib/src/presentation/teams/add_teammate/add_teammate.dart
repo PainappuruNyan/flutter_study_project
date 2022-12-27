@@ -122,7 +122,7 @@ class UserListView extends StatelessWidget {
             ),
             hintText: 'Поиск',
             filled: true,
-            fillColor: const Color.fromARGB(255, 230, 230, 231),
+            fillColor: Colors.grey.shade600,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(100),
                 borderSide: const BorderSide(
@@ -135,42 +135,3 @@ class UserListView extends StatelessWidget {
     );
   }
 }
-
-// return Padding(
-// padding: EdgeInsets.symmetric(vertical: 32.sp),
-// child: Column(
-// children: [
-// Container(
-// height: 40.h,
-// padding: EdgeInsets.symmetric(horizontal: 20.sp),
-// child: TextFormField(
-// controller: inputController,
-// style: Theme
-//     .of(context)
-// .textTheme
-//     .bodyText2,
-// onChanged: (String value) {
-// context.read<UserListBloc>().add(
-// SearchUserEvent(value));
-// },
-// decoration: InputDecoration(
-// contentPadding:
-// EdgeInsets.symmetric(horizontal: 32.w),
-// suffixIcon: const Icon(
-// Icons.search_rounded,
-// color: Colors.black,
-// ),
-// hintText: 'Поиск',
-// filled: true,
-// fillColor: const Color.fromARGB(255, 230, 230, 231),
-// focusedBorder: OutlineInputBorder(
-// borderRadius: BorderRadius.circular(100),
-// borderSide: const BorderSide(
-// color: Color.fromARGB(255, 230, 230, 231))),
-// enabledBorder: OutlineInputBorder(
-// borderRadius: BorderRadius.circular(100),
-// borderSide: const BorderSide(
-// color:
-// Color.fromARGB(255, 230, 230, 231)))),
-// ),
-// ),

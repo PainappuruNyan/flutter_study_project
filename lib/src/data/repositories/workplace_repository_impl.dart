@@ -15,6 +15,7 @@ import '../datasources/local/local_data_source.dart';
 import '../datasources/remote_data_source.dart';
 import '../models/floor_list_model.dart';
 import '../models/workplace_list_model.dart';
+import '../models/workplase_model.dart';
 
 // typedef Future<Employee> GetEmployeeByIdOrLogin();
 
@@ -45,6 +46,7 @@ class WorkplaceRepositoryImpl implements WorkplaceRepository {
     try {
       final FloorListModel remoteFloors =
           await remoteDataSource.getFloors(officeId);
+      remoteFloors.floors.sort((a, b) => a.floorNumber.compareTo(b.floorNumber));
       return Right(remoteFloors);
     } on ServerException {
       return Left(ServerFailure());
@@ -123,11 +125,12 @@ class WorkplaceRepositoryImpl implements WorkplaceRepository {
       for(Floor f in floors){
         final WorkplaceListModel remoteWorkplace = await remoteDataSource.getWorkplacesByFloor(f.id!, 1);
         final WorkplaceListModel remoteMeetingRooms = await remoteDataSource.getWorkplacesByFloor(f.id!, 2);
-        MiniFloor nMiniFloor = MiniFloor(floorNumber: f.floorNumber, officeId: f.officeId);
+        MiniFloor nMiniFloor = MiniFloor(floorNumber: f.floorNumber, officeId: f.officeId, floorId: f.id);
         nMiniFloor.nWorkplaces = remoteWorkplace.places.map((Workplace e) => MiniWorkplace.fromEntity(e, 1)).toList();
         nMiniFloor.nMeetingRooms = remoteMeetingRooms.places.map((Workplace e) => MiniWorkplace.fromEntity(e, 2)).toList();
         miniFloors.add(nMiniFloor);
       }
+      miniFloors.sort((a, b) => a.floorNumber.compareTo(b.floorNumber));
       return Right(miniFloors);
     }
     on ServerException {
@@ -136,6 +139,75 @@ class WorkplaceRepositoryImpl implements WorkplaceRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, String>> postFloorImage(String imagePath, int floorId) async {
+    try {
+      String answer = '';
+      answer = await remoteDataSource.postFloorImage(imagePath, floorId);
+      print(answer);
+      return Right(answer);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, WorkplaceList>> getWorkplacesByFloor(int floorId, int typeId) async {
+    try {
+      final WorkplaceListModel remoteFavorites =
+          await remoteDataSource.getWorkplacesByFloor(floorId, typeId);
+      return Right(remoteFavorites);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Floor>> getFloor(int floorId) async  {
+    try {
+      final Floor remoteFloor =
+          await remoteDataSource.getFloor(floorId);
+      return Right(remoteFloor);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteWorkplace(int placeId) async{
+    try {
+      String answer = '';
+      answer = await remoteDataSource.deleteWorkplace(placeId);
+      print(answer);
+      return Right(answer);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> postWorkplace(WorkplaceModel place) async {
+    try {
+      String answer = '';
+      answer = await remoteDataSource.postWorkplace(place);
+      print(answer);
+      return Right(answer);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> updateWorkplace(WorkplaceModel place) async {
+    try {
+      String answer = '';
+      answer = await remoteDataSource.updateWorkplace(place);
+      print(answer);
+      return Right(answer);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
 
 
