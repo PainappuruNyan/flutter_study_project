@@ -154,7 +154,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                               Column(
                                 children: [
                                   Text('Выберете место для'),
-                                  Text('${state.selectedName}')
+                                  Text('${state.selectedName.split(' ').first +' '+state.selectedName.split(' ')[1][0]+'. ' + state.selectedName.split(' ')[2][0] +'.'}')
                                 ],
                               )
                             ],

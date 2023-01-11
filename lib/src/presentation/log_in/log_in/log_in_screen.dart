@@ -20,11 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ));
     return BlocProvider<LoginBloc>(
       create: (BuildContext context) => LoginBloc()..add(LoginFormLoaded()),
       child: LoginScreenView(),

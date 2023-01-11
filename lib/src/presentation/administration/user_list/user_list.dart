@@ -131,13 +131,13 @@ class UserListView extends StatelessWidget {
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 32.w),
-            suffixIcon: Icon(
+            suffixIcon: const Icon(
               Icons.search_rounded,
               color: Colors.black,
             ),
             hintText: 'Поиск',
             filled: true,
-            fillColor: const Color.fromARGB(255, 230, 230, 231),
+            fillColor: Colors.grey.shade600,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(100),
                 borderSide: const BorderSide(

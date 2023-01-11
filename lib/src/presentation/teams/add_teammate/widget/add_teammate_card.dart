@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../bloc/teammate_list/teammate_list_bloc.dart';
 import '../../../../data/models/teammate_model.dart';
@@ -17,6 +22,9 @@ class AddTeammateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SharedPreferences prefs = di.sl();
+    final String? username = prefs.getString('username');
+    final String? password = prefs.getString('password');
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -35,9 +43,16 @@ class AddTeammateCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 10.sp, bottom: 8.sp),
               child: Row(
                   children: <Widget>[
-                    Image(image: const AssetImage('assets/images/Group 1740.png'),
-                      height: 80.sp,
-                      width: 80.sp,),
+                    CircleAvatar(
+                      radius: 29,
+                      backgroundColor: null,
+                      backgroundImage: employee.imageId != null
+                          ? NetworkImage('http://10.0.2.2:8080/image/${employee.imageId}',
+                          headers: <String, String>{
+                            HttpHeaders.authorizationHeader:
+                            'Basic ${base64.encode(utf8.encode('$username:$password'))}'
+                          })
+                          : AssetImage('assets/images/Group 1740.png') as ImageProvider,),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(8.0.sp),

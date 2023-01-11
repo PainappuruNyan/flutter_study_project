@@ -125,7 +125,7 @@ ThemeData basicTheme() => ThemeData(
           dayPeriodTextColor: MyColors.kPrimary,
           dialHandColor: MyColors.kPrimary,
           hourMinuteTextColor: MyColors.kPrimary),
-      scaffoldBackgroundColor: MyColors.kWhite,
+      scaffoldBackgroundColor: MyColors.kFrameBackground,
     );
 
 ThemeData darkTheme() => ThemeData(
