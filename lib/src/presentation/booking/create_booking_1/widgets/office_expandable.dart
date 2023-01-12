@@ -20,10 +20,10 @@ class OfficeExpandable extends StatefulWidget {
   final List<int> holdersId;
 
   @override
-  _OfficeExpandableState createState() => _OfficeExpandableState();
+  OfficeExpandableState createState() => OfficeExpandableState();
 }
 
-class _OfficeExpandableState extends State<OfficeExpandable> {
+class OfficeExpandableState extends State<OfficeExpandable> {
   @override
   Widget build(BuildContext context) {
     return Accordion(
@@ -89,14 +89,12 @@ class OfficeAddressCard extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                     child: RichText(
-                      text: TextSpan(
-                  text: office.address,
-                  style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
-                ),
-                    )),
+                  text: TextSpan(
+                    text: office.address,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontSize: 16.sp, fontWeight: FontWeight.w500),
+                  ),
+                )),
                 Wrap(
                   spacing: 5.sp,
                   children: <Widget>[
@@ -119,14 +117,13 @@ class OfficeAddressCard extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MaterialPageRoute<dynamic>(
                             builder: (BuildContext context) =>
                                 BookingCreate2Screen(
-                              selectedOffice: selectedOffice,
-                              holdersId: holdersId,
-                              isEdit: false,
-                              bookingRange: office.bookingRange
-                            ),
+                                    selectedOffice: selectedOffice,
+                                    holdersId: holdersId,
+                                    isEdit: false,
+                                    bookingRange: office.bookingRange),
                           ),
                         );
                       },
@@ -152,10 +149,10 @@ class OfficeAddressCard extends StatelessWidget {
                 content: SizedBox(
                   height: 270.h,
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           Text('Посмотреть на карте', style: textStyle),
                           InkWell(
                             child: const Icon(
@@ -168,7 +165,7 @@ class OfficeAddressCard extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           Text('Рабочий телефон', style: textStyle),
                           Padding(
                             padding: EdgeInsets.only(top: 6.h),
@@ -206,14 +203,13 @@ class OfficeAddressCard extends StatelessWidget {
                       selectedOffice = office.id!;
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
+                        MaterialPageRoute<dynamic>(
                           builder: (BuildContext context) =>
                               BookingCreate2Screen(
-                            selectedOffice: selectedOffice,
-                            holdersId: holdersId,
-                            isEdit: false,
-                                  bookingRange: office.bookingRange
-                          ),
+                                  selectedOffice: selectedOffice,
+                                  holdersId: holdersId,
+                                  isEdit: false,
+                                  bookingRange: office.bookingRange),
                         ),
                       );
                     },

@@ -9,6 +9,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../../../dependency_injection_container.dart' as di;
 import '../../../bloc/booking_create_3/booking_create3_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/floor.dart';
@@ -16,10 +17,9 @@ import '../../shared_widgets/bottom_app_bar.dart';
 import '../../shared_widgets/simple_teammate_card.dart';
 import '../../shared_widgets/workplace_card.dart';
 import '../booking_list/booking_list_screen.dart';
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 
 class BookingCreate3Screen extends StatefulWidget {
-  BookingCreate3Screen({
+  const BookingCreate3Screen({
     super.key,
     required this.selectedOffice,
     required this.dateStart,
@@ -36,7 +36,7 @@ class BookingCreate3Screen extends StatefulWidget {
   final String? timeEnd;
   final List<int> holdersId;
   final bool isEdit;
-  int? editedBookingId;
+  final int? editedBookingId;
 
   static const String routeName = '/booking_create/3';
 
@@ -75,11 +75,11 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
         animationController.reset();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<dynamic>(
                 builder: (BuildContext context) => const BookingListScreen(
                       isOfficeBooking: false,
                     )),
-            (Route route) => route.isFirst);
+            (Route<dynamic> route) => route.isFirst);
       }
     });
   }
@@ -131,9 +131,7 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                 if (state is BookingCreate3FloorLoaded) {}
               },
               builder: (BuildContext context, BookingCreate3State state) {
-                print('state is ${state}');
                 if (state is BookingCreate3FloorLoaded) {
-                  print('длина букинга ${state.bookings.length}');
                   return Column(
                     children: <Widget>[
                       Container(
@@ -148,13 +146,14 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                               horizontal: 30.w, vertical: 10.h),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                            children: <Widget>[
                               Text(
                                   'Выбрано ${state.bookings.length}/${state.holdersId.length}'),
                               Column(
-                                children: [
-                                  Text('Выберете место для'),
-                                  Text('${state.selectedName.split(' ').first +' '+state.selectedName.split(' ')[1][0]+'. ' + state.selectedName.split(' ')[2][0] +'.'}')
+                                children: <Widget>[
+                                  const Text('Выберете место для'),
+                                  Text(
+                                      '${state.selectedName.split(' ').first} ${state.selectedName.split(' ')[1][0]}. ${state.selectedName.split(' ')[2][0]}.')
                                 ],
                               )
                             ],
@@ -274,7 +273,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                               ),
                               children: <Widget>[
                                 ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: state.favorites.length,
                                     itemBuilder:
@@ -298,13 +298,15 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                               ),
                               children: <Widget>[
                                 ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: state.usualWorkplaces.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return WorkplaceCard(
-                                          workplace: state.usualWorkplaces[index],
+                                          workplace:
+                                              state.usualWorkplaces[index],
                                           dateTimeStart: dateTimeStart,
                                           dateTimeEnd: dateTimeEnd);
                                     }),
@@ -321,7 +323,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                               ),
                               children: <Widget>[
                                 ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: state.meetingRoom.length,
                                     itemBuilder:
@@ -342,7 +345,6 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                 final SharedPreferences sharedPreference = di.sl();
                 final String? username = sharedPreference.getString('username');
                 final String? password = sharedPreference.getString('password');
-                print('Выбран этаж ${state.selectedFloorEntity}');
 
                 return SingleChildScrollView(
                     child: Column(children: <Widget>[
@@ -360,8 +362,8 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                                 .toList(),
                             onChanged: (dynamic value) {
                               final String selected = value as String;
-                              final int result = int.parse(selected
-                                  .substring(0, selected.indexOf(' ')));
+                              final int result = int.parse(
+                                  selected.substring(0, selected.indexOf(' ')));
                               context.read<BookingCreate3Bloc>().add(
                                   BookingCreate3ChangeFloor(
                                       floorNumber: result));
@@ -402,28 +404,26 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
                       ],
                     ),
                   ),
-                  Container(
-                    child: SizedBox(
-                        width: 360.w,
-                        height: 325.h,
-                        child: ClipRect(
-                          child: PhotoView(
-                            backgroundDecoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            imageProvider: state.selectedFloorEntity!.mapFloor != null
-                                ? NetworkImage(
-                                    'http://10.0.2.2:8080/image/${state.selectedFloorEntity!.mapFloor}',
-                                    headers: <String, String>{
-                                        HttpHeaders.authorizationHeader:
-                                            'Basic ${base64.encode(utf8.encode('$username:$password'))}'
-                                      })
-                                : const AssetImage(
-                                        'assets/images/Default_image.png')
-                                    as ImageProvider,
-                          ),
-                        )),
-                  ),
+                  SizedBox(
+                      width: 360.w,
+                      height: 325.h,
+                      child: ClipRect(
+                        child: PhotoView(
+                          backgroundDecoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          imageProvider: state.selectedFloorEntity!.mapFloor !=
+                                  null
+                              ? NetworkImage(
+                                  'http://10.0.2.2:8080/image/${state.selectedFloorEntity!.mapFloor}',
+                                  headers: <String, String>{
+                                      HttpHeaders.authorizationHeader:
+                                          'Basic ${base64.encode(utf8.encode('$username:$password'))}'
+                                    })
+                              : const AssetImage(
+                                      'assets/images/Default_image.png')
+                                  as ImageProvider,
+                        ),
+                      )),
                 ]));
               }
               return const Text('');
@@ -443,7 +443,6 @@ class _BookingCreate3ScreenState extends State<BookingCreate3Screen>
               pageNum: '3',
               dateValid: true,
               nextRoute: () {
-                print('нажали на дальше');
                 context
                     .read<BookingCreate3Bloc>()
                     .add(BookingCreate3SendWorkplaces());
@@ -482,7 +481,7 @@ class CustomDropDown extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: Padding(
           padding: const EdgeInsets.only(left: 14.0, right: 5),
-          child: DropdownButton(
+          child: DropdownButton<Object?>(
             icon: const Icon(
               Icons.arrow_forward_ios,
               color: MyColors.kSecondary,

@@ -1,18 +1,19 @@
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../dependency_injection_container.dart' as di;
 import '../../../bloc/booking_list/booking_list_bloc.dart';
 import '../../../bloc/profile/profile_bloc.dart';
-import '../../../core/constants/colors.dart';
 import '../../shared_widgets/booking_card.dart';
-import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../../shared_widgets/navigation_drawer.dart' as navigation_drawer;
 import '../create_booking_1/create_booking_1.dart';
 
-
-
 class BookingListScreen extends StatelessWidget {
-  const BookingListScreen({super.key, required this.isOfficeBooking, this.officeId, });
+  const BookingListScreen({
+    super.key,
+    required this.isOfficeBooking,
+    this.officeId,
+  });
 
   static const String routeName = '/booking_list';
 
@@ -20,7 +21,7 @@ class BookingListScreen extends StatelessWidget {
   final int? officeId;
 
   TabBar get _tabBarPerson {
-    if(isOfficeBooking){
+    if (isOfficeBooking) {
       return const TabBar(
         tabs: <Widget>[
           Tab(
@@ -29,8 +30,7 @@ class BookingListScreen extends StatelessWidget {
           Tab(text: 'Переговорки')
         ],
       );
-    }
-    else{
+    } else {
       return const TabBar(
         tabs: <Widget>[
           Tab(
@@ -40,13 +40,14 @@ class BookingListScreen extends StatelessWidget {
         ],
       );
     }
-    }
-
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BookingListBloc>(
-      create: (BuildContext context) => BookingListBloc(di.sl(), isOfficeBooking, officeId)..add(GetBookingList()),
+      create: (BuildContext context) =>
+          BookingListBloc(di.sl(), isOfficeBooking, officeId)
+            ..add(const GetBookingList()),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -59,14 +60,21 @@ class BookingListScreen extends StatelessWidget {
                   child: _tabBarPerson,
                 ),
               )),
-          drawer: const NavigationDrawer.NavigationDrawer(),
+          drawer: const navigation_drawer.NavigationDrawer(),
           body: const BookingListView(),
-          floatingActionButton: !isOfficeBooking ? FloatingActionButton(
-            onPressed: () {Navigator.push(context, MaterialPageRoute(
-                builder: (_) =>
-                    CreateBooking1(holdersId: [context.read<ProfileBloc>().userId])));},
-            child: const Icon(Icons.add),
-          ) : null,
+          floatingActionButton: !isOfficeBooking
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                            builder: (_) => CreateBooking1(holdersId: <int>[
+                                  context.read<ProfileBloc>().userId
+                                ])));
+                  },
+                  child: const Icon(Icons.add),
+                )
+              : null,
         ),
       ),
     );
@@ -86,49 +94,44 @@ class _BookingListView extends State<BookingListView> {
     return TabBarView(children: <Widget>[
       BlocBuilder<BookingListBloc, BookingListState>(
           builder: (BuildContext context, BookingListState state) {
-            if (state is BookingListLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            else if (state is BookingListLoaded) {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.lengthActual,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BookingCard(booking: state.bookingListActual.bookings[index]);
-                  });
-            }
-            else if (state is BookingListError) {
-              return Text(state.message);
-            }
+        if (state is BookingListLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is BookingListLoaded) {
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: state.lengthActual,
+              itemBuilder: (BuildContext context, int index) {
+                return BookingCard(
+                    booking: state.bookingListActual.bookings[index]);
+              });
+        } else if (state is BookingListError) {
+          return Text(state.message);
+        }
 
-            return const Text('');
-          }
-      ),
+        return const Text('');
+      }),
       BlocBuilder<BookingListBloc, BookingListState>(
           builder: (BuildContext context, BookingListState state) {
-            if (state is BookingListLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            else if (state is BookingListLoaded) {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.lengthHistory,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BookingCard(booking: state.bookingListHistory.bookings[index]);
-                  });
-            }
-            else if (state is BookingListError) {
-              return Text(state.message);
-            }
-            else {
-              return const Text('');
-            }
-          }
-      ),
+        if (state is BookingListLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is BookingListLoaded) {
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: state.lengthHistory,
+              itemBuilder: (BuildContext context, int index) {
+                return BookingCard(
+                    booking: state.bookingListHistory.bookings[index]);
+              });
+        } else if (state is BookingListError) {
+          return Text(state.message);
+        } else {
+          return const Text('');
+        }
+      }),
     ]);
   }
 }

@@ -11,6 +11,7 @@ import '../create_booking_2/booking_create_2.dart';
 
 class BookingDetailScreen extends StatelessWidget {
   const BookingDetailScreen({super.key, required this.e});
+
   final Booking e;
 
   static const String routeName = '/booking_details';
@@ -290,10 +291,16 @@ class BookingDetailScreen extends StatelessWidget {
                 width: 286.w,
                 child: MaterialButton(
                   onPressed: () async {
-                    context.read<BookingListBloc>().add(BookingDelete(id: e.id));
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                        builder: (_) =>
-                            BookingListScreen(isOfficeBooking: false,)), (Route route) => route.isFirst);
+                    context
+                        .read<BookingListBloc>()
+                        .add(BookingDelete(id: e.id));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                            builder: (_) => const BookingListScreen(
+                                  isOfficeBooking: false,
+                                )),
+                        (Route<dynamic> route) => route.isFirst);
                   },
                   color: MyColors.kPrimary,
                   child: const Text('Удалить бронь',
@@ -321,9 +328,8 @@ class BookingDetailScreen extends StatelessWidget {
           holdersId.add(e.holder);
           Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      BookingCreate2Screen(
+              MaterialPageRoute<dynamic>(
+                  builder: (BuildContext context) => BookingCreate2Screen(
                         selectedOffice: e.officeId!,
                         holdersId: holdersId,
                         isEdit: true,

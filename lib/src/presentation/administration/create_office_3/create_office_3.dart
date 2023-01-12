@@ -19,57 +19,62 @@ class _CreateOffice3State extends State<CreateOffice3> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<OfficeCreate3Bloc>(
-      create: (BuildContext context) => OfficeCreate3Bloc(widget.officeId)..add(LoadScreen()),
+      create: (BuildContext context) =>
+          OfficeCreate3Bloc(widget.officeId)..add(LoadScreen()),
       child: Scaffold(
         appBar: AppBar(
-            title: const Text(
-              'Новый офис',
-            ),
+          title: const Text(
+            'Новый офис',
+          ),
         ),
         body: BlocBuilder<OfficeCreate3Bloc, OfficeCreate3State>(
-            builder: (BuildContext context, OfficeCreate3State state) {
-
-              if(state is ScreenLoaded){
-                return SingleChildScrollView(
-                  primary: true,
-                  physics: const ScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.w, vertical: 28.h),
-                        child: Text('Этажи вашего офиса', style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 20.sp, fontWeight: FontWeight.w500),),
+          builder: (BuildContext context, OfficeCreate3State state) {
+            if (state is ScreenLoaded) {
+              return SingleChildScrollView(
+                primary: true,
+                physics: const ScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 28.h),
+                      child: Text(
+                        'Этажи вашего офиса',
+                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontSize: 20.sp, fontWeight: FontWeight.w500),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.w, vertical: 28.h),
-                        child: ListView.builder(
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 28.h),
+                      child: ListView.builder(
                           reverse: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: state.floors.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return FloorAccordion(
-                                floor: state.floors[index],
-                              );
-                            }),
-                      ),
-                    ],
-                  ),
-                );
-              }
-              if(state is OfficeCreate3Initial){
-                return const Center(child: CircularProgressIndicator(),);
-              }
-              return const Center(child: Text('Возникла ошибка'));
-
-
-            },
-          ),
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state.floors.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return FloorAccordion(
+                              floor: state.floors[index],
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              );
+            }
+            if (state is OfficeCreate3Initial) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return const Center(child: Text('Возникла ошибка'));
+          },
+        ),
         bottomNavigationBar: CustomBottomAppBar(
           dateValid: true,
-          nextRoute: (){
-            Navigator.popUntil(context, (route) => route.isFirst);
+          nextRoute: () {
+            Navigator.popUntil(
+                context, (Route<dynamic> route) => route.isFirst);
           },
           pageCount: '3',
           pageNum: '3',

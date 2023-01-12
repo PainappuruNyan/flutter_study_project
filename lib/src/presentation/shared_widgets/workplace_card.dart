@@ -19,7 +19,7 @@ class WorkplaceCard extends StatelessWidget {
   final DateTime? dateTimeStart;
   final DateTime? dateTimeEnd;
 
-  TextEditingController guests = TextEditingController();
+  final TextEditingController guests = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,8 @@ class WorkplaceCard extends StatelessWidget {
                           date: dateTimeStart!,
                           bookingBloc: context.read<BookingCreate3Bloc>(),
                           workplace: workplace,
-                          selectedEmployeeId: (state
-                          as BookingCreate3FloorLoaded)
-                              .selectedId,
+                          selectedEmployeeId:
+                              (state as BookingCreate3FloorLoaded).selectedId,
                         );
                       })
                   : workplace.typeName == 'Одиночное место'
@@ -75,8 +74,9 @@ class WorkplaceCard extends StatelessWidget {
                               actions: <Widget>[
                                 MaterialButton(
                                   onPressed: () {
-                                    context.read<BookingCreate3Bloc>().add(
-                                        BookingCreate3WorkplaceSelected(
+                                    context
+                                        .read<BookingCreate3Bloc>()
+                                        .add(BookingCreate3WorkplaceSelected(
                                             booking: BookingModel(
                                               id: -1,
                                               holder: (state
@@ -103,9 +103,7 @@ class WorkplaceCard extends StatelessWidget {
                                               city: '',
                                               type: '',
                                             ),
-                                            employeeId: (state
-                                                    as BookingCreate3FloorLoaded)
-                                                .selectedId));
+                                            employeeId: state.selectedId));
                                     Navigator.of(context).pop();
                                   },
                                   child: Text('Да',

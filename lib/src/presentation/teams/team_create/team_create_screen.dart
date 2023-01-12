@@ -12,10 +12,10 @@ import '../../../data/models/team_model.dart';
 import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
 
 class TeamCreateScreen extends StatefulWidget {
-  TeamCreateScreen({super.key, this.teamId, this.isEdit});
+  const TeamCreateScreen({super.key, this.teamId, this.isEdit});
 
-  int? teamId;
-  bool? isEdit = false;
+  final int? teamId;
+  final bool? isEdit;
 
   static const String routeName = '/team_create_screen';
 
@@ -44,7 +44,7 @@ class _TeamCreateScreenState extends State<TeamCreateScreen>
     animationController.addStatusListener((AnimationStatus status) async {
       if (status == AnimationStatus.completed) {
         animationController.reset();
-        Navigator.popUntil(context, (Route route) => route.isFirst);
+        Navigator.popUntil(context, (Route<dynamic> route) => route.isFirst);
       }
     });
   }
@@ -58,28 +58,25 @@ class _TeamCreateScreenState extends State<TeamCreateScreen>
 
   @override
   Widget build(BuildContext context) {
-    SharedPreferences prefs = di.sl();
-    void successAnimation() =>
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) =>
-                Center(
-                  child: SizedBox(
-                    width: 200.w,
-                    height: 200.h,
-                    child: Lottie.asset('assets/animation/success.json',
-                        repeat: false, controller: animationController,
-                        onLoaded: (LottieComposition composition) {
-                          animationController.duration = composition.duration;
-                          animationController.forward();
-                        }),
-                  ),
-                ));
+    final SharedPreferences prefs = di.sl();
+    void successAnimation() => showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => Center(
+              child: SizedBox(
+                width: 200.w,
+                height: 200.h,
+                child: Lottie.asset('assets/animation/success.json',
+                    repeat: false, controller: animationController,
+                    onLoaded: (LottieComposition composition) {
+                  animationController.duration = composition.duration;
+                  animationController.forward();
+                }),
+              ),
+            ));
     return BlocProvider<TeamCreateBloc>(
       create: (BuildContext context) =>
-      TeamCreateBloc()
-        ..add(TeamCreateStart()),
+          TeamCreateBloc()..add(TeamCreateStart()),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Создание команды'),
@@ -101,81 +98,77 @@ class _TeamCreateScreenState extends State<TeamCreateScreen>
               return SingleChildScrollView(
                 child: Center(
                     child: Column(
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 36.5.sp,
-                                right: 36.5.sp,
-                                top: 70.sp,
-                                bottom: 35.sp),
-                            child: TextFormField(
-                              controller: teamName,
-                              keyboardType: TextInputType.emailAddress,
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2,
-                              decoration: const InputDecoration(
-                                  labelText: 'Название команды',
-                                  prefixIcon: Icon(
-                                    Icons.group,
-                                    color: MyColors.kPrimary,
-                                  )),
-                            )),
-                        Container(
-                          padding: EdgeInsets.only(top: 76.sp),
-                          width: 286.w,
-                          child: MaterialButton(
-                            onPressed: () {
-                              if (isEdit == true) {
-                                context.read<TeamListBloc>().add(
-                                    TeamEdit(
-                                        team: TeamModel(
-                                            id: teamId!,
-                                            leaderId: prefs.getInt('id')!,
-                                            name: teamName.text,
-                                            leaderName: '',
-                                            membersNumber: 0)));
-                                successAnimation();
-                              }
-                              context.read<TeamCreateBloc>().add(
-                                  TeamCreateInfoSelected(
-                                      team: TeamModel(
-                                          id: -1,
-                                          leaderId: prefs.getInt('id')!,
-                                          name: teamName.text,
-                                          leaderName: '',
-                                          membersNumber: 0)));
-                            },
-                            color: MyColors.kPrimary,
-                            child: const Text('Принять',
-                                style:
+                  children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.only(
+                            left: 36.5.sp,
+                            right: 36.5.sp,
+                            top: 70.sp,
+                            bottom: 35.sp),
+                        child: TextFormField(
+                          controller: teamName,
+                          keyboardType: TextInputType.emailAddress,
+                          style: Theme.of(context).textTheme.bodyText2,
+                          decoration: const InputDecoration(
+                              labelText: 'Название команды',
+                              prefixIcon: Icon(
+                                Icons.group,
+                                color: MyColors.kPrimary,
+                              )),
+                        )),
+                    Container(
+                      padding: EdgeInsets.only(top: 76.sp),
+                      width: 286.w,
+                      child: MaterialButton(
+                        onPressed: () {
+                          if (isEdit ?? false) {
+                            context.read<TeamListBloc>().add(TeamEdit(
+                                team: TeamModel(
+                                    id: teamId!,
+                                    leaderId: prefs.getInt('id')!,
+                                    name: teamName.text,
+                                    leaderName: '',
+                                    membersNumber: 0)));
+                            successAnimation();
+                          }
+                          context.read<TeamCreateBloc>().add(
+                              TeamCreateInfoSelected(
+                                  team: TeamModel(
+                                      id: -1,
+                                      leaderId: prefs.getInt('id')!,
+                                      name: teamName.text,
+                                      leaderName: '',
+                                      membersNumber: 0)));
+                        },
+                        color: MyColors.kPrimary,
+                        child: const Text('Принять',
+                            style:
                                 TextStyle(fontSize: 16.0, color: Colors.white)),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 30.sp, right: 15.sp),
+                      width: 286.w,
+                      child: TextButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          size: 24.0,
+                          color: MyColors.kPrimary,
+                        ),
+                        label: const Text(
+                          'Отмена',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: MyColors.kPrimary,
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 30.sp, right: 15.sp),
-                          width: 286.w,
-                          child: TextButton.icon(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              size: 24.0,
-                              color: MyColors.kPrimary,
-                            ),
-                            label: const Text(
-                              'Отмена',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: MyColors.kPrimary,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )),
+                      ),
+                    )
+                  ],
+                )),
               );
             }
             return const Center(

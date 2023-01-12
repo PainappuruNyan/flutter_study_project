@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,11 +16,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
-      create: (BuildContext context) => LoginBloc()..add(LoginFormLoaded()),
+      create: (BuildContext context) =>
+          LoginBloc()..add(const LoginFormLoaded()),
       child: LoginScreenView(),
     );
   }
@@ -55,7 +54,10 @@ class LoginScreenView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Image(
-                            image: AssetImage('assets/images/coolLogo.png'), height: 90.h, width: 90.w,),
+                          image: const AssetImage('assets/images/coolLogo.png'),
+                          height: 90.h,
+                          width: 90.w,
+                        ),
                         Container(
                             margin: EdgeInsets.only(left: 14.0.sp),
                             child: Column(
@@ -128,23 +130,25 @@ class LoginScreenView extends StatelessWidget {
                           if (state is LoginSuccess) {
                             Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
+                                MaterialPageRoute<dynamic>(
                                   builder: (BuildContext context) =>
-                                      ProfileScreen(),
+                                      const ProfileScreen(),
                                 ));
                           }
                           if (state is LoginRemoteError) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ErrorDialog(errorMessage: state.errorMessage);
+                                  return ErrorDialog(
+                                      errorMessage: state.errorMessage);
                                 });
                           }
                           if (state is LoginLocalError) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ErrorDialog(errorMessage: state.errorMessage);
+                                  return ErrorDialog(
+                                      errorMessage: state.errorMessage);
                                 });
                           }
                         },
@@ -185,8 +189,7 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title:
-      const Text('Введены неверные данные'),
+      title: const Text('Введены неверные данные'),
       content: Container(
         height: 100.h,
         alignment: Alignment.center,
@@ -196,14 +199,10 @@ class ErrorDialog extends StatelessWidget {
         MaterialButton(
           onPressed: () {
             Navigator.pop(context);
-            },
-          child: Text('ОК',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2),
+          },
+          child: Text('ОК', style: Theme.of(context).textTheme.bodyText2),
         )
       ],
     );
   }
 }
-

@@ -65,7 +65,7 @@ class UserListView extends StatelessWidget {
         )),
         body: BlocBuilder<UserListBloc, UserListState>(
             builder: (BuildContext context, UserListState state) {
-          List<Employee> users = [];
+          List<Employee> users = <Employee>[];
           bool isLoading = false;
 
           if (state is UserListLoading) {
@@ -91,11 +91,6 @@ class UserListView extends StatelessWidget {
                             onLongPress: () {
                               onTapFunc(users[index].id);
                               },
-                              // onLongPress: () {
-                              //   bloc.add(PostAdmin(NewAdminModel(
-                              //       officeId: officeId!,
-                              //       employeeId: users[index].id)));
-                              // },
                               child: UserCard(employee: users[index]));
                         } else {
                           return _loadingIndicator();

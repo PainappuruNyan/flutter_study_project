@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
+
+import '../../../../dependency_injection_container.dart' as di;
 
 class UserCard extends StatelessWidget {
   const UserCard(this.name, this.email, {super.key, required this.imageId});
@@ -29,15 +30,15 @@ class UserCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CircleAvatar(
-              backgroundColor: null,
               radius: 55.sp,
               backgroundImage: imageId != null
                   ? NetworkImage('http://10.0.2.2:8080/image/$imageId',
-              headers: <String, String>{
-                    HttpHeaders.authorizationHeader:
-                    'Basic ${base64.encode(utf8.encode('$username:$password'))}'
-                  })
-                  : AssetImage('assets/images/Group 1740.png') as ImageProvider,
+                      headers: <String, String>{
+                          HttpHeaders.authorizationHeader:
+                              'Basic ${base64.encode(utf8.encode('$username:$password'))}'
+                        })
+                  : const AssetImage('assets/images/Group 1740.png')
+                      as ImageProvider,
             ),
             // Image(image: const AssetImage('assets/images/Group 1740.png'), height: 80.sp, width: 80.sp,),
             //'http://10.0.2.2:8080/image/$imageId'

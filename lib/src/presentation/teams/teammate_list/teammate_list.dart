@@ -40,7 +40,7 @@ class TeamMateList extends StatelessWidget {
             if (state is TeammateListLoaded) {
               return SingleChildScrollView(
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(top: 30.sp, bottom: 20.sp),
                       child: Text(

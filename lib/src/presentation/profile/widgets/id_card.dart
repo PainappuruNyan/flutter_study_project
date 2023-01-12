@@ -34,7 +34,7 @@ class IdCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Switch.adaptive(
-                activeColor: MyColors.kPrimary,
+                  activeColor: MyColors.kPrimary,
                   inactiveThumbColor: MyColors.kPrimary,
                   value: themeProvider.isDarkMode,
                   onChanged: (bool value) {
@@ -55,7 +55,7 @@ class IdCard extends StatelessWidget {
                 ],
               ),
               Text(
-                'Login ${this.login}',
+                'Login $login',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

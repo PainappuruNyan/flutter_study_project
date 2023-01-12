@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class OfficeBooking extends StatefulWidget {
-  const OfficeBooking({Key? key}) : super(key: key);
+  const OfficeBooking({super.key});
 
   @override
   State<OfficeBooking> createState() => _OfficeBookingState();

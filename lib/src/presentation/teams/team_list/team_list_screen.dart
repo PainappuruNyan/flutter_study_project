@@ -1,10 +1,10 @@
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../dependency_injection_container.dart' as di;
 import '../../../bloc/team_list/team_list_bloc.dart';
 import '../../../bloc/teammate_list/teammate_list_bloc.dart';
-import '../../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../../shared_widgets/navigation_drawer.dart' as navigation_drawer;
 import '../../shared_widgets/team_card.dart' as teams;
 import '../team_create/team_create_screen.dart';
 
@@ -19,7 +19,7 @@ class TeamListScreen extends StatelessWidget {
       providers: [
         BlocProvider<TeamListBloc>(
           create: (BuildContext context) =>
-              TeamListBloc(di.sl())..add(GetTeamList()),
+              TeamListBloc(di.sl())..add(const GetTeamList()),
         ),
         BlocProvider<TeammateListBloc>(
             create: (BuildContext context) => TeammateListBloc(di.sl()))
@@ -45,7 +45,7 @@ class _TeamListView extends State<TeamListView> {
         appBar: AppBar(
           title: const Text('Команды'),
         ),
-        drawer: const NavigationDrawer.NavigationDrawer(),
+        drawer: const navigation_drawer.NavigationDrawer(),
         body: BlocBuilder<TeamListBloc, TeamListState>(
             builder: (BuildContext context, TeamListState state) {
           if (state is TeamListLoading) {
@@ -68,8 +68,10 @@ class _TeamListView extends State<TeamListView> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => TeamCreateScreen())).then((value) {
-                  context.read<TeamListBloc>().add(GetTeamList());
+                .push(MaterialPageRoute<dynamic>(
+                    builder: (_) => const TeamCreateScreen()))
+                .then((Object? value) {
+              context.read<TeamListBloc>().add(const GetTeamList());
             });
           },
           child: const Icon(Icons.add),

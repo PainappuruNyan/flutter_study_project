@@ -66,7 +66,7 @@ class BookingCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(
+                    .push(MaterialPageRoute<dynamic>(
                         builder: (_) => BookingDetailScreen(e: booking)))
                     .then((_) {
                   context.read<ProfileBloc>().add(ProfileStarted());
@@ -90,7 +90,7 @@ class BookingCard extends StatelessWidget {
                       holdersId.add(booking.holder);
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MaterialPageRoute<dynamic>(
                               builder: (BuildContext context) =>
                                   BookingCreate2Screen(
                                     selectedOffice: booking.officeId!,

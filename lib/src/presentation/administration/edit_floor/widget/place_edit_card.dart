@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/workplace.dart';
 
 class PlaceEditCard extends StatefulWidget {
-  PlaceEditCard({super.key, required this.place, this.onDelete, this.onSave});
+  const PlaceEditCard({super.key, required this.place, this.onDelete, this.onSave});
 
   final Workplace place;
   final dynamic onDelete;
@@ -48,7 +47,7 @@ class _PlaceEditCardState extends State<PlaceEditCard> {
                     controller: nameInput,
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18.sp),
                     decoration: InputDecoration(
-                      label: Text('Номер'),
+                      label: const Text('Номер'),
                         constraints: BoxConstraints(maxWidth: 62.w)),
                   ),
                   TextField(
@@ -57,7 +56,7 @@ class _PlaceEditCardState extends State<PlaceEditCard> {
                     controller: capacityInput,
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18.sp),
                     decoration: InputDecoration(
-                        label: Text('Вместимость'),
+                        label: const Text('Вместимость'),
                         constraints: BoxConstraints(maxWidth: 62.w)),
                   )
                 ],

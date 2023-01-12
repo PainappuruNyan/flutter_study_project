@@ -49,14 +49,13 @@ class NavigationDrawer extends StatelessWidget {
           children: <Widget>[
             CircleAvatar(
               radius: 80,
-                backgroundColor: null,
                 backgroundImage: prefs.getInt('imageId') != null
                     ? NetworkImage('http://10.0.2.2:8080/image/$imageId',
                     headers: <String, String>{
                       HttpHeaders.authorizationHeader:
                       'Basic ${base64.encode(utf8.encode('$username:$password'))}'
                     })
-                    : AssetImage('assets/images/Group 1740.png') as ImageProvider,),
+                    : const AssetImage('assets/images/Group 1740.png') as ImageProvider,),
             const SizedBox(height: 12),
             Text(
               prefs.getString('fullName')!,
@@ -98,9 +97,9 @@ class NavigationDrawer extends StatelessWidget {
             title: Text('Бронирования',
                 style: Theme.of(context).textTheme.bodyText2),
             onTap: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(
+              Navigator.pushReplacement(context, MaterialPageRoute<dynamic>(
                   builder: (_) =>
-                      BookingListScreen(isOfficeBooking: false,)));
+                      const BookingListScreen(isOfficeBooking: false,)));
             },
           ),
           ListTile(
@@ -119,7 +118,7 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, Routes.faq);
             },
           ),
-          if(prefs.getString('role')! == 'Админ')...[
+          if(prefs.getString('role')! == 'Админ')...<Widget>[
             ListTile(
               leading: const Icon(Icons.admin_panel_settings,
                   color: MyColors.kPrimary),

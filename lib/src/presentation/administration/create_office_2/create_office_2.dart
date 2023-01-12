@@ -10,7 +10,10 @@ import 'widgets/floor_expandable.dart';
 
 class CreateOffice2 extends StatefulWidget {
   const CreateOffice2(
-      {super.key, required this.floorCount, required this.nOffice, required this.officeId});
+      {super.key,
+      required this.floorCount,
+      required this.nOffice,
+      required this.officeId});
 
   final int floorCount;
   final Office? nOffice;
@@ -21,32 +24,30 @@ class CreateOffice2 extends StatefulWidget {
 }
 
 class _CreateOffice2State extends State<CreateOffice2> {
-
   void nextRoute(int officeId) {
     Navigator.of(context).push(MaterialPageRoute<CreateOffice2>(
-        builder: (_) =>
-            CreateOffice3(
+        builder: (_) => CreateOffice3(
               officeId: officeId,
             )));
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.nOffice);
     return BlocProvider<OfficeCreate2Bloc>(
       create: (BuildContext context) =>
-      OfficeCreate2Bloc(officeId: widget.officeId)
-        ..add(EnterFloorCount(floorCount: widget.floorCount)),
+          OfficeCreate2Bloc(officeId: widget.officeId)
+            ..add(EnterFloorCount(floorCount: widget.floorCount)),
       child: BlocBuilder<OfficeCreate2Bloc, OfficeCreate2State>(
         builder: (BuildContext context, OfficeCreate2State state) {
           return Scaffold(
             appBar: AppBar(
                 title: const Text(
-                  'Новый офис',
-                )),
-            bottomNavigationBar: BlocListener<OfficeCreate2Bloc, OfficeCreate2State>(
+              'Новый офис',
+            )),
+            bottomNavigationBar:
+                BlocListener<OfficeCreate2Bloc, OfficeCreate2State>(
               listener: (BuildContext context, OfficeCreate2State state) {
-                if(state is FloorsLoaded){
+                if (state is FloorsLoaded) {
                   nextRoute(widget.officeId);
                 }
               },
@@ -72,16 +73,15 @@ class _CreateOffice2State extends State<CreateOffice2> {
                             children: <Widget>[
                               Container(
                                 padding:
-                                EdgeInsets.only(top: 31.h, bottom: 45.h),
+                                    EdgeInsets.only(top: 31.h, bottom: 45.h),
                                 child: Text(
                                   'Введите информацию об этажах',
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyText2!
                                       .copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700),
                                 ),
                               ),
                               ListView.builder(

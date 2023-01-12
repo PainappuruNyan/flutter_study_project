@@ -18,19 +18,20 @@ class CreateBooking1 extends StatefulWidget {
 }
 
 class _CreateBooking1State extends State<CreateBooking1> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BookingCreate1Bloc>(
       create: (BuildContext context) =>
           BookingCreate1Bloc()..add(BookingCreate1Start()),
-      child:  CreateBooking1View(holdersId: widget.holdersId,),
+      child: CreateBooking1View(
+        holdersId: widget.holdersId,
+      ),
     );
   }
 }
 
 class CreateBooking1View extends StatelessWidget {
-  CreateBooking1View({super.key, required this.holdersId});
+  const CreateBooking1View({super.key, required this.holdersId});
 
   final List<int> holdersId;
 
@@ -44,7 +45,8 @@ class CreateBooking1View extends StatelessWidget {
         bottomNavigationBar: CustomBottomAppBar(
           pageNum: '1',
           pageCount: '3',
-          nextPageButton: false, nextRoute: (){},
+          nextPageButton: false,
+          nextRoute: () {},
         ),
         body: BlocBuilder<BookingCreate1Bloc, BookingCreate1State>(
           builder: (BuildContext context, BookingCreate1State state) {
@@ -77,7 +79,10 @@ class CreateBooking1View extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               late List<Office> cityOffices;
                               if (state.cites[index] == 'Избранное') {
-                                cityOffices = state.offices.where((element) => element.isFavorite==true).toList();
+                                cityOffices = state.offices
+                                    .where((Office element) =>
+                                        element.isFavorite ?? false)
+                                    .toList();
                               } else {
                                 cityOffices = state.offices
                                     .where((Office element) =>
@@ -86,7 +91,8 @@ class CreateBooking1View extends StatelessWidget {
                               }
                               return OfficeExpandable(
                                 offices: cityOffices,
-                                city: state.cites[index], holdersId: holdersId,
+                                city: state.cites[index],
+                                holdersId: holdersId,
                               );
                             }),
                       ),

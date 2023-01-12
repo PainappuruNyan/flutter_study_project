@@ -8,11 +8,13 @@ import '../../../../core/constants/colors.dart';
 class FloorExpandable extends StatelessWidget {
   FloorExpandable({super.key, required this.floor, required this.floorIndex});
 
-  MiniFloor floor;
-  int floorIndex;
-  TextEditingController floorNumberController = TextEditingController();
-  TextEditingController workplaceCounterController = TextEditingController();
-  TextEditingController meetingCounterController = TextEditingController();
+  final MiniFloor floor;
+  final int floorIndex;
+  final TextEditingController floorNumberController = TextEditingController();
+  final TextEditingController workplaceCounterController =
+      TextEditingController();
+  final TextEditingController meetingCounterController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {

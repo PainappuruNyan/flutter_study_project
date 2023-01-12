@@ -37,7 +37,8 @@ class CustomBottomAppBar extends StatelessWidget {
                   onPressed: () {},
                   child: TextButton.icon(
                     onPressed: () {
-                      Navigator.popUntil(context, (route)=> route.isFirst);
+                      Navigator.popUntil(
+                          context, (Route<dynamic> route) => route.isFirst);
                     },
                     icon: const Icon(
                       Icons.close,
@@ -89,12 +90,9 @@ class CustomBottomAppBar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 5),
                   child: TextButton(
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                     child: TextButton.icon(
                       onPressed: () {
-                        print('нажали в виджите');
                         nextRoute();
                       },
                       label: Text(

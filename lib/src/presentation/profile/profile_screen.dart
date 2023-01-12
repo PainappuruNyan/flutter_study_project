@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +11,7 @@ import '../booking/booking_list/booking_list_screen.dart';
 import '../booking/create_booking_1/create_booking_1.dart';
 import '../routes/routes.dart';
 import '../shared_widgets/booking_card.dart';
-import '../shared_widgets/navigation_drawer.dart' as NavigationDrawer;
+import '../shared_widgets/navigation_drawer.dart' as navigation_drawer;
 import '../shared_widgets/team_card.dart';
 import '../teams/team_create/team_create_screen.dart';
 import 'widgets/id_card.dart';
@@ -26,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const NavigationDrawer.NavigationDrawer(),
+        drawer: const navigation_drawer.NavigationDrawer(),
         appBar: AppBar(
           elevation: 0,
           title: const Text('Профиль сотрудника'),
@@ -74,12 +73,12 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Flexible(
                           flex: 55,
                           child: UserCard(state.profile.employee.fullName,
-                              state.profile.employee.email, imageId: state.profile.employee.imageId),
+                              state.profile.employee.email,
+                              imageId: state.profile.employee.imageId),
                         ),
                         const Spacer(
                           flex: 2,
@@ -123,26 +122,31 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                          context,
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    CreateBooking1(holdersId: [prefs.getInt('id')!],))).then((_)  {
-                                              context.read<ProfileBloc>().add(ProfileStarted());
+                                            context,
+                                            MaterialPageRoute<dynamic>(
+                                                builder: (_) => CreateBooking1(
+                                                      holdersId: <int>[
+                                                        prefs.getInt('id')!
+                                                      ],
+                                                    ))).then((_) {
+                                          context
+                                              .read<ProfileBloc>()
+                                              .add(ProfileStarted());
                                         });
                                       },
-                                      child: Icon(Icons.add_box_outlined),
+                                      child: const Icon(Icons.add_box_outlined),
                                     )
                                   ],
                                 ),
                               ),
-                              if (state.profile.bookings != null) ...[
+                              if (state.profile.bookings != null) ...<Widget>[
                                 Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 9.w),
                                   child: BookingCard(
                                       booking: state.profile.bookings!),
                                 ),
-                              ] else ...[
+                              ] else ...<Widget>[
                                 Text(
                                   'Здесь пока пусто',
                                   style: Theme.of(context).textTheme.caption,
@@ -150,7 +154,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                               ],
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: <Widget>[
                                   Expanded(
                                     child: Container(
                                       margin: EdgeInsets.only(top: 11.h),
@@ -160,8 +164,8 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                                   color: Colors.grey))),
                                       child: InkWell(
                                         child: Padding(
-                                          padding:
-                                          EdgeInsets.symmetric(vertical: 8.h),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 8.h),
                                           child: Text(
                                             'Весь список',
                                             textAlign: TextAlign.center,
@@ -169,16 +173,22 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                                 .textTheme
                                                 .bodyText2!
                                                 .copyWith(
-                                                  color: MyColors.kTextSecondary,
+                                                  color:
+                                                      MyColors.kTextSecondary,
                                                 ),
                                           ),
                                         ),
                                         onTap: () {
                                           Navigator.push(
-                                              context, MaterialPageRoute(
-                                              builder: (_) =>
-                                                  BookingListScreen(isOfficeBooking: false,))).then((_)  {
-                                            context.read<ProfileBloc>().add(ProfileStarted());
+                                              context,
+                                              MaterialPageRoute<dynamic>(
+                                                  builder: (_) =>
+                                                      const BookingListScreen(
+                                                        isOfficeBooking: false,
+                                                      ))).then((_) {
+                                            context
+                                                .read<ProfileBloc>()
+                                                .add(ProfileStarted());
                                           });
                                         },
                                       ),
@@ -215,25 +225,29 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute<dynamic>(
                                               builder: (_) =>
-                                                  TeamCreateScreen())).then((_)  {
-                                        context.read<ProfileBloc>().add(ProfileStarted());
+                                                  TeamCreateScreen()))
+                                          .then((_) {
+                                        context
+                                            .read<ProfileBloc>()
+                                            .add(ProfileStarted());
                                       });
                                     },
-                                    child: Icon(Icons.add_box_outlined),
+                                    child: const Icon(Icons.add_box_outlined),
                                   )
                                 ],
                               ),
                             ),
-                            if (state.profile.teams!=null) ...[
+                            if (state.profile.teams != null) ...<Widget>[
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 9.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 9.w),
                                   child: TeamCard(
-                                team: state.profile.teams!,
-                              )),
-                            ] else ...[
+                                    team: state.profile.teams!,
+                                  )),
+                            ] else ...<Widget>[
                               Text(
                                 'Здесь пока пусто',
                                 style: Theme.of(context).textTheme.caption,
@@ -241,7 +255,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                             ],
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: Container(
                                     margin: EdgeInsets.only(top: 11.h),
@@ -252,7 +266,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                     child: InkWell(
                                       child: Padding(
                                         padding:
-                                        EdgeInsets.symmetric(vertical: 8.h),
+                                            EdgeInsets.symmetric(vertical: 8.h),
                                         child: Text(
                                           'Весь список',
                                           textAlign: TextAlign.center,
@@ -266,8 +280,11 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                       ),
                                       onTap: () {
                                         Navigator.pushNamed(
-                                            context, Routes.team_list).then((_)  {
-                                          context.read<ProfileBloc>().add(ProfileStarted());
+                                                context, Routes.team_list)
+                                            .then((_) {
+                                          context
+                                              .read<ProfileBloc>()
+                                              .add(ProfileStarted());
                                         });
                                       },
                                     ),

@@ -1,9 +1,9 @@
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../dependency_injection_container.dart' as di;
 import '../../../bloc/office_details/office_details_bloc.dart';
 import '../../../core/constants/colors.dart';
 import '../../../data/models/new_admin_model.dart';
@@ -21,11 +21,11 @@ class OfficeDetailsScreen extends StatelessWidget {
 
   static const String routeName = '/office_details_screen';
 
-  TextEditingController startdateinput = TextEditingController();
+  final TextEditingController startDateInput = TextEditingController();
 
-  TextEditingController enddateinput = TextEditingController();
+  final TextEditingController endDateInput = TextEditingController();
 
-  TextEditingController bookingRangeInput = TextEditingController();
+  final TextEditingController bookingRangeInput = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class OfficeDetailsScreen extends StatelessWidget {
 
       if (pickedTime != null) {
         final DateTime parsedTime =
-            DateFormat.jm().parse(pickedTime.format(context).toString());
+            DateFormat.jm().parse(pickedTime.format(context));
         final String formattedTime = DateFormat('HH:mm').format(parsedTime);
         timeinput.text = formattedTime;
       }
@@ -208,13 +208,13 @@ class OfficeDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
+                          MaterialPageRoute<dynamic>(
                               builder: (BuildContext context) =>
                                   BookingListScreen(
                                     isOfficeBooking: true,
                                     officeId: office.id,
                                   )),
-                          (Route route) => route.isFirst);
+                          (Route<dynamic> route) => route.isFirst);
                     },
                     color: MyColors.kPrimary,
                     child: const Text('Список бронирований',
@@ -259,13 +259,13 @@ class OfficeDetailsScreen extends StatelessWidget {
                                 children: <Widget>[
                                   TextFormField(
                                     readOnly: true,
-                                    controller: startdateinput,
+                                    controller: startDateInput,
                                     decoration: const InputDecoration(
                                       labelText: 'Начало бронирований',
                                       icon: Icon(Icons.calendar_month),
                                     ),
                                     onTap: () {
-                                      timePicker(startdateinput);
+                                      timePicker(startDateInput);
                                     },
                                   ),
                                   Padding(
@@ -273,13 +273,13 @@ class OfficeDetailsScreen extends StatelessWidget {
                                         EdgeInsets.symmetric(vertical: 10.sp),
                                     child: TextFormField(
                                       readOnly: true,
-                                      controller: enddateinput,
+                                      controller: endDateInput,
                                       decoration: const InputDecoration(
                                         labelText: 'Конец бронирований',
                                         icon: Icon(Icons.calendar_month),
                                       ),
                                       onTap: () {
-                                        timePicker(enddateinput);
+                                        timePicker(endDateInput);
                                       },
                                     ),
                                   ),
@@ -303,19 +303,20 @@ class OfficeDetailsScreen extends StatelessWidget {
                                             address: office.address,
                                             workNumber: office.workNumber,
                                             startOfDay: DateFormat('HH:mm')
-                                                .parse(startdateinput.text),
+                                                .parse(startDateInput.text),
                                             endOfDay: DateFormat('HH:mm')
-                                                .parse(enddateinput.text),
+                                                .parse(endDateInput.text),
                                             bookingRange: int.parse(
                                                 bookingRangeInput.text),
                                             isFavorite: null)));
                                         Navigator.pushAndRemoveUntil(
                                             context,
-                                            MaterialPageRoute(
+                                            MaterialPageRoute<dynamic>(
                                                 builder: (BuildContext
                                                         context) =>
                                                     const OfficeListScreen()),
-                                            (Route route) => route.isFirst);
+                                            (Route<dynamic> route) =>
+                                                route.isFirst);
                                       },
                                       child:
                                           const Text('Подтвердить изменения'),
@@ -338,7 +339,7 @@ class OfficeDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MaterialPageRoute<dynamic>(
                               builder: (BuildContext context) => UserList(
                                     officeId: office.id,
                                     onTapFunc: onTapFunc,

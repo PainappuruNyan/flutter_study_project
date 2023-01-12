@@ -17,17 +17,15 @@ class FloorAccordion extends StatefulWidget {
   final MiniFloor floor;
 
   @override
-  _FloorAccordionState createState() => _FloorAccordionState();
+  FloorAccordionState createState() => FloorAccordionState();
 }
 
-class _FloorAccordionState extends State<FloorAccordion> {
-
-
+class FloorAccordionState extends State<FloorAccordion> {
   Future<File?> _getFromGallery() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      File imageFile = File(image.path);
+      final File imageFile = File(image.path);
       return imageFile;
     }
     return null;
@@ -36,7 +34,7 @@ class _FloorAccordionState extends State<FloorAccordion> {
   @override
   Widget build(BuildContext context) {
     return Accordion(
-      contentBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        contentBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
         disableScrolling: true,
         headerBorderRadius: 4,
         paddingListTop: 0,
@@ -64,15 +62,19 @@ class _FloorAccordionState extends State<FloorAccordion> {
                   floorId: widget.floor.floorId!,
                 ),
                 WorkplacesCard(
-                    workplaceCount: widget.floor.meetingRoomCount, type: false, floorId: widget.floor.floorId!,),
+                  workplaceCount: widget.floor.meetingRoomCount,
+                  type: false,
+                  floorId: widget.floor.floorId!,
+                ),
                 Container(
                   alignment: Alignment.bottomRight,
                   child: MaterialButton(
                     onPressed: () async {
-                      await _getFromGallery().then((value) {
-                        if (value != null){
-                          print(value.path);
-                          context.read<OfficeCreate3Bloc>().add(LoadMap(filePath: value.path, floorId: widget.floor.floorId!));
+                      await _getFromGallery().then((File? value) {
+                        if (value != null) {
+                          context.read<OfficeCreate3Bloc>().add(LoadMap(
+                              filePath: value.path,
+                              floorId: widget.floor.floorId!));
                         }
                       });
                     },
@@ -95,7 +97,10 @@ class _FloorAccordionState extends State<FloorAccordion> {
 
 class WorkplacesCard extends StatelessWidget {
   const WorkplacesCard(
-      {super.key, required this.workplaceCount, required this.type, required this.floorId});
+      {super.key,
+      required this.workplaceCount,
+      required this.type,
+      required this.floorId});
 
   final bool type;
   final int workplaceCount;
@@ -132,98 +137,21 @@ class WorkplacesCard extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            EditFloor(floorId: floorId, workplaceType: type ? 1: 2, ),
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => EditFloor(
+                          floorId: floorId,
+                          workplaceType: type ? 1 : 2,
+                        ),
                       ),
-                    ).then((value) {context.read<OfficeCreate3Bloc>().add(LoadScreen());});
+                    ).then((dynamic value) {
+                      context.read<OfficeCreate3Bloc>().add(LoadScreen());
+                    });
                   },
                 )
               ],
             )),
       ),
-      onTap: () {
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       final TextStyle textStyle = Theme.of(context)
-        //           .textTheme
-        //           .bodyText2!
-        //           .copyWith(fontWeight: FontWeight.w500);
-        //       return AlertDialog(
-        //         title: Text(
-        //           office.address,
-        //           style: textStyle,
-        //         ),
-        //         content: SizedBox(
-        //           height: 270.h,
-        //           child: Column(
-        //             children: [
-        //               Row(
-        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   Text('Посмотреть на карте', style: textStyle),
-        //                   InkWell(
-        //                     child: const Icon(
-        //                       Icons.location_on_sharp,
-        //                       color: MyColors.kPrimary,
-        //                     ),
-        //                     onTap: () {},
-        //                   ),
-        //                 ],
-        //               ),
-        //               Row(
-        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   Text('Рабочий телефон', style: textStyle),
-        //                   Padding(
-        //                     padding: EdgeInsets.only(top: 6.h),
-        //                     child: InkWell(
-        //                       child: const Icon(
-        //                         Icons.copy,
-        //                         color: MyColors.kPrimary,
-        //                       ),
-        //                       onTap: () {},
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //               Row(
-        //                 children: <Widget>[
-        //                   Text(
-        //                       office.workNumber,
-        //                       style: textStyle.copyWith(
-        //                           fontWeight: FontWeight.normal)),
-        //                 ],
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //         actions: <Widget>[
-        //           MaterialButton(
-        //             onPressed: () {},
-        //             child: Text('Избранное',
-        //                 style: Theme.of(context).textTheme.bodyText2),
-        //           ),
-        //           MaterialButton(
-        //             onPressed: () {
-        //               // Navigator.push(
-        //               //   context,
-        //               //   MaterialPageRoute(
-        //               //     builder: (BuildContext context) =>
-        //               //         BookingCreate2Screen(
-        //               //       selectedOffice: selectedOffice,
-        //               //     ),
-        //               //   ),
-        //               // );
-        //             },
-        //             child: Text('Выбрать',
-        //                 style: Theme.of(context).textTheme.bodyText2),
-        //           ),
-        //         ],
-        //       );
-        //     });
-      },
+      onTap: () {},
     );
   }
 }

@@ -53,27 +53,22 @@ class _CreateOffice1State extends State<CreateOffice1> {
 
   void nextRoute(Office office, int nOfficeId) {
     Navigator.of(context).push(MaterialPageRoute<CreateOffice2>(
-        builder: (_) =>
-            CreateOffice2(
+        builder: (_) => CreateOffice2(
               floorCount: int.parse(floorCountInput.text),
               nOffice: office,
               officeId: nOfficeId,
-            )
-
-    ));
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<OfficeCreate1Bloc>(
-      create: (BuildContext context) =>
-      OfficeCreate1Bloc()
-        ..add(Starting()),
+      create: (BuildContext context) => OfficeCreate1Bloc()..add(Starting()),
       child: BlocBuilder<OfficeCreate1Bloc, OfficeCreate1State>(
         builder: (BuildContext context, OfficeCreate1State state) {
           if (state is OfficeCreate1Initial) {
-            startdateinput.text = DateFormat('HH:mm')
-                .format(state.beginningTime);
+            startdateinput.text =
+                DateFormat('HH:mm').format(state.beginningTime);
             enddateinput.text = DateFormat('HH:mm').format(state.endTime);
             bookingRangeInput.text = state.bookingRange.toString();
             floorCountInput.text = state.floorsCount.toString();
@@ -82,8 +77,8 @@ class _CreateOffice1State extends State<CreateOffice1> {
             return Scaffold(
               appBar: AppBar(
                   title: const Text(
-                    'Формирование офиса',
-                  )),
+                'Формирование офиса',
+              )),
               body: Container(
                 padding: EdgeInsets.only(top: 36.sp),
                 child: Column(
@@ -147,33 +142,33 @@ class _CreateOffice1State extends State<CreateOffice1> {
                                     child: InkWell(
                                       child: validator(cityInput.text) == null
                                           ? Ink(
-                                        decoration: const ShapeDecoration(
-                                            color: MyColors.kPrimary,
-                                            shape: CircleBorder()),
-                                        child: const Icon(
-                                          Icons.done,
-                                          color: MyColors.kWhite,
-                                        ),
-                                      )
+                                              decoration: const ShapeDecoration(
+                                                  color: MyColors.kPrimary,
+                                                  shape: CircleBorder()),
+                                              child: const Icon(
+                                                Icons.done,
+                                                color: MyColors.kWhite,
+                                              ),
+                                            )
                                           : Ink(
-                                        child: Stack(
-                                            alignment: Alignment.center,
-                                            children: <Icon>[
-                                              Icon(
-                                                Icons.circle,
-                                                color: MyColors.kPrimary,
-                                                size: 32.sp,
-                                              ),
-                                              Icon(Icons.circle,
-                                                  color: MyColors.kWhite,
-                                                  size: 30.sp),
-                                              Icon(
-                                                Icons.circle,
-                                                color: MyColors.kPrimary,
-                                                size: 10.sp,
-                                              ),
-                                            ]),
-                                      ),
+                                              child: Stack(
+                                                  alignment: Alignment.center,
+                                                  children: <Icon>[
+                                                    Icon(
+                                                      Icons.circle,
+                                                      color: MyColors.kPrimary,
+                                                      size: 32.sp,
+                                                    ),
+                                                    Icon(Icons.circle,
+                                                        color: MyColors.kWhite,
+                                                        size: 30.sp),
+                                                    Icon(
+                                                      Icons.circle,
+                                                      color: MyColors.kPrimary,
+                                                      size: 10.sp,
+                                                    ),
+                                                  ]),
+                                            ),
                                       onTap: () {},
                                     ),
                                   ),
@@ -182,22 +177,23 @@ class _CreateOffice1State extends State<CreateOffice1> {
                                         .read<OfficeCreate1Bloc>()
                                         .cityList,
                                     dropdownDecoratorProps:
-                                    DropDownDecoratorProps(
-                                        dropdownSearchDecoration:
-                                        InputDecoration(
-                                          prefixIcon: const Icon(
-                                            Icons.location_city,
-                                            color: MyColors.kPrimary,),
-                                          labelText: 'Город',
-                                          constraints:
+                                        DropDownDecoratorProps(
+                                            dropdownSearchDecoration:
+                                                InputDecoration(
+                                      prefixIcon: const Icon(
+                                        Icons.location_city,
+                                        color: MyColors.kPrimary,
+                                      ),
+                                      labelText: 'Город',
+                                      constraints:
                                           BoxConstraints(maxWidth: 250.w),
-                                        )),
+                                    )),
                                     onChanged: (City? data) {
-                                      print(data);
                                       context.read<OfficeCreate1Bloc>().add(
                                           FieldChanged(
                                               fieldChanged: 5,
-                                              nText: '${data!.name} ${data.id}'));
+                                              nText:
+                                                  '${data!.name} ${data.id}'));
                                     },
                                     itemAsString: (City u) => u.name,
                                   ),
@@ -219,9 +215,10 @@ class _CreateOffice1State extends State<CreateOffice1> {
                   ],
                 ),
               ),
-              bottomNavigationBar: BlocListener<OfficeCreate1Bloc, OfficeCreate1State>(
+              bottomNavigationBar:
+                  BlocListener<OfficeCreate1Bloc, OfficeCreate1State>(
                 listener: (BuildContext context, OfficeCreate1State state) {
-                  if(state is OfficeCreated){
+                  if (state is OfficeCreated) {
                     nextRoute(state.nOffice, state.nOfficeId);
                   }
                 },
@@ -229,7 +226,9 @@ class _CreateOffice1State extends State<CreateOffice1> {
                   pageNum: '1',
                   pageCount: '3',
                   nextRoute: () {
-                    context.read<OfficeCreate1Bloc>().add(ConfirmCreation(office: state.nOffice));
+                    context
+                        .read<OfficeCreate1Bloc>()
+                        .add(ConfirmCreation(office: state.nOffice));
                   },
                   nextPageButton: true,
                   dateValid: _formKey.currentState?.validate(),
@@ -239,8 +238,8 @@ class _CreateOffice1State extends State<CreateOffice1> {
           }
           return const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
-              ));
+            child: CircularProgressIndicator(),
+          ));
         },
       ),
     );

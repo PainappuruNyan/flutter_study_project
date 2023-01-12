@@ -1,4 +1,3 @@
-import 'package:atb_first_project/src/data/models/team_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +6,7 @@ import '../../bloc/profile/profile_bloc.dart';
 import '../../bloc/team_list/team_list_bloc.dart';
 import '../../bloc/teammate_list/teammate_list_bloc.dart';
 import '../../core/constants/colors.dart';
+import '../../data/models/team_model.dart';
 import '../teams/team_details/team_details_screen.dart';
 
 class TeamCard extends StatelessWidget {
@@ -26,15 +26,14 @@ class TeamCard extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(
+                  .push(MaterialPageRoute<dynamic>(
                       builder: (_) => TeamDetailsScreen(
                           e: team,
                           bloc: context.read<TeamListBloc>(),
                           mateBloc: context.read<TeammateListBloc>())))
                   .then((_) {
-                context.read<TeamListBloc>().add(GetTeamList());
+                context.read<TeamListBloc>().add(const GetTeamList());
                 context.read<ProfileBloc>().add(ProfileStarted());
-
               });
             },
             child: Container(
@@ -80,47 +79,6 @@ class TeamCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 10.sp),
-                    //     height: 59.h,
-                    //     width: 800.w,
-                    //     decoration: const BoxDecoration(
-                    //       borderRadius: BorderRadius.only(
-                    //           bottomLeft: Radius.circular(4),
-                    //           bottomRight: Radius.circular(4)),
-                    //       color: MyColors.kSecondary,
-                    //     ),
-                    //     child: InkWell(
-                    //       onTap: () {
-                    //         Navigator.of(context).push(MaterialPageRoute(
-                    //             builder: (_) => TeamDetailsScreen(
-                    //                 e: team,
-                    //                 bloc: context.read<TeamListBloc>(),
-                    //                 mateBloc: context.read<TeammateListBloc>())));
-                    //       },
-                    //       child: Column(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: <Widget>[
-                    //           Container(
-                    //             padding: EdgeInsets.symmetric(vertical: 10.sp),
-                    //             height: 39.h,
-                    //             width: 130.w,
-                    //             decoration: BoxDecoration(
-                    //               border: Border.all(
-                    //                   color: MyColors.kWhite, width: 1.w),
-                    //               borderRadius:
-                    //                   const BorderRadius.all(Radius.circular(8)),
-                    //               color: MyColors.kSecondary,
-                    //             ),
-                    //             child: Text(
-                    //               'Роль',
-                    //               textAlign: TextAlign.center,
-                    //               style: Theme.of(context).textTheme.bodyText1,
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     )),
                   ],
                 )),
           )

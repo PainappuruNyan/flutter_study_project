@@ -26,16 +26,16 @@ class FreeTimePicker extends StatefulWidget {
   final int selectedEmployeeId;
 
   @override
-  _FreeTimePickerState createState() => _FreeTimePickerState();
+  FreeTimePickerState createState() => FreeTimePickerState();
 }
 
-class _FreeTimePickerState extends State<FreeTimePicker> {
+class FreeTimePickerState extends State<FreeTimePicker> {
   DateFormat format = DateFormat('HH:mm');
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FreeTimePikerBloc(),
+    return BlocProvider<FreeTimePikerBloc>(
+      create: (BuildContext context) => FreeTimePikerBloc(),
       child: AlertDialog(
         title: Text('Выберите один из промежутков',
             style: Theme.of(context)
@@ -46,8 +46,6 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
         content: BlocBuilder<FreeTimePikerBloc, FreeTimePikerState>(
           builder: (BuildContext context, FreeTimePikerState state) {
             if (state is FreeTimePikerInitial) {
-              print(widget.placeId);
-              print(widget.date);
               context.read<FreeTimePikerBloc>().add(
                   DialogStarted(placeId: widget.placeId, date: widget.date));
               return const Center(
@@ -65,7 +63,6 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
                         children: <Widget>[
                           FlutterSlider(
                               handlerHeight: 30.h,
-                              lockHandlers: false,
                               touchSize: 5,
                               selectByTap: false,
                               trackBar: const FlutterSliderTrackBar(
@@ -125,7 +122,7 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
                               })),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                            children: <Widget>[
                               Container(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -146,37 +143,37 @@ class _FreeTimePickerState extends State<FreeTimePicker> {
                                   color: MyColors.kPrimary,
                                   height: 35.sp,
                                   onPressed: () {
-                                    DateTime nStart = DateTime(
+                                    final DateTime nStart = DateTime(
                                         widget.date.year,
                                         widget.date.month,
                                         widget.date.day,
                                         state.intervals[index].start.hour,
                                         state.intervals[index].start.minute);
 
-                                    DateTime nEnd = DateTime(
+                                    final DateTime nEnd = DateTime(
                                         widget.date.year,
                                         widget.date.month,
                                         widget.date.day,
                                         state.intervals[index].end.hour,
                                         state.intervals[index].end.minute);
-                                    widget.bookingBloc.add(
-                                        BookingCreate3WorkplaceSelected(
-                                            booking: BookingModel(
-                                              id: -1,
-                                              holder: widget
-                                                  .bookingBloc.holdersId[0],
-                                              maker: widget.bookingBloc.makerId,
-                                              placeId: widget.workplace.id!,
-                                              start: nStart,
-                                              end: nEnd,
-                                              guests: 0,
-                                              officeId: null,
-                                              floorNumber: null,
-                                              address: '',
-                                              city: '',
-                                              type: '',
-                                            ),
-                                            employeeId: widget.selectedEmployeeId,));
+                                    widget.bookingBloc
+                                        .add(BookingCreate3WorkplaceSelected(
+                                      booking: BookingModel(
+                                        id: -1,
+                                        holder: widget.bookingBloc.holdersId[0],
+                                        maker: widget.bookingBloc.makerId,
+                                        placeId: widget.workplace.id!,
+                                        start: nStart,
+                                        end: nEnd,
+                                        guests: 0,
+                                        officeId: null,
+                                        floorNumber: null,
+                                        address: '',
+                                        city: '',
+                                        type: '',
+                                      ),
+                                      employeeId: widget.selectedEmployeeId,
+                                    ));
                                   },
                                   child: const Text(
                                     'Выбрать',

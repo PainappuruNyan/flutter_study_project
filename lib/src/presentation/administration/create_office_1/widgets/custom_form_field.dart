@@ -7,24 +7,23 @@ import '../../../../bloc/office_create_1/office_create_1_bloc.dart';
 import '../../../../core/constants/colors.dart';
 
 class CustomFormField extends StatefulWidget {
-  CustomFormField({
-    super.key,
-    required this.icon,
-    required this.controller,
-    required this.labelText,
-    this.isDateTime = false,
-    required this.valid,
-    required this.index,
-    required this.formKey,
-    this.inputType
-  });
+  const CustomFormField(
+      {super.key,
+      required this.icon,
+      required this.controller,
+      required this.labelText,
+      this.isDateTime = false,
+      required this.valid,
+      required this.index,
+      required this.formKey,
+      this.inputType});
 
-  GlobalKey<FormState> formKey;
-  IconData icon;
-  TextEditingController controller;
-  String labelText;
-  bool isDateTime;
-  String? Function(String?) valid;
+  final GlobalKey<FormState> formKey;
+  final IconData icon;
+  final TextEditingController controller;
+  final String labelText;
+  final bool isDateTime;
+  final String? Function(String?) valid;
   final int index;
   final TextInputType? inputType;
 
@@ -35,7 +34,6 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _valid(String text) {
     if (text == '' || text == null || text == '0') {
-      print('пустая строка');
       return false;
     }
     return true;
@@ -43,8 +41,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> datePicker(TextEditingController dateinput) async {
-      assert(dateinput != null);
+    Future<void> datePicker(TextEditingController dateInput) async {
+      assert(dateInput != null);
 
       final TimeOfDay? pickedTime = await showTimePicker(
           initialTime: TimeOfDay.now(),
@@ -56,13 +54,16 @@ class _CustomFormFieldState extends State<CustomFormField> {
               child: child ?? Container(),
             );
           });
+      if (!mounted) {
+        return;
+      }
 
       if (pickedTime != null) {
         final DateTime parsedTime =
             DateFormat.jm().parse(pickedTime.format(context));
         final String formattedTime = DateFormat('HH:mm').format(parsedTime);
         setState(() {
-          dateinput.text = formattedTime;
+          dateInput.text = formattedTime;
         });
       }
     }

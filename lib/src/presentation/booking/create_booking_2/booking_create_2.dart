@@ -9,26 +9,26 @@ import '../../shared_widgets/bottom_app_bar.dart';
 import '../create_booking_3/booking_create_3.dart';
 
 class BookingCreate2Screen extends StatefulWidget {
-  BookingCreate2Screen(
+  const BookingCreate2Screen(
       {super.key,
       required this.selectedOffice,
       required this.holdersId,
       required this.isEdit,
-        required this.bookingRange,
+      required this.bookingRange,
       this.editedBookingId});
 
   final int selectedOffice;
   final List<int> holdersId;
   final int bookingRange;
   final bool isEdit;
-  int? editedBookingId;
-
+  final int? editedBookingId;
 
   static const String routeName = '/booking_create/2';
 
   @override
   State<StatefulWidget> createState() {
-    return _BookingCreate2Screen(selectedOffice, isEdit, editedBookingId, bookingRange);
+    return _BookingCreate2Screen(
+        selectedOffice, isEdit, editedBookingId, bookingRange);
   }
 }
 
@@ -42,17 +42,17 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
   final int bookingRange;
   final bool isEdit;
   int? editedBookingId;
-  TextEditingController dateinput = TextEditingController();
-  TextEditingController begintimeinput = TextEditingController();
-  TextEditingController endtimeinput = TextEditingController();
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController beginTimeInput = TextEditingController();
+  TextEditingController endTimeInput = TextEditingController();
 
   //text editing controller for text field
 
   @override
   void initState() {
-    dateinput.text = '';
-    begintimeinput.text = '';
-    endtimeinput.text = '';
+    dateInput.text = '';
+    beginTimeInput.text = '';
+    endTimeInput.text = '';
     super.initState();
   }
 
@@ -62,9 +62,9 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
       Navigator.of(context).push(MaterialPageRoute<BookingCreate3Screen>(
           builder: (_) => BookingCreate3Screen(
                 selectedOffice: selectedOffice,
-                dateStart: dateinput.text,
-                timeStart: begintimeinput.text,
-                timeEnd: endtimeinput.text,
+                dateStart: dateInput.text,
+                timeStart: beginTimeInput.text,
+                timeEnd: endTimeInput.text,
                 holdersId: widget.holdersId,
                 isEdit: isEdit,
                 editedBookingId: editedBookingId,
@@ -100,10 +100,13 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
               child: child ?? Container(),
             );
           });
+      if (!mounted) {
+        return;
+      }
 
       if (pickedTime != null) {
         final DateTime parsedTime =
-            DateFormat.jm().parse(pickedTime.format(context).toString());
+            DateFormat.jm().parse(pickedTime.format(context));
         final String formattedTime = DateFormat('HH:mm').format(parsedTime);
         setState(() {
           timeinput.text = formattedTime;
@@ -151,7 +154,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                                     }
                                     return null;
                                   },
-                                  controller: dateinput,
+                                  controller: dateInput,
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.calendar_month,
@@ -160,7 +163,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                                     labelText: 'Дата начала брони',
                                   ),
                                   readOnly: true,
-                                  onTap: () => datePicker(dateinput)))),
+                                  onTap: () => datePicker(dateInput)))),
                       Container(
                         padding: EdgeInsets.only(top: 70.sp),
                         child: Text(
@@ -178,7 +181,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                             }
                             return null;
                           },
-                          controller: begintimeinput,
+                          controller: beginTimeInput,
                           readOnly: true,
                           style: Theme.of(context).textTheme.bodyText2,
                           decoration: const InputDecoration(
@@ -187,7 +190,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                                 Icons.watch_later_outlined,
                                 color: Colors.deepOrange,
                               )),
-                          onTap: () => timePicker(begintimeinput),
+                          onTap: () => timePicker(beginTimeInput),
                         ),
                       ),
                       Container(
@@ -200,7 +203,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                             }
                             return null;
                           },
-                          controller: endtimeinput,
+                          controller: endTimeInput,
                           readOnly: true,
                           style: Theme.of(context).textTheme.bodyText2,
                           decoration: const InputDecoration(
@@ -209,7 +212,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                                 Icons.watch_later_outlined,
                                 color: MyColors.kPrimary,
                               )),
-                          onTap: () => timePicker(endtimeinput),
+                          onTap: () => timePicker(endTimeInput),
                         ),
                       ),
                     ],
@@ -217,7 +220,7 @@ class _BookingCreate2Screen extends State<BookingCreate2Screen> {
                 ),
               );
             }
-            return Text('Error');
+            return const Text('Error');
           },
         ),
         bottomNavigationBar: CustomBottomAppBar(

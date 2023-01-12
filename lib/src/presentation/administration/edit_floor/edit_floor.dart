@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:atb_first_project/src/presentation/administration/edit_floor/widget/place_edit_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../dependency_injection_container.dart' as di;
 import '../../../bloc/edit_floor/edit_floor_bloc.dart';
 import '../../../core/constants/colors.dart';
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
+import 'widget/place_edit_card.dart';
 
 class EditFloor extends StatefulWidget {
   const EditFloor(
@@ -45,7 +44,7 @@ class _EditFloorState extends State<EditFloor> {
             if (state is EditFloorLoaded) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Flexible(
                     flex: 2,
                     child: SizedBox(
@@ -78,7 +77,7 @@ class _EditFloorState extends State<EditFloor> {
                               bottom: BorderSide(color: Colors.grey))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
+                        children: <Widget>[
                           Text(
                             'Этаж №${state.floor.floorNumber}',
                             style: Theme.of(context)

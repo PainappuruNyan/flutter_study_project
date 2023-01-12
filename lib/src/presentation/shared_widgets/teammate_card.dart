@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:atb_first_project/dependency_injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../dependency_injection_container.dart' as di;
 import '../../bloc/teammate_list/teammate_list_bloc.dart';
 import '../../domain/entities/teammate.dart';
 
@@ -41,11 +41,11 @@ class TeammateCard extends StatelessWidget {
                 ? showMaterialModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) => Container(
-                      padding: EdgeInsets.only(left: 30, right: 30, top: 25),
+                      padding: const EdgeInsets.only(left: 30, right: 30, top: 25),
                       height: 100.h,
                       child: Center(
                         child: Column(
-                          children: [
+                          children: <Widget>[
                             MaterialButton(
                               onPressed: () {
                                 bloc.add(TeammateDelete(
@@ -79,7 +79,7 @@ class TeammateCard extends StatelessWidget {
                                 HttpHeaders.authorizationHeader:
                                     'Basic ${base64.encode(utf8.encode('$username:$password'))}'
                               })
-                        : AssetImage('assets/images/Group 1740.png')
+                        : const AssetImage('assets/images/Group 1740.png')
                             as ImageProvider,
                   ),
                   Expanded(
@@ -100,7 +100,7 @@ class TeammateCard extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: '${teammate.roleString}',
+                                        text: teammate.roleString,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2)

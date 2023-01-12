@@ -18,22 +18,25 @@ class AddTeammate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-  providers: [
-    BlocProvider<UserListBloc>(
-      create: (BuildContext context) =>
-          UserListBloc(di.sl())..add(SearchUserEvent('')),
-),
-    BlocProvider<TeammateListBloc>(
-      create: (BuildContext context) => TeammateListBloc(di.sl()),
-    ),
-  ],
-  child: UserListView(teamId: teamId,),
-);
+      providers: [
+        BlocProvider<UserListBloc>(
+          create: (BuildContext context) =>
+              UserListBloc(di.sl())..add(SearchUserEvent('')),
+        ),
+        BlocProvider<TeammateListBloc>(
+          create: (BuildContext context) => TeammateListBloc(di.sl()),
+        ),
+      ],
+      child: UserListView(
+        teamId: teamId,
+      ),
+    );
   }
 }
 
 class UserListView extends StatelessWidget {
   UserListView({super.key, required this.teamId});
+
   final int teamId;
 
   final TextEditingController inputController = TextEditingController();
@@ -60,7 +63,7 @@ class UserListView extends StatelessWidget {
         )),
         body: BlocBuilder<UserListBloc, UserListState>(
             builder: (BuildContext context, UserListState state) {
-          List<Employee> users = [];
+          List<Employee> users = <Employee>[];
           bool isLoading = false;
 
           if (state is UserListLoading) {
@@ -77,16 +80,19 @@ class UserListView extends StatelessWidget {
                 _searchField(context),
                 Expanded(
                   child: ListView.builder(
-                    controller: scrollController,
+                      controller: scrollController,
                       shrinkWrap: true,
                       itemCount: users.length + (isLoading ? 1 : 0),
                       itemBuilder: (BuildContext context, int index) {
-                      if (index < users.length) {
-                        return AddTeammateCard(employee: users[index], teamId: teamId, bloc: context.read<TeammateListBloc>(),);
-                      }
-                      else {
-                        return _loadingIndicator();
-                      }
+                        if (index < users.length) {
+                          return AddTeammateCard(
+                            employee: users[index],
+                            teamId: teamId,
+                            bloc: context.read<TeammateListBloc>(),
+                          );
+                        } else {
+                          return _loadingIndicator();
+                        }
                       }),
                 )
               ],
@@ -112,7 +118,9 @@ class UserListView extends StatelessWidget {
         controller: inputController,
         style: Theme.of(context).textTheme.bodyText2,
         onChanged: (String value) {
-          context.read<UserListBloc>().add(SearchUserEvent(value, startPage: 0, currentPage: 0));
+          context
+              .read<UserListBloc>()
+              .add(SearchUserEvent(value, startPage: 0, currentPage: 0));
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 32.w),
